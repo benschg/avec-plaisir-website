@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(yarn create:*)",
+      "Bash(mv:*)",
+      "Bash(rmdir:*)",
+      "Bash(yarn install)",
+      "Bash(yarn add:*)",
+      "Bash(mkdir:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
