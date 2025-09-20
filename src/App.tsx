@@ -4,6 +4,7 @@ import Navigation from './components/Navigation'
 import HeroSection from './sections/HeroSection'
 import ServicesSection from './sections/ServicesSection'
 import TeamSection from './sections/TeamSection'
+import GallerySection from './sections/GallerySection'
 import ContactSection from './sections/ContactSection'
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
       <HeroSection />
       <ServicesSection />
       <TeamSection />
+      <GallerySection />
       <ContactSection />
     </ThemeProvider>
   )

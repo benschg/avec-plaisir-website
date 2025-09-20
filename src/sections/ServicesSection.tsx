@@ -1,61 +1,84 @@
-import { Box, Typography, Container, Grid, Card, CardContent } from '@mui/material'
+import { Box, Typography, Container, Grid } from '@mui/material'
 import { services } from '../data/content'
 
 const ServicesSection = () => {
   return (
-    <Box id="angebot" sx={{ py: 8, backgroundColor: 'background.default' }}>
-      <Container maxWidth="lg">
+    <Box
+      id="angebot"
+      sx={{
+        py: 10,
+        backgroundColor: '#f9f9f9',
+      }}
+    >
+      <Container maxWidth="md">
         <Typography
-          variant="h2"
+          variant="h3"
           sx={{
             textAlign: 'center',
-            mb: 6,
-            color: 'secondary.main',
-            fontSize: { xs: '1.8rem', md: '2.2rem' },
+            mb: 8,
+            color: '#f28c86',
+            fontSize: { xs: '1.8rem', md: '2.5rem' },
+            fontWeight: 400,
           }}
         >
           Unser Angebot
         </Typography>
 
-        <Grid container spacing={4}>
+        <Grid container spacing={6}>
           {services.map((service) => (
-            <Grid item xs={12} sm={6} md={3} key={service.id}>
-              <Card
+            <Grid item xs={12} sm={6} key={service.id}>
+              <Box
                 sx={{
-                  height: '100%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  transition: 'transform 0.2s ease-in-out',
-                  '&:hover': {
-                    transform: 'translateY(-4px)',
-                  },
-                  border: '1px solid',
-                  borderColor: 'primary.light',
-                  borderRadius: 2,
+                  textAlign: 'center',
+                  py: 4,
                 }}
               >
-                <CardContent sx={{ flexGrow: 1, p: 3 }}>
-                  <Typography
-                    variant="h6"
-                    sx={{
-                      mb: 2,
-                      color: 'primary.main',
-                      fontWeight: 500,
+                {/* Service Icon */}
+                <Box
+                  sx={{
+                    width: 100,
+                    height: 100,
+                    mx: 'auto',
+                    mb: 3,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <img
+                    src={service.icon}
+                    alt={service.title}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'contain',
                     }}
-                  >
-                    {service.title}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      color: 'text.secondary',
-                      lineHeight: 1.6,
-                    }}
-                  >
-                    {service.description}
-                  </Typography>
-                </CardContent>
-              </Card>
+                  />
+                </Box>
+
+                <Typography
+                  variant="h5"
+                  sx={{
+                    mb: 2,
+                    color: '#333333',
+                    fontWeight: 500,
+                    fontSize: '1.3rem',
+                  }}
+                >
+                  {service.title}
+                </Typography>
+
+                <Typography
+                  variant="body1"
+                  sx={{
+                    color: '#666666',
+                    lineHeight: 1.7,
+                    fontSize: '1rem',
+                  }}
+                >
+                  {service.description}
+                </Typography>
+              </Box>
             </Grid>
           ))}
         </Grid>

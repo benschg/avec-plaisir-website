@@ -1,4 +1,4 @@
-import { Box, Typography, Container, Grid, Card, CardContent } from '@mui/material'
+import { Box, Typography, Container } from '@mui/material'
 import { teamMembers } from '../data/content'
 
 const TeamSection = () => {
@@ -6,70 +6,93 @@ const TeamSection = () => {
     <Box
       id="team"
       sx={{
-        py: 8,
-        backgroundColor: 'background.paper',
+        py: 10,
+        backgroundColor: '#f9f9f9',
       }}
     >
-      <Container maxWidth="lg">
+      <Container maxWidth="md">
         <Typography
-          variant="h2"
+          variant="h3"
           sx={{
             textAlign: 'center',
-            mb: 6,
-            color: 'secondary.main',
-            fontSize: { xs: '1.8rem', md: '2.2rem' },
+            mb: 8,
+            color: '#f28c86',
+            fontSize: { xs: '1.8rem', md: '2.5rem' },
+            fontWeight: 400,
           }}
         >
           Team
         </Typography>
 
-        <Grid container spacing={4} justifyContent="center">
-          {teamMembers.map((member, index) => (
-            <Grid item xs={12} md={6} key={index}>
-              <Card
-                sx={{
-                  textAlign: 'center',
-                  border: '1px solid',
-                  borderColor: 'primary.light',
-                  borderRadius: 2,
+        {teamMembers.map((member, index) => (
+          <Box
+            key={index}
+            sx={{
+              textAlign: 'center',
+              maxWidth: 600,
+              mx: 'auto',
+            }}
+          >
+            {/* Team member photo */}
+            <Box
+              sx={{
+                width: 200,
+                height: 200,
+                borderRadius: '50%',
+                mx: 'auto',
+                mb: 4,
+                overflow: 'hidden',
+                border: '3px solid #f28c86',
+              }}
+            >
+              <img
+                src="/images/imgi_123_40A7C801-D815-4BA5-8CFF-AADD6184BA57_1_105_c.jpg"
+                alt={member.name}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
                 }}
-              >
-                <CardContent sx={{ p: 4 }}>
-                  <Typography
-                    variant="h5"
-                    sx={{
-                      mb: 1,
-                      color: 'primary.main',
-                      fontWeight: 500,
-                    }}
-                  >
-                    {member.name}
-                  </Typography>
-                  <Typography
-                    variant="subtitle1"
-                    sx={{
-                      mb: 3,
-                      color: 'secondary.main',
-                      fontWeight: 400,
-                    }}
-                  >
-                    {member.role}
-                  </Typography>
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      color: 'text.secondary',
-                      lineHeight: 1.6,
-                      fontStyle: 'italic',
-                    }}
-                  >
-                    {member.bio}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
+              />
+            </Box>
+
+            <Typography
+              variant="h4"
+              sx={{
+                mb: 2,
+                color: '#333333',
+                fontWeight: 500,
+                fontSize: { xs: '1.5rem', md: '1.8rem' },
+              }}
+            >
+              {member.name}
+            </Typography>
+
+            <Typography
+              variant="subtitle1"
+              sx={{
+                mb: 4,
+                color: '#f28c86',
+                fontSize: '1.1rem',
+                fontWeight: 400,
+              }}
+            >
+              {member.role}
+            </Typography>
+
+            <Typography
+              variant="body1"
+              sx={{
+                color: '#666666',
+                lineHeight: 1.7,
+                fontSize: { xs: '1rem', md: '1.1rem' },
+                fontStyle: 'italic',
+              }}
+            >
+              "{member.bio}"
+            </Typography>
+          </Box>
+        ))}
       </Container>
     </Box>
   )

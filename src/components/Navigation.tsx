@@ -11,43 +11,68 @@ const Navigation = () => {
   return (
     <AppBar
       position="fixed"
+      elevation={0}
       sx={{
-        backgroundColor: 'rgba(255, 255, 255, 0.95)',
+        backgroundColor: 'rgba(255, 255, 255, 0.98)',
         backdropFilter: 'blur(10px)',
-        boxShadow: '0 2px 20px rgba(0,0,0,0.1)',
+        borderBottom: '1px solid rgba(0,0,0,0.05)',
       }}
     >
-      <Toolbar sx={{ justifyContent: 'space-between' }}>
-        <Typography
-          variant="h6"
-          sx={{
-            color: 'primary.main',
-            fontWeight: 400,
-            fontSize: '1.2rem',
-          }}
-        >
-          avec plaisir zürich
-        </Typography>
+      <Toolbar sx={{ justifyContent: 'space-between', py: 1 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+          <img
+            src="/images/avecplaisir-logo.png"
+            alt="avec plaisir zürich"
+            style={{
+              height: '40px',
+              width: 'auto',
+            }}
+          />
+        </Box>
 
-        <Box sx={{ display: 'flex', gap: 2 }}>
+        <Box sx={{ display: 'flex', gap: 4 }}>
           <Button
-            color="secondary"
             onClick={() => scrollToSection('angebot')}
-            sx={{ textTransform: 'none' }}
+            sx={{
+              color: '#666666',
+              textTransform: 'none',
+              fontSize: '1rem',
+              fontWeight: 400,
+              '&:hover': {
+                backgroundColor: 'transparent',
+                color: '#f28c86',
+              },
+            }}
           >
             Angebot
           </Button>
           <Button
-            color="secondary"
             onClick={() => scrollToSection('team')}
-            sx={{ textTransform: 'none' }}
+            sx={{
+              color: '#666666',
+              textTransform: 'none',
+              fontSize: '1rem',
+              fontWeight: 400,
+              '&:hover': {
+                backgroundColor: 'transparent',
+                color: '#f28c86',
+              },
+            }}
           >
             Team
           </Button>
           <Button
-            color="secondary"
             onClick={() => scrollToSection('kontakt')}
-            sx={{ textTransform: 'none' }}
+            sx={{
+              color: '#666666',
+              textTransform: 'none',
+              fontSize: '1rem',
+              fontWeight: 400,
+              '&:hover': {
+                backgroundColor: 'transparent',
+                color: '#f28c86',
+              },
+            }}
           >
             Kontakt
           </Button>
