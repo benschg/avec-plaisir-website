@@ -4,25 +4,25 @@ export const services: Service[] = [
   {
     id: 'blumen-abo',
     title: 'Blumen-Abo',
-    description: 'Weekly or monthly flower delivery service with fresh, seasonal blooms delivered to your door.',
+    description: 'Ob wöchentlich oder monatlich, mit einem Blumen-Abo beliefern wir Sie zuhause oder geschäftlich mit frischen Blumen nach Ihrem Budget und Gusto.',
     icon: '/images/imgi_19_Avec-Plaisir-Zuerich-Blumenabo.png',
   },
   {
     id: 'trauerfloristik',
     title: 'Trauerfloristik',
-    description: 'Compassionate funeral floristry services to honor and remember your loved ones.',
+    description: 'Blumenkranz, Sargbouquets, Urnenschmuck oder Grabbepflanzung, wir nehmen uns viel Zeit, um Ihnen in schweren Stunden bestmöglich zur Seite zu stehen.',
     icon: '/images/imgi_20_Avec-Plaisir-Zuerich-Trauerfloristik.png',
   },
   {
     id: 'hauslieferdienst',
     title: 'Hauslieferdienst',
-    description: 'Convenient home delivery service for all your floral needs throughout Zürich.',
+    description: 'Ihnen ist es nicht möglich, unseren Laden im Kreis 3 zu besuchen? Kein Problem, wir liefern Blumen und Pflanzen gemäss Abmachung auch gerne an die gewünschte Adresse.',
     icon: '/images/imgi_21_Avec-Plaisir-Zuerich-Blumenlieferdienst.png',
   },
   {
     id: 'events',
     title: 'Events',
-    description: 'Professional floral decoration and arrangements for weddings, parties, and special events.',
+    description: 'Ihr feierlicher Anlass ist unser floristischer Ansporn. Gerne beraten wir Sie und geben Ihrem Event mit unseren Blumenkreationen das florale i-Tüpfelchen.',
     icon: '/images/imgi_22_Avec-Plaisir-Zuerich-Blumendeko.png',
   },
 ]
@@ -33,17 +33,17 @@ export const contactInfo: ContactInfo = {
   email: 'salut@avecplaisir-zuerich.ch',
   instagram: '@avecplaisirzuerich',
   hours: {
-    weekdays: 'Monday to Friday: 9 – 18 Uhr',
-    saturday: 'Saturday: 9 – 15 Uhr',
-    sunday: 'Sunday: Closed',
+    weekdays: 'Montag bis Freitag: 9 – 18 Uhr',
+    saturday: 'Samstag: 9 – 15 Uhr',
+    sunday: 'Sonntag: geschlossen',
   },
 }
 
 export const teamMembers: TeamMember[] = [
   {
     name: 'Monika Fähndrich',
-    role: 'Founder & Florist',
-    bio: 'Ein ganzes Meer an Blumen sind in den letzten 30 Jahren durch meine Floristenhände geflossen.',
+    role: 'Inhaberin & Floristin',
+    bio: 'Ein ganzes Meer an Blumen sind in den letzten 30 Jahren durch meine Floristenhände geflossen. Und es sind immer noch nicht genug. Nach tollen und lehrreichen zwei Jahrzehnten in einem renommierten Blumengeschäft im Zürcher Seefeld, betreibe ich seit August 2024 mit _avec plaisir_ meinen eigenen Blumenladen. Ein Herzensprojekt geht in Erfüllung und ich freue mich, das Quartier und meine Kundschaft mit Farben, Formen und Düften zu bereichern.',
   },
 ]
 
@@ -52,7 +52,7 @@ export const content = {
     greeting: 'Bonjour im neuen Blumenladen im Kreis 3',
     title: 'avec plaisir zürich',
     subtitle: 'avec plaisir!',
-    intro: 'Saisonale und lokale Blumen, Pflanzentöpfe, Accessoires und Vintage-Produkte für jeden Anlass.',
+    intro: 'Bei uns finden Sie saisonale und lokale Blumen und Topfpflanzen. Ausserdem pflegen wir ein ausgewähltes Sortiment an Pflanzgefässen, Accessories und Vintageprodukten. Ihr Besuch ist unsere Freude!',
     ownerQuote: 'Ein ganzes Meer an Blumen sind in den letzten 30 Jahren durch meine Floristenhände geflossen.',
     ownerName: '- Monika Fähndrich',
   },

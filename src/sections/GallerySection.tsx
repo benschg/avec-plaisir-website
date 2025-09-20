@@ -23,7 +23,7 @@ const GallerySection = () => {
           sx={{
             textAlign: 'center',
             mb: 8,
-            color: '#f28c86',
+            color: '#f1938d',
             fontSize: { xs: '1.8rem', md: '2.5rem' },
             fontWeight: 400,
           }}

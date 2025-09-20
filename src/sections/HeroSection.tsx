@@ -62,7 +62,7 @@ const HeroSection = () => {
             sx={{
               fontSize: { xs: '2rem', md: '3rem' },
               fontWeight: 300,
-              color: '#f28c86',
+              color: '#f1938d',
               mb: 2,
             }}
           >
@@ -74,7 +74,7 @@ const HeroSection = () => {
             sx={{
               fontSize: { xs: '1.5rem', md: '2rem' },
               fontWeight: 400,
-              color: '#f28c86',
+              color: '#f1938d',
               mb: 4,
             }}
           >

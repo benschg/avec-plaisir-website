@@ -10,7 +10,7 @@ const ContactSection = () => {
           sx={{
             textAlign: 'center',
             mb: 3,
-            color: '#f28c86',
+            color: '#f1938d',
             fontSize: { xs: '1.8rem', md: '2.5rem' },
             fontWeight: 400,
           }}
@@ -99,7 +99,7 @@ const ContactSection = () => {
                 <Link
                   href={`tel:${contactInfo.phone}`}
                   sx={{
-                    color: '#f28c86',
+                    color: '#f1938d',
                     textDecoration: 'none',
                     '&:hover': { textDecoration: 'underline' },
                   }}
@@ -118,7 +118,7 @@ const ContactSection = () => {
                 <Link
                   href={`mailto:${contactInfo.email}`}
                   sx={{
-                    color: '#f28c86',
+                    color: '#f1938d',
                     textDecoration: 'none',
                     '&:hover': { textDecoration: 'underline' },
                   }}
@@ -139,7 +139,7 @@ const ContactSection = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   sx={{
-                    color: '#f28c86',
+                    color: '#f1938d',
                     textDecoration: 'none',
                     '&:hover': { textDecoration: 'underline' },
                   }}

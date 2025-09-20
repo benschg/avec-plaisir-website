@@ -16,7 +16,7 @@ const TeamSection = () => {
           sx={{
             textAlign: 'center',
             mb: 8,
-            color: '#f28c86',
+            color: '#f1938d',
             fontSize: { xs: '1.8rem', md: '2.5rem' },
             fontWeight: 400,
           }}
@@ -42,7 +42,7 @@ const TeamSection = () => {
                 mx: 'auto',
                 mb: 4,
                 overflow: 'hidden',
-                border: '3px solid #f28c86',
+                border: '3px solid #f1938d',
               }}
             >
               <img
@@ -72,7 +72,7 @@ const TeamSection = () => {
               variant="subtitle1"
               sx={{
                 mb: 4,
-                color: '#f28c86',
+                color: '#f1938d',
                 fontSize: '1.1rem',
                 fontWeight: 400,
               }}

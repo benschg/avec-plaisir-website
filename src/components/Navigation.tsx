@@ -40,7 +40,7 @@ const Navigation = () => {
               fontWeight: 400,
               '&:hover': {
                 backgroundColor: 'transparent',
-                color: '#f28c86',
+                color: '#f1938d',
               },
             }}
           >
@@ -55,7 +55,7 @@ const Navigation = () => {
               fontWeight: 400,
               '&:hover': {
                 backgroundColor: 'transparent',
-                color: '#f28c86',
+                color: '#f1938d',
               },
             }}
           >
@@ -70,7 +70,7 @@ const Navigation = () => {
               fontWeight: 400,
               '&:hover': {
                 backgroundColor: 'transparent',
-                color: '#f28c86',
+                color: '#f1938d',
               },
             }}
           >

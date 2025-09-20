@@ -3,7 +3,7 @@ import { createTheme } from '@mui/material/styles'
 export const theme = createTheme({
   palette: {
     primary: {
-      main: '#f28c86', // Pale pink/salmon
+      main: '#f1938d', // Updated pale pink/salmon
       light: '#f2aaa7', // Lighter pink
       dark: '#e66b64',
     },
@@ -51,7 +51,7 @@ export const theme = createTheme({
     h3: {
       fontSize: '2rem',
       fontWeight: 400,
-      color: '#f28c86',
+      color: '#f1938d',
       lineHeight: 1.4,
     },
     h4: {
