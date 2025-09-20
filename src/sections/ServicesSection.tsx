@@ -1,5 +1,5 @@
 import { Box, Typography, Container, Grid } from '@mui/material'
-import { services } from '../data/content'
+import { services } from '../data/services'
 
 const ServicesSection = () => {
   return (

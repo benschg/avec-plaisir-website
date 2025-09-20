@@ -18,9 +18,9 @@ const HeroSection = () => {
             variant="h1"
             sx={{
               textAlign: 'center',
-              fontSize: { xs: '2rem', md: '3.5rem' },
-              fontWeight: 300,
-              color: '#333333',
+              fontSize: { xs: '3rem', md: '6rem' },
+              fontWeight: 600,
+              color: '#ffffff',
               mb: 6,
               lineHeight: 1.2,
             }}
@@ -51,8 +51,8 @@ const HeroSection = () => {
               src="/images/Flower-wht-150x150.png"
               alt="avec plaisir flower logo"
               style={{
-                width: '120px',
-                height: '120px',
+                width: '80px',
+                height: '80px',
                 objectFit: 'contain',
               }}
             />

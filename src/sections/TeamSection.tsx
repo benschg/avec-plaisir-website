@@ -1,5 +1,5 @@
 import { Box, Typography, Container } from '@mui/material'
-import { teamMembers } from '../data/content'
+import { teamMembers } from '../data/teamMembers'
 
 const TeamSection = () => {
   return (

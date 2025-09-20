@@ -1,5 +1,6 @@
 import { Box, Typography, Container, Grid, Link } from '@mui/material'
-import { contactInfo, content } from '../data/content'
+import { content } from '../data/content'
+import { contactInfo } from '../data/contactInfo'
 
 const ContactSection = () => {
   return (
@@ -84,7 +85,10 @@ const ContactSection = () => {
                 >
                   <strong>Adresse:</strong>
                 </Typography>
-                <Typography variant="body1" sx={{ color: '#666666', lineHeight: 1.7 }}>
+                <Typography
+                  variant="body1"
+                  sx={{ color: '#666666', lineHeight: 1.7 }}
+                >
                   {contactInfo.address}
                 </Typography>
               </Box>
@@ -166,17 +170,26 @@ const ContactSection = () => {
               </Typography>
 
               <Box sx={{ mb: 2 }}>
-                <Typography variant="body1" sx={{ color: '#666666', lineHeight: 1.7 }}>
+                <Typography
+                  variant="body1"
+                  sx={{ color: '#666666', lineHeight: 1.7 }}
+                >
                   {contactInfo.hours.weekdays}
                 </Typography>
               </Box>
               <Box sx={{ mb: 2 }}>
-                <Typography variant="body1" sx={{ color: '#666666', lineHeight: 1.7 }}>
+                <Typography
+                  variant="body1"
+                  sx={{ color: '#666666', lineHeight: 1.7 }}
+                >
                   {contactInfo.hours.saturday}
                 </Typography>
               </Box>
               <Box sx={{ mb: 4 }}>
-                <Typography variant="body1" sx={{ color: '#666666', lineHeight: 1.7 }}>
+                <Typography
+                  variant="body1"
+                  sx={{ color: '#666666', lineHeight: 1.7 }}
+                >
                   {contactInfo.hours.sunday}
                 </Typography>
               </Box>
@@ -193,7 +206,10 @@ const ContactSection = () => {
               >
                 Newsletter
               </Typography>
-              <Typography variant="body1" sx={{ color: '#666666', lineHeight: 1.7 }}>
+              <Typography
+                variant="body1"
+                sx={{ color: '#666666', lineHeight: 1.7 }}
+              >
                 {content.contact.newsletter}
               </Typography>
             </Box>
