@@ -3,14 +3,14 @@ import { contactInfo, content } from '../data/content'
 
 const ContactSection = () => {
   return (
-    <Box id="kontakt" sx={{ py: 10, backgroundColor: '#ffffff' }}>
+    <Box id="kontakt" sx={{ py: 10, my: 4 }}>
       <Container maxWidth="md">
         <Typography
           variant="h3"
           sx={{
             textAlign: 'center',
             mb: 3,
-            color: '#f1938d',
+            color: '#ffffff',
             fontSize: { xs: '1.8rem', md: '2.5rem' },
             fontWeight: 400,
           }}
@@ -99,7 +99,7 @@ const ContactSection = () => {
                 <Link
                   href={`tel:${contactInfo.phone}`}
                   sx={{
-                    color: '#f1938d',
+                    color: '#ffffff',
                     textDecoration: 'none',
                     '&:hover': { textDecoration: 'underline' },
                   }}
@@ -118,7 +118,7 @@ const ContactSection = () => {
                 <Link
                   href={`mailto:${contactInfo.email}`}
                   sx={{
-                    color: '#f1938d',
+                    color: '#ffffff',
                     textDecoration: 'none',
                     '&:hover': { textDecoration: 'underline' },
                   }}
@@ -139,7 +139,7 @@ const ContactSection = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   sx={{
-                    color: '#f1938d',
+                    color: '#ffffff',
                     textDecoration: 'none',
                     '&:hover': { textDecoration: 'underline' },
                   }}

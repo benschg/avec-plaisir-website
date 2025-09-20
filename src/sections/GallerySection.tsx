@@ -14,7 +14,7 @@ const GallerySection = () => {
     <Box
       sx={{
         py: 10,
-        backgroundColor: '#ffffff',
+        my: 4,
       }}
     >
       <Container maxWidth="lg">
@@ -23,7 +23,7 @@ const GallerySection = () => {
           sx={{
             textAlign: 'center',
             mb: 8,
-            color: '#f1938d',
+            color: '#ffffff',
             fontSize: { xs: '1.8rem', md: '2.5rem' },
             fontWeight: 400,
           }}

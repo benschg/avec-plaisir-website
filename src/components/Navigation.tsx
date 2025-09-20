@@ -13,7 +13,7 @@ const Navigation = () => {
       position="fixed"
       elevation={0}
       sx={{
-        backgroundColor: 'rgba(255, 255, 255, 0.98)',
+        backgroundColor: '#f1938d',
         backdropFilter: 'blur(10px)',
         borderBottom: '1px solid rgba(0,0,0,0.05)',
       }}
@@ -34,13 +34,13 @@ const Navigation = () => {
           <Button
             onClick={() => scrollToSection('angebot')}
             sx={{
-              color: '#666666',
+              color: '#ffffff',
               textTransform: 'none',
               fontSize: '1rem',
               fontWeight: 400,
               '&:hover': {
                 backgroundColor: 'transparent',
-                color: '#f1938d',
+                color: 'rgba(255, 255, 255, 0.8)',
               },
             }}
           >
@@ -49,13 +49,13 @@ const Navigation = () => {
           <Button
             onClick={() => scrollToSection('team')}
             sx={{
-              color: '#666666',
+              color: '#ffffff',
               textTransform: 'none',
               fontSize: '1rem',
               fontWeight: 400,
               '&:hover': {
                 backgroundColor: 'transparent',
-                color: '#f1938d',
+                color: 'rgba(255, 255, 255, 0.8)',
               },
             }}
           >
@@ -64,13 +64,13 @@ const Navigation = () => {
           <Button
             onClick={() => scrollToSection('kontakt')}
             sx={{
-              color: '#666666',
+              color: '#ffffff',
               textTransform: 'none',
               fontSize: '1rem',
               fontWeight: 400,
               '&:hover': {
                 backgroundColor: 'transparent',
-                color: '#f1938d',
+                color: 'rgba(255, 255, 255, 0.8)',
               },
             }}
           >

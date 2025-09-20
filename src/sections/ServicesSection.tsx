@@ -7,7 +7,7 @@ const ServicesSection = () => {
       id="angebot"
       sx={{
         py: 10,
-        backgroundColor: '#f9f9f9',
+        my: 4,
       }}
     >
       <Container maxWidth="md">
@@ -16,7 +16,7 @@ const ServicesSection = () => {
           sx={{
             textAlign: 'center',
             mb: 8,
-            color: '#f1938d',
+            color: '#ffffff',
             fontSize: { xs: '1.8rem', md: '2.5rem' },
             fontWeight: 400,
           }}

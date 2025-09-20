@@ -17,7 +17,7 @@ export const theme = createTheme({
       secondary: '#666666',
     },
     background: {
-      default: '#ffffff',
+      default: '#f1938d',
       paper: '#f9f9f9',
     },
     grey: {
@@ -51,7 +51,7 @@ export const theme = createTheme({
     h3: {
       fontSize: '2rem',
       fontWeight: 400,
-      color: '#f1938d',
+      color: '#ffffff',
       lineHeight: 1.4,
     },
     h4: {
@@ -94,6 +94,13 @@ export const theme = createTheme({
   },
   spacing: 8,
   components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          backgroundColor: '#f1938d',
+        },
+      },
+    },
     MuiButton: {
       styleOverrides: {
         root: {

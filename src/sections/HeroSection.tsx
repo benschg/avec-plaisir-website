@@ -7,9 +7,10 @@ const HeroSection = () => {
       {/* First Section - Greeting */}
       <Box
         sx={{
-          backgroundColor: '#ffffff',
           pt: 12,
           pb: 8,
+          mt: 0,
+          mb: 4,
         }}
       >
         <Container maxWidth="md">
@@ -32,8 +33,8 @@ const HeroSection = () => {
       {/* Logo Section */}
       <Box
         sx={{
-          backgroundColor: '#f9f9f9',
           py: 8,
+          my: 4,
           textAlign: 'center',
         }}
       >
@@ -62,7 +63,7 @@ const HeroSection = () => {
             sx={{
               fontSize: { xs: '2rem', md: '3rem' },
               fontWeight: 300,
-              color: '#f1938d',
+              color: '#ffffff',
               mb: 2,
             }}
           >
@@ -74,7 +75,7 @@ const HeroSection = () => {
             sx={{
               fontSize: { xs: '1.5rem', md: '2rem' },
               fontWeight: 400,
-              color: '#f1938d',
+              color: '#ffffff',
               mb: 4,
             }}
           >
@@ -100,8 +101,8 @@ const HeroSection = () => {
       {/* Owner Quote Section */}
       <Box
         sx={{
-          backgroundColor: '#ffffff',
           py: 8,
+          my: 4,
         }}
       >
         <Container maxWidth="md">
