@@ -6,7 +6,8 @@
       "Bash(rmdir:*)",
       "Bash(yarn install)",
       "Bash(yarn add:*)",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "WebFetch(domain:www.avecplaisir-zuerich.ch)"
     ],
     "deny": [],
     "ask": []
