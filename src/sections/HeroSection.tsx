@@ -7,8 +7,8 @@ const HeroSection = () => {
       {/* First Section - Greeting */}
       <Box
         sx={{
-          pt: 12,
-          pb: 8,
+          pt: 24,
+          pb: 0,
           mt: 0,
           mb: 4,
         }}
@@ -59,34 +59,10 @@ const HeroSection = () => {
           </Box>
 
           <Typography
-            variant="h2"
-            sx={{
-              fontSize: { xs: '2rem', md: '3rem' },
-              fontWeight: 300,
-              color: '#ffffff',
-              mb: 2,
-            }}
-          >
-            {content.hero.title}
-          </Typography>
-
-          <Typography
-            variant="h3"
-            sx={{
-              fontSize: { xs: '1.5rem', md: '2rem' },
-              fontWeight: 400,
-              color: '#ffffff',
-              mb: 4,
-            }}
-          >
-            {content.hero.subtitle}
-          </Typography>
-
-          <Typography
             variant="body1"
             sx={{
-              fontSize: { xs: '1rem', md: '1.1rem' },
-              color: '#666666',
+              fontSize: { xs: '1.5rem', md: '1.8rem' },
+              color: '#ffffff',
               maxWidth: 600,
               mx: 'auto',
               lineHeight: 1.7,
@@ -104,35 +80,7 @@ const HeroSection = () => {
           py: 8,
           my: 4,
         }}
-      >
-        <Container maxWidth="md">
-          <Typography
-            variant="body1"
-            sx={{
-              textAlign: 'center',
-              fontSize: { xs: '1.1rem', md: '1.3rem' },
-              fontStyle: 'italic',
-              color: '#666666',
-              lineHeight: 1.6,
-              maxWidth: 700,
-              mx: 'auto',
-              mb: 2,
-            }}
-          >
-            "{content.hero.ownerQuote}"
-          </Typography>
-          <Typography
-            variant="subtitle1"
-            sx={{
-              textAlign: 'center',
-              color: '#999999',
-              fontSize: '1rem',
-            }}
-          >
-            {content.hero.ownerName}
-          </Typography>
-        </Container>
-      </Box>
+      ></Box>
     </>
   )
 }

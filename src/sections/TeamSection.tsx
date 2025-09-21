@@ -16,7 +16,6 @@ const TeamSection = () => {
           sx={{
             textAlign: 'center',
             mb: 8,
-            color: '#ffffff',
             fontSize: { xs: '1.8rem', md: '2.5rem' },
             fontWeight: 400,
           }}
@@ -36,9 +35,7 @@ const TeamSection = () => {
             {/* Team member photo */}
             <Box
               sx={{
-                width: 200,
-                height: 200,
-                borderRadius: '50%',
+                width: '50%',
                 mx: 'auto',
                 mb: 4,
                 overflow: 'hidden',
@@ -55,41 +52,45 @@ const TeamSection = () => {
                 }}
               />
             </Box>
-
             <Typography
               variant="h4"
               sx={{
                 mb: 2,
-                color: '#333333',
                 fontWeight: 500,
                 fontSize: { xs: '1.5rem', md: '1.8rem' },
               }}
             >
-              {member.name}
+              {member.title}
             </Typography>
-
-            <Typography
-              variant="subtitle1"
-              sx={{
-                mb: 4,
-                color: '#ffffff',
-                fontSize: '1.1rem',
-                fontWeight: 400,
-              }}
-            >
-              {member.role}
-            </Typography>
-
             <Typography
               variant="body1"
               sx={{
-                color: '#666666',
                 lineHeight: 1.7,
                 fontSize: { xs: '1rem', md: '1.1rem' },
                 fontStyle: 'italic',
               }}
             >
               "{member.bio}"
+            </Typography>
+            <Typography
+              variant="h4"
+              sx={{
+                mb: 2,
+                fontWeight: 500,
+                fontSize: { xs: '1.5rem', md: '1.8rem' },
+              }}
+            >
+              {member.name}
+            </Typography>
+            <Typography
+              variant="subtitle1"
+              sx={{
+                mb: 4,
+                fontSize: '1.1rem',
+                fontWeight: 400,
+              }}
+            >
+              {member.role}
             </Typography>
           </Box>
         ))}

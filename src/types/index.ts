@@ -19,6 +19,7 @@ export interface ContactInfo {
 
 export interface TeamMember {
   name: string
+  title: string
   role: string
   bio: string
   image?: string
