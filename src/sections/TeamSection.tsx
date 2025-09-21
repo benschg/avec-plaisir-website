@@ -1,4 +1,4 @@
-import { Box, Typography, Container } from '@mui/material'
+import { Box, Typography, Container, Grid } from '@mui/material'
 import { teamMembers } from '../data/teamMembers'
 
 const TeamSection = () => {
@@ -11,32 +11,67 @@ const TeamSection = () => {
       }}
     >
       <Container maxWidth="md">
-        <Typography
-          variant="h3"
-          sx={{
-            textAlign: 'center',
-            mb: 8,
-            fontSize: { xs: '1.8rem', md: '2.5rem' },
-            fontWeight: 400,
-          }}
-        >
-          Team
-        </Typography>
-
         {teamMembers.map((member, index) => (
-          <Box
+          <Grid
+            spacing={2}
+            container
             key={index}
             sx={{
-              textAlign: 'center',
-              maxWidth: 600,
-              mx: 'auto',
+              textAlign: 'left',
             }}
           >
+            <Grid size={{ xs: 12, md: 6 }} spacing="gap">
+              <Box gap="40px" display={'flex'} flexDirection={'column'}>
+                <img
+                  src="/images/Flower-wht-150x150.png"
+                  alt="avec plaisir flower logo"
+                  style={{
+                    width: '40px',
+                    objectFit: 'contain',
+                  }}
+                />
+
+                <Typography
+                  variant="h1"
+                  sx={{
+                    mb: 2,
+                    fontWeight: 500,
+                    fontSize: { xs: '1.5rem', md: '1.8rem' },
+                    whiteSpace: 'pre-line',
+                  }}
+                >
+                  {member.title}
+                </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    lineHeight: 1.7,
+                    fontSize: { xs: '1rem', md: '1.1rem' },
+                    fontStyle: 'italic',
+                    borderLeft: '4px solid currentColor',
+                    paddingLeft: 2,
+                    marginLeft: 1,
+                  }}
+                >
+                  "{member.bio}"
+                </Typography>
+                <Typography
+                  variant="h4"
+                  sx={{
+                    mb: 2,
+                    fontWeight: 500,
+                    fontSize: { xs: '1.0rem', md: '1.1rem' },
+                  }}
+                >
+                  {member.name}, {member.role}
+                </Typography>
+              </Box>
+            </Grid>
+
             {/* Team member photo */}
-            <Box
+            <Grid
+              size={{ xs: 12, md: 6 }}
               sx={{
-                width: '50%',
-                mx: 'auto',
                 mb: 4,
                 overflow: 'hidden',
               }}
@@ -50,48 +85,8 @@ const TeamSection = () => {
                   objectFit: 'cover',
                 }}
               />
-            </Box>
-            <Typography
-              variant="h1"
-              sx={{
-                mb: 2,
-                fontWeight: 500,
-                fontSize: { xs: '1.5rem', md: '1.8rem' },
-              }}
-            >
-              {member.title}
-            </Typography>
-            <Typography
-              variant="body1"
-              sx={{
-                lineHeight: 1.7,
-                fontSize: { xs: '1rem', md: '1.1rem' },
-                fontStyle: 'italic',
-              }}
-            >
-              "{member.bio}"
-            </Typography>
-            <Typography
-              variant="h4"
-              sx={{
-                mb: 2,
-                fontWeight: 500,
-                fontSize: { xs: '1.5rem', md: '1.8rem' },
-              }}
-            >
-              {member.name}
-            </Typography>
-            <Typography
-              variant="subtitle1"
-              sx={{
-                mb: 4,
-                fontSize: '1.1rem',
-                fontWeight: 400,
-              }}
-            >
-              {member.role}
-            </Typography>
-          </Box>
+            </Grid>
+          </Grid>
         ))}
       </Container>
     </Box>

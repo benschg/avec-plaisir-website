@@ -20,8 +20,8 @@ export interface SectionColorConfig {
 export const sectionColorConfigs: Record<string, SectionColorConfig> = {
   hero: {
     background: '#f1938d',
-    // textColor: '#ffffff',        // Uncomment to override auto-calculation
-    // headingColor: '#ffffff',     // Uncomment to override auto-calculation
+    textColor: '#ffffff', // Uncomment to override auto-calculation
+    headingColor: '#ffffff', // Uncomment to override auto-calculation
     // secondaryTextColor: 'rgba(255, 255, 255, 0.8)', // Uncomment to override auto-calculation
   },
   angebot: {
