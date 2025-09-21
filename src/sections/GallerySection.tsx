@@ -12,6 +12,7 @@ const galleryImages = [
 const GallerySection = () => {
   return (
     <Box
+      id="gallery"
       sx={{
         py: 10,
         my: 4,

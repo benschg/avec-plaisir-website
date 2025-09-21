@@ -97,7 +97,7 @@ export const theme = createTheme({
     MuiCssBaseline: {
       styleOverrides: {
         body: {
-          backgroundColor: '#f1938d',
+          backgroundColor: 'transparent',
         },
       },
     },

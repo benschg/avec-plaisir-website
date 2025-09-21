@@ -1,11 +1,14 @@
 import { Box, Typography, Container } from '@mui/material'
 import { content } from '../data/content'
+import { useTextColor } from '../components/DynamicBackground'
 
 const HeroSection = () => {
+  const { textColor, headingColor } = useTextColor()
   return (
     <>
       {/* First Section - Greeting */}
       <Box
+        id="hero"
         sx={{
           pt: 24,
           pb: 0,
@@ -20,7 +23,8 @@ const HeroSection = () => {
               textAlign: 'center',
               fontSize: { xs: '3rem', md: '6rem' },
               fontWeight: 600,
-              color: '#ffffff',
+              color: headingColor,
+              transition: 'color 0.8s ease',
               mb: 6,
               lineHeight: 1.2,
             }}
@@ -62,7 +66,8 @@ const HeroSection = () => {
             variant="body1"
             sx={{
               fontSize: { xs: '1.5rem', md: '1.8rem' },
-              color: '#ffffff',
+              color: textColor,
+              transition: 'color 0.8s ease',
               maxWidth: 600,
               mx: 'auto',
               lineHeight: 1.7,

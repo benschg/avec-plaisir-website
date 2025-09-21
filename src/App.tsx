@@ -1,7 +1,8 @@
-import { ThemeProvider, CssBaseline } from '@mui/material'
+import { ThemeProvider, CssBaseline, Box } from '@mui/material'
 import { theme } from './theme'
 import Navigation from './components/Navigation'
 import FallingFlowers from './components/FallingFlowers'
+import DynamicBackground from './components/DynamicBackground'
 import HeroSection from './sections/HeroSection'
 import ServicesSection from './sections/ServicesSection'
 import TeamSection from './sections/TeamSection'
@@ -12,13 +13,17 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <FallingFlowers />
-      <Navigation />
-      <HeroSection />
-      <ServicesSection />
-      <TeamSection />
-      <GallerySection />
-      <ContactSection />
+      <DynamicBackground>
+        <FallingFlowers />
+        <Navigation />
+        <Box component="main" sx={{ position: 'relative', zIndex: 0 }}>
+          <HeroSection />
+          <ServicesSection />
+          <TeamSection />
+          <GallerySection />
+          <ContactSection />
+        </Box>
+      </DynamicBackground>
     </ThemeProvider>
   )
 }
