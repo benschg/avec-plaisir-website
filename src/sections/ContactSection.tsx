@@ -64,7 +64,7 @@ const ContactSection = () => {
 
         <Grid container spacing={8}>
           {/* Contact Information */}
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <Box sx={{ textAlign: { xs: 'center', md: 'left' } }}>
               <Typography
                 variant="h5"
@@ -155,7 +155,7 @@ const ContactSection = () => {
           </Grid>
 
           {/* Opening Hours */}
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <Box sx={{ textAlign: { xs: 'center', md: 'left' } }}>
               <Typography
                 variant="h5"

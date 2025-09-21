@@ -26,7 +26,7 @@ const ServicesSection = () => {
 
         <Grid container spacing={6}>
           {services.map((service) => (
-            <Grid item xs={12} sm={6} key={service.id}>
+            <Grid size={{ xs: 12, sm: 6 }} key={service.id}>
               <Box
                 sx={{
                   textAlign: 'center',

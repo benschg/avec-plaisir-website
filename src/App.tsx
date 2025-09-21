@@ -1,6 +1,7 @@
 import { ThemeProvider, CssBaseline } from '@mui/material'
 import { theme } from './theme'
 import Navigation from './components/Navigation'
+import FallingFlowers from './components/FallingFlowers'
 import HeroSection from './sections/HeroSection'
 import ServicesSection from './sections/ServicesSection'
 import TeamSection from './sections/TeamSection'

@@ -33,7 +33,7 @@ const GallerySection = () => {
 
         <Grid container spacing={2}>
           {galleryImages.map((image, index) => (
-            <Grid item xs={12} sm={6} md={4} key={index}>
+            <Grid size={{ xs: 12, sm: 6, md: 4 }} key={index}>
               <Box
                 sx={{
                   borderRadius: 2,
