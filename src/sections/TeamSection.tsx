@@ -39,7 +39,6 @@ const TeamSection = () => {
                 mx: 'auto',
                 mb: 4,
                 overflow: 'hidden',
-                border: '3px solid #f1938d',
               }}
             >
               <img
@@ -53,7 +52,7 @@ const TeamSection = () => {
               />
             </Box>
             <Typography
-              variant="h4"
+              variant="h1"
               sx={{
                 mb: 2,
                 fontWeight: 500,

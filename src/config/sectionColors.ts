@@ -25,13 +25,13 @@ export const sectionColorConfigs: Record<string, SectionColorConfig> = {
     // secondaryTextColor: 'rgba(255, 255, 255, 0.8)', // Uncomment to override auto-calculation
   },
   angebot: {
-    background: '#5e747a',
+    background: '#ffffff',
     // textColor: '#ffffff',
     // headingColor: '#ffffff',
     // secondaryTextColor: 'rgba(255, 255, 255, 0.8)',
   },
   team: {
-    background: '#ffffff',
+    background: '#5e747a',
     // textColor: '#333333',
     // headingColor: '#333333',
     // secondaryTextColor: 'rgba(0, 0, 0, 0.7)',

@@ -96,7 +96,7 @@ const ScrollStepper = () => {
     handleScroll()
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [sections])
+  }, [])
 
   const totalProgress = Math.min(
     100,
