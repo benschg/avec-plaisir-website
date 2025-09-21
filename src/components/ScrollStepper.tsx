@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Box, Typography } from '@mui/material'
 import { useTextColor } from './DynamicBackground'
+import { sectionsConfig } from '../config/sections'
 
 interface SectionProgress {
   id: string
@@ -11,13 +12,14 @@ interface SectionProgress {
 
 const ScrollStepper = () => {
   const { textColor, headingColor } = useTextColor()
-  const [sections, setSections] = useState<SectionProgress[]>([
-    { id: 'hero', title: 'Start', isActive: true, progress: 0 },
-    { id: 'kontakt', title: 'Kontakt', isActive: false, progress: 0 },
-    { id: 'angebot', title: 'Angebot', isActive: false, progress: 0 },
-    { id: 'team', title: 'Team', isActive: false, progress: 0 },
-    { id: 'gallery', title: 'Galerie', isActive: false, progress: 0 },
-  ])
+  const [sections, setSections] = useState<SectionProgress[]>(
+    sectionsConfig.map((section, index) => ({
+      id: section.id,
+      title: section.title,
+      isActive: index === 0,
+      progress: 0,
+    }))
+  )
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,24 +27,15 @@ const ScrollStepper = () => {
       const windowHeight = window.innerHeight
       const documentHeight = document.documentElement.scrollHeight
 
-      // Get all section elements
-      const sectionElements = [
-        {
-          id: 'hero',
-          element:
-            document.querySelector('#hero') ||
-            document.querySelector('main > *:first-child'),
-        },
-        { id: 'kontakt', element: document.getElementById('kontakt') },
-        { id: 'angebot', element: document.getElementById('angebot') },
-        { id: 'team', element: document.getElementById('team') },
-        {
-          id: 'gallery',
-          element:
-            document.querySelector('[id*="gallery"]') ||
-            document.querySelector('main > *:nth-child(5)'),
-        },
-      ]
+      // Get all section elements using configuration
+      const sectionElements = sectionsConfig.map((section, index) => ({
+        id: section.id,
+        element: section.id === 'hero'
+          ? document.querySelector('#hero') || document.querySelector('main > *:first-child')
+          : section.id === 'gallery'
+          ? document.querySelector('[id*="gallery"]') || document.querySelector(`main > *:nth-child(${index + 1})`)
+          : document.getElementById(section.id),
+      }))
 
       const updatedSections = sectionElements.map((section, index) => {
         if (!section.element) {

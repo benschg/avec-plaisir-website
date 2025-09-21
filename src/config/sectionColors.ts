@@ -25,10 +25,10 @@ export const sectionColorConfigs: Record<string, SectionColorConfig> = {
     // secondaryTextColor: 'rgba(255, 255, 255, 0.8)', // Uncomment to override auto-calculation
   },
   kontakt: {
-    background: '#ffc5bf',
-    // textColor: '#333333',
-    // headingColor: '#333333',
-    // secondaryTextColor: 'rgba(0, 0, 0, 0.7)',
+    background: '#e09f9d',
+    textColor: '#ffffff',
+    headingColor: '#ffffff',
+    secondaryTextColor: 'rgba(0, 0, 0, 0.7)',
   },
   angebot: {
     background: '#ffffff',
