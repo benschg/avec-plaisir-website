@@ -3,6 +3,7 @@ import { theme } from './theme'
 import Navigation from './components/Navigation'
 import FallingFlowers from './components/FallingFlowers'
 import DynamicBackground from './components/DynamicBackground'
+import ScrollStepper from './components/ScrollStepper'
 import HeroSection from './sections/HeroSection'
 import ServicesSection from './sections/ServicesSection'
 import TeamSection from './sections/TeamSection'
@@ -16,6 +17,7 @@ function App() {
       <DynamicBackground>
         <FallingFlowers />
         <Navigation />
+        <ScrollStepper />
         <Box component="main" sx={{ position: 'relative', zIndex: 0 }}>
           <HeroSection />
           <ServicesSection />
