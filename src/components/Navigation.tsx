@@ -2,7 +2,6 @@ import { useState } from 'react'
 import {
   AppBar,
   Toolbar,
-  Typography,
   Button,
   Box,
   IconButton,
@@ -11,16 +10,12 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
-  useMediaQuery,
-  useTheme,
 } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import CloseIcon from '@mui/icons-material/Close'
 
 const Navigation = () => {
   const [mobileOpen, setMobileOpen] = useState(false)
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)

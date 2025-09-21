@@ -1,6 +1,6 @@
 import { useEffect, useState, createContext, useContext } from 'react'
 import { Box, GlobalStyles } from '@mui/material'
-import { sectionColorConfigs, type SectionColorConfig } from '../config/sectionColors'
+import { sectionColorConfigs } from '../config/sectionColors'
 import { sectionsConfig } from '../config/sections'
 
 // Function to determine if background is light or dark
