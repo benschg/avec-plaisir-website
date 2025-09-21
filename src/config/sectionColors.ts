@@ -24,6 +24,12 @@ export const sectionColorConfigs: Record<string, SectionColorConfig> = {
     headingColor: '#ffffff', // Uncomment to override auto-calculation
     // secondaryTextColor: 'rgba(255, 255, 255, 0.8)', // Uncomment to override auto-calculation
   },
+  kontakt: {
+    background: '#ffc5bf',
+    // textColor: '#333333',
+    // headingColor: '#333333',
+    // secondaryTextColor: 'rgba(0, 0, 0, 0.7)',
+  },
   angebot: {
     background: '#ffffff',
     // textColor: '#ffffff',
@@ -41,11 +47,5 @@ export const sectionColorConfigs: Record<string, SectionColorConfig> = {
     // textColor: '#ffffff',
     // headingColor: '#ffffff',
     // secondaryTextColor: 'rgba(255, 255, 255, 0.8)',
-  },
-  kontakt: {
-    background: '#ffc5bf',
-    // textColor: '#333333',
-    // headingColor: '#333333',
-    // secondaryTextColor: 'rgba(0, 0, 0, 0.7)',
   },
 }

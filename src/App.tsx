@@ -20,10 +20,10 @@ function App() {
         <ScrollStepper />
         <Box component="main" sx={{ position: 'relative', zIndex: 0 }}>
           <HeroSection />
+          <ContactSection />
           <ServicesSection />
           <TeamSection />
           <GallerySection />
-          <ContactSection />
         </Box>
       </DynamicBackground>
     </ThemeProvider>

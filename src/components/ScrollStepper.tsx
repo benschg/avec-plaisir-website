@@ -13,10 +13,10 @@ const ScrollStepper = () => {
   const { textColor, headingColor } = useTextColor()
   const [sections, setSections] = useState<SectionProgress[]>([
     { id: 'hero', title: 'Start', isActive: true, progress: 0 },
+    { id: 'kontakt', title: 'Kontakt', isActive: false, progress: 0 },
     { id: 'angebot', title: 'Angebot', isActive: false, progress: 0 },
     { id: 'team', title: 'Team', isActive: false, progress: 0 },
     { id: 'gallery', title: 'Galerie', isActive: false, progress: 0 },
-    { id: 'kontakt', title: 'Kontakt', isActive: false, progress: 0 },
   ])
 
   useEffect(() => {
@@ -33,15 +33,15 @@ const ScrollStepper = () => {
             document.querySelector('#hero') ||
             document.querySelector('main > *:first-child'),
         },
+        { id: 'kontakt', element: document.getElementById('kontakt') },
         { id: 'angebot', element: document.getElementById('angebot') },
         { id: 'team', element: document.getElementById('team') },
         {
           id: 'gallery',
           element:
             document.querySelector('[id*="gallery"]') ||
-            document.querySelector('main > *:nth-child(4)'),
+            document.querySelector('main > *:nth-child(5)'),
         },
-        { id: 'kontakt', element: document.getElementById('kontakt') },
       ]
 
       const updatedSections = sectionElements.map((section, index) => {
