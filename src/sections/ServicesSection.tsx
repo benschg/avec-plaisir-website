@@ -2,6 +2,7 @@ import { Box, Typography, Container, Grid } from '@mui/material'
 import ServiceImage from '../components/ServiceImage'
 import ServiceCard from '../components/ServiceCard'
 import { useTextColor } from '../components/DynamicBackground'
+import AnimatedText from '../components/AnimatedText'
 
 const ServicesSection = () => {
   const { headingColor } = useTextColor()
@@ -121,6 +122,23 @@ const ServicesSection = () => {
             />
           </Grid>
         </Grid>
+
+        {/* Animated Text Section */}
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            mt: 8,
+            mb: 4,
+          }}
+        >
+          <AnimatedText
+            words={['plaisir!', 'fleurs?', '*']}
+            fontSize={{ xs: '2rem', md: '6rem' }}
+            interval={4000}
+          />
+        </Box>
       </Container>
     </Box>
   )
