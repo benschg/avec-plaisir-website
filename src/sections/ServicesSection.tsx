@@ -1,8 +1,11 @@
 import { Box, Typography, Container, Grid } from '@mui/material'
 import ServiceImage from '../components/ServiceImage'
 import ServiceCard from '../components/ServiceCard'
+import { useTextColor } from '../components/DynamicBackground'
 
 const ServicesSection = () => {
+  const { headingColor } = useTextColor()
+
   return (
     <Box
       id="angebot"
@@ -13,18 +16,45 @@ const ServicesSection = () => {
       }}
     >
       <Container maxWidth="lg">
-        <Typography
-          variant="h3"
-          sx={{
-            textAlign: 'center',
-            mb: 8,
-            color: '#333333',
-            fontSize: { xs: '1.8rem', md: '2.5rem' },
-            fontWeight: 400,
-          }}
-        >
-          Unser Angebot
-        </Typography>
+        <Box display={'flex'} justifyContent={'center'}>
+          <Box
+            maxWidth={{ xs: '90%', md: '700px' }}
+            display={'flex'}
+            justifyContent={'center'}
+            alignContent={'center'}
+            alignItems={'center'}
+            textAlign={'center'}
+            flexDirection={'column'}
+          >
+            <Typography
+              variant="h2"
+              sx={{ color: headingColor }}
+              fontSize={{ xs: '1.8rem', md: '8rem' }}
+            >
+              avec plaisir!
+            </Typography>
+            <Typography
+              variant="h2"
+              sx={{ color: headingColor }}
+              fontSize={{ xs: '1.1rem', md: '3rem' }}
+            >
+              Ihre Blumen nach Wunsch.
+            </Typography>
+
+            <Typography
+              maxWidth={'500px'}
+              paddingTop={8}
+              paddingBottom={8}
+              variant="body1"
+              fontSize={{ xs: '1.1rem', md: '1.5rem' }}
+            >
+              Wir erfüllen Ihren Blumenwunsch mit grosser Freude. Egal ob
+              einmalig oder wiederkehrend, für den Küchentisch oder ein grosses
+              Bankett, Ihre Bestellung wird mit äusserster Sorgfalt und so
+              schnell wie möglich erledigt.
+            </Typography>
+          </Box>
+        </Box>
 
         <Grid container>
           <Grid size={{ xs: 12, md: 4 }}>
@@ -89,40 +119,6 @@ const ServicesSection = () => {
               src="/images/imgi_60_Screenshot-2024-09-17-at-13.19.32.png"
               alt="Blumenarrangement"
             />
-          </Grid>
-
-          {/* Row 3: Additional service or call-to-action space */}
-          <Grid size={{ xs: 12 }}>
-            <Box
-              sx={{
-                textAlign: 'center',
-                py: 6,
-                px: 3,
-              }}
-            >
-              <Typography
-                variant="h6"
-                sx={{
-                  color: '#333333',
-                  fontWeight: 400,
-                  fontSize: '1.2rem',
-                  mb: 2,
-                }}
-              >
-                Haben Sie Fragen zu unserem Angebot?
-              </Typography>
-              <Typography
-                variant="body1"
-                sx={{
-                  color: '#666666',
-                  lineHeight: 1.7,
-                  fontSize: '1rem',
-                }}
-              >
-                Kontaktieren Sie uns gerne für eine persönliche Beratung oder
-                besuchen Sie uns in unserem Laden im Kreis 3.
-              </Typography>
-            </Box>
           </Grid>
         </Grid>
       </Container>

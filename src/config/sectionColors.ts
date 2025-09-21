@@ -33,7 +33,7 @@ export const sectionColorConfigs: Record<string, SectionColorConfig> = {
   angebot: {
     background: '#ffffff',
     // textColor: '#ffffff',
-    // headingColor: '#ffffff',
+    headingColor: '#c56761',
     // secondaryTextColor: 'rgba(255, 255, 255, 0.8)',
   },
   team: {

@@ -10,7 +10,8 @@ const FallingFlowers = () => {
       if (!containerRef.current) return
 
       const flower = document.createElement('div')
-      flower.textContent = flowerEmojis[Math.floor(Math.random() * flowerEmojis.length)]
+      flower.textContent =
+        flowerEmojis[Math.floor(Math.random() * flowerEmojis.length)]
 
       const rotation = Math.random() * 60 - 30 // Slight random rotation
       const scale = 0.6 + Math.random() * 0.4
@@ -52,7 +53,10 @@ const FallingFlowers = () => {
       if (now - lastTime < 50) return // Create flower more frequently for a continuous trail
       lastTime = now
 
-      createFlowerTrail(e.clientX, e.clientY)
+      createFlowerTrail(
+        e.clientX + Math.random() * 40 - 10,
+        e.clientY + Math.random() * 40 - 10
+      )
     }
 
     window.addEventListener('mousemove', handleMouseMove)

@@ -1,6 +1,7 @@
 import { useEffect, useState, createContext, useContext } from 'react'
 import { Box, GlobalStyles } from '@mui/material'
 import { sectionColorConfigs, type SectionColorConfig } from '../config/sectionColors'
+import { sectionsConfig } from '../config/sections'
 
 // Function to determine if background is light or dark
 const isLightColor = (color: string): boolean => {
@@ -33,24 +34,15 @@ const DynamicBackground = ({ children }: { children?: React.ReactNode }) => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY + window.innerHeight / 2
 
-      // Get all sections
-      const sections = [
-        {
-          id: 'hero',
-          element:
-            document.querySelector('#hero') ||
-            document.querySelector('main > *:first-child'),
-        },
-        { id: 'angebot', element: document.getElementById('angebot') },
-        { id: 'team', element: document.getElementById('team') },
-        {
-          id: 'gallery',
-          element:
-            document.querySelector('[id*="gallery"]') ||
-            document.querySelector('main > *:nth-child(4)'),
-        },
-        { id: 'kontakt', element: document.getElementById('kontakt') },
-      ]
+      // Get all sections using centralized configuration
+      const sections = sectionsConfig.map((section, index) => ({
+        id: section.id,
+        element: section.id === 'hero'
+          ? document.querySelector('#hero') || document.querySelector('main > *:first-child')
+          : section.id === 'gallery'
+          ? document.querySelector('[id*="gallery"]') || document.querySelector(`main > *:nth-child(${index + 1})`)
+          : document.getElementById(section.id),
+      }))
 
       // Find current section
       for (let i = sections.length - 1; i >= 0; i--) {

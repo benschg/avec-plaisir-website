@@ -35,9 +35,9 @@ const Navigation = () => {
   }
 
   const menuItems = [
+    { text: 'Kontakt', id: 'kontakt' },
     { text: 'Angebot', id: 'angebot' },
     { text: 'Team', id: 'team' },
-    { text: 'Kontakt', id: 'kontakt' },
   ]
 
   return (

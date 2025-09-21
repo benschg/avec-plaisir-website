@@ -43,6 +43,7 @@ export const theme = createTheme({
       letterSpacing: '-0.01em',
     },
     h2: {
+      fontFamily: 'Inter',
       fontSize: '2.5rem',
       fontWeight: 300,
       color: '#333333',

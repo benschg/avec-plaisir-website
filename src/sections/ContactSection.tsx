@@ -1,4 +1,4 @@
-import { Box, Typography, Container, Grid, Link } from '@mui/material'
+import { Box, Typography, Container, Grid, Link, Divider } from '@mui/material'
 import { contactInfo } from '../data/contactInfo'
 import {
   LocationOn,
@@ -99,11 +99,13 @@ const ContactSection = () => {
 
           <Grid size={{ xs: 12, md: 6 }}>
             {/* Contact Information */}
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
               <ContactItem
                 icon={<LocationOn sx={{ mr: 2, color: '#666666' }} />}
                 description={contactInfo.address}
               />
+
+              <Divider sx={{ my: 2, backgroundColor: 'rgba(255, 255, 255, 0.2)' }} />
 
               <ContactItem
                 icon={<Phone sx={{ mr: 2, color: '#666666' }} />}
@@ -111,17 +113,23 @@ const ContactSection = () => {
                 link={`tel:${contactInfo.phone}`}
               />
 
+              <Divider sx={{ my: 2, backgroundColor: 'rgba(255, 255, 255, 0.2)' }} />
+
               <ContactItem
                 icon={<Email sx={{ mr: 2, color: '#666666' }} />}
                 description={contactInfo.email}
                 link={`mailto:${contactInfo.email}`}
               />
 
+              <Divider sx={{ my: 2, backgroundColor: 'rgba(255, 255, 255, 0.2)' }} />
+
               <ContactItem
                 icon={<Instagram sx={{ mr: 2, color: '#666666' }} />}
                 description={contactInfo.instagram}
                 link={`https://instagram.com/${contactInfo.instagram.substring(1)}`}
               />
+
+              <Divider sx={{ my: 2, backgroundColor: 'rgba(255, 255, 255, 0.2)' }} />
 
               <ContactItem
                 icon={<Schedule sx={{ mr: 2, color: '#666666' }} />}
