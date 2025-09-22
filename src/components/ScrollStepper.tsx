@@ -25,7 +25,6 @@ const ScrollStepper = () => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY
       const windowHeight = window.innerHeight
-      const documentHeight = document.documentElement.scrollHeight
 
       // Get all section elements using configuration
       const sectionElements = sectionsConfig.map((section, index) => ({
@@ -91,12 +90,6 @@ const ScrollStepper = () => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const totalProgress = Math.min(
-    100,
-    (window.scrollY /
-      (document.documentElement.scrollHeight - window.innerHeight)) *
-      100
-  )
 
   return (
     <Box
