@@ -13,10 +13,15 @@ const AnimatedText = ({
 }) => {
   const { headingColor } = useTextColor()
   const [currentWordIndex, setCurrentWordIndex] = useState(0)
+  const [isAnimating, setIsAnimating] = useState(false)
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentWordIndex((prev) => (prev + 1) % words.length)
+      setIsAnimating(true)
+      setTimeout(() => {
+        setCurrentWordIndex((prev) => (prev + 1) % words.length)
+        setIsAnimating(false)
+      }, 400)
     }, interval)
 
     return () => clearInterval(timer)
@@ -35,36 +40,75 @@ const AnimatedText = ({
         gap: '0.3em',
       }}
     >
-      <Box component="span">avec</Box>
-
       <Box
         sx={{
           position: 'relative',
-          minWidth: { xs: '3em', md: '6em' },
-          lineHeight: 'inherit',
+          minWidth: '2em',
+          height: '1.3em',
           display: 'inline-block',
+          overflow: 'hidden',
+          verticalAlign: 'baseline',
         }}
       >
         <Box
           component="span"
-          key={currentWordIndex}
           sx={{
-            display: 'inline-block',
-            animation: 'slideIn 0.5s ease-in-out',
-            '@keyframes slideIn': {
-              from: {
-                transform: 'translateY(-100%)',
-                opacity: 0,
-              },
-              to: {
-                transform: 'translateY(0)',
-                opacity: 1,
-              },
-            },
+            position: 'absolute',
+            left: 0,
+            top: 0,
+            whiteSpace: 'nowrap',
           }}
         >
-          {words[currentWordIndex]}
+          avec
         </Box>
+      </Box>
+
+      <Box
+        sx={{
+          position: 'relative',
+          minWidth: { xs: '3em', md: '3em' },
+          height: '1.3em',
+          display: 'inline-block',
+          overflow: 'hidden',
+          verticalAlign: 'baseline',
+        }}
+      >
+        {words.map((word, index) => {
+          const isCurrent = index === currentWordIndex
+          const isNext = index === (currentWordIndex + 1) % words.length
+
+          if (!isCurrent && !isNext) return null
+
+          return (
+            <Box
+              component="span"
+              key={`${word}-${index}`}
+              sx={{
+                position: 'absolute',
+                left: 0,
+                top: 0,
+                transform: isCurrent
+                  ? isAnimating
+                    ? 'translateY(-120%)'
+                    : 'translateY(0)'
+                  : isAnimating
+                    ? 'translateY(0)'
+                    : 'translateY(120%)',
+                opacity: isCurrent
+                  ? isAnimating
+                    ? 0
+                    : 1
+                  : isAnimating
+                    ? 1
+                    : 0,
+                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {word}
+            </Box>
+          )
+        })}
       </Box>
     </Box>
   )
