@@ -13,7 +13,10 @@ interface LayoutProps {
 const Layout = ({ children, showScrollStepper = false }: LayoutProps) => {
   return (
     <DynamicBackground>
-      <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <Box
+        component={'div'}
+        sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}
+      >
         <FallingFlowers />
         <Navigation />
         {showScrollStepper && <ScrollStepper />}

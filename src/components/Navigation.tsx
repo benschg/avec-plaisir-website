@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import {
   AppBar,
@@ -11,15 +11,25 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
-  Divider,
 } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import CloseIcon from '@mui/icons-material/Close'
 
 const Navigation = () => {
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
   const location = useLocation()
   const navigate = useNavigate()
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const isScrolled = window.scrollY > 50
+      setScrolled(isScrolled)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   const scrollToSection = (sectionId: string) => {
     // If not on home page, navigate to home first
@@ -60,24 +70,28 @@ const Navigation = () => {
     { text: 'Team', id: 'team' },
   ]
 
-  const legalItems = [
-    { text: 'Impressum', path: '/impressum' },
-    { text: 'AGB', path: '/agbs' },
-    { text: 'Datenschutz', path: '/datenschutz' },
-  ]
-
   return (
     <>
       <AppBar
         position="fixed"
         elevation={0}
         sx={{
-          backgroundColor: '#f1938d',
+          // backgroundColor: '#f1938d',
           backdropFilter: 'blur(10px)',
           borderBottom: '1px solid rgba(0,0,0,0.05)',
+          transition: 'all 0.3s ease-in-out',
+          ...(scrolled && {
+            py: 0.5,
+          }),
         }}
       >
-        <Toolbar sx={{ justifyContent: 'space-between', py: 1 }}>
+        <Toolbar
+          sx={{
+            justifyContent: 'space-between',
+            py: scrolled ? 0.5 : 1,
+            transition: 'all 0.3s ease-in-out',
+          }}
+        >
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
             <Box
               onClick={handleLogoClick}
@@ -92,15 +106,23 @@ const Navigation = () => {
                 src="/images/avecplaisir-logo.png"
                 alt="avec plaisir zürich"
                 style={{
-                  height: '40px',
+                  marginTop: scrolled ? '10px' : '20px',
+                  height: scrolled ? '45px' : '60px',
                   width: 'auto',
+                  transition: 'all 0.3s ease-in-out',
                 }}
               />
             </Box>
           </Box>
 
           {/* Desktop Menu */}
-          <Box sx={{ display: { xs: 'none', sm: 'flex' }, gap: 4, alignItems: 'center' }}>
+          <Box
+            sx={{
+              display: { xs: 'none', sm: 'flex' },
+              gap: 4,
+              alignItems: 'center',
+            }}
+          >
             {menuItems.map((item) => (
               <Button
                 key={item.id}
@@ -119,29 +141,6 @@ const Navigation = () => {
                 {item.text}
               </Button>
             ))}
-
-            {/* Legal Links - smaller text */}
-            <Box sx={{ display: 'flex', gap: 2, ml: 2, borderLeft: '1px solid rgba(255,255,255,0.3)', pl: 2 }}>
-              {legalItems.map((item) => (
-                <Button
-                  key={item.path}
-                  onClick={() => navigateToPage(item.path)}
-                  sx={{
-                    color: '#ffffff',
-                    textTransform: 'none',
-                    fontSize: '0.85rem',
-                    fontWeight: 300,
-                    minWidth: 'auto',
-                    '&:hover': {
-                      backgroundColor: 'transparent',
-                      color: 'rgba(255, 255, 255, 0.8)',
-                    },
-                  }}
-                >
-                  {item.text}
-                </Button>
-              ))}
-            </Box>
           </Box>
 
           {/* Mobile Menu Button */}
@@ -195,32 +194,6 @@ const Navigation = () => {
                     primaryTypographyProps={{
                       fontSize: '1.2rem',
                       fontWeight: 400,
-                    }}
-                  />
-                </ListItemButton>
-              </ListItem>
-            ))}
-
-            {/* Divider and Legal Links */}
-            <Divider sx={{ my: 2, backgroundColor: 'rgba(255, 255, 255, 0.2)' }} />
-
-            {legalItems.map((item) => (
-              <ListItem key={item.path} disablePadding>
-                <ListItemButton
-                  onClick={() => navigateToPage(item.path)}
-                  sx={{
-                    textAlign: 'center',
-                    color: '#ffffff',
-                    '&:hover': {
-                      backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                    },
-                  }}
-                >
-                  <ListItemText
-                    primary={item.text}
-                    primaryTypographyProps={{
-                      fontSize: '1rem',
-                      fontWeight: 300,
                     }}
                   />
                 </ListItemButton>

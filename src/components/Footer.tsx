@@ -71,10 +71,17 @@ const Footer = () => {
             <Box
               sx={{
                 display: 'flex',
-                justifyContent: { xs: 'flex-start', md: 'flex-end' },
+                justifyContent: { xs: 'flex-end', md: 'flex-end' },
               }}
             >
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 1,
+                  position: 'relative',
+                }}
+              >
                 {/* Navigation Links */}
                 <Link
                   component="button"
@@ -87,7 +94,7 @@ const Footer = () => {
                     cursor: 'pointer',
                     padding: 0,
                     font: 'inherit',
-                    textAlign: 'left',
+                    textAlign: 'right',
                     '&:hover': {
                       color: '#FFB6C1',
                       textDecoration: 'underline',
@@ -107,7 +114,7 @@ const Footer = () => {
                     cursor: 'pointer',
                     padding: 0,
                     font: 'inherit',
-                    textAlign: 'left',
+                    textAlign: 'right',
                     '&:hover': {
                       color: '#FFB6C1',
                       textDecoration: 'underline',
@@ -127,7 +134,7 @@ const Footer = () => {
                     cursor: 'pointer',
                     padding: 0,
                     font: 'inherit',
-                    textAlign: 'left',
+                    textAlign: 'right',
                     '&:hover': {
                       color: '#FFB6C1',
                       textDecoration: 'underline',
@@ -143,6 +150,7 @@ const Footer = () => {
                   to="/impressum"
                   sx={{
                     color: 'white',
+                    textAlign: 'right',
                     textDecoration: 'none',
                     '&:hover': {
                       color: '#FFB6C1',
@@ -157,6 +165,7 @@ const Footer = () => {
                   to="/datenschutz"
                   sx={{
                     color: 'white',
+                    textAlign: 'right',
                     textDecoration: 'none',
                     '&:hover': {
                       color: '#FFB6C1',
@@ -171,6 +180,7 @@ const Footer = () => {
                   to="/agbs"
                   sx={{
                     color: 'white',
+                    textAlign: 'right',
                     textDecoration: 'none',
                     '&:hover': {
                       color: '#FFB6C1',
@@ -191,6 +201,7 @@ const Footer = () => {
                     textDecoration: 'none',
                     display: 'flex',
                     alignItems: 'center',
+                    justifyContent: 'flex-end',
                     gap: 0.5,
                     mt: 1,
                     '&:hover': {
@@ -201,6 +212,26 @@ const Footer = () => {
                   <InstagramIcon fontSize="small" />
                   Instagram
                 </Link>
+
+                {/* Flower decoration in bottom right after links */}
+                <Box
+                  sx={{
+                    opacity: 1.0,
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    my: 8,
+                    transition: 'opacity 0.3s ease-in-out',
+                  }}
+                >
+                  <img
+                    src="/avec-plaisir-flower-white.svg"
+                    alt="avec plaisir flower decoration"
+                    style={{
+                      width: '50px',
+                      height: '50px',
+                    }}
+                  />
+                </Box>
               </Box>
             </Box>
           </Grid>
