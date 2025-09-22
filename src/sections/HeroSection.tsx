@@ -51,13 +51,20 @@ const HeroSection = () => {
               justifyContent: 'center',
             }}
           >
-            <img
-              src="/images/Flower-wht-150x150.png"
-              alt="avec plaisir flower logo"
-              style={{
+            <Box
+              sx={{
                 width: '80px',
                 height: '80px',
-                objectFit: 'contain',
+                backgroundColor: textColor,
+                maskImage: 'url(/avec-plaisir-flower-white.svg)',
+                maskSize: 'contain',
+                maskRepeat: 'no-repeat',
+                maskPosition: 'center',
+                WebkitMaskImage: 'url(/avec-plaisir-flower-white.svg)',
+                WebkitMaskSize: 'contain',
+                WebkitMaskRepeat: 'no-repeat',
+                WebkitMaskPosition: 'center',
+                transition: 'background-color 0.8s ease',
               }}
             />
           </Box>

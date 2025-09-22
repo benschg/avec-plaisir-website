@@ -19,7 +19,7 @@ const ServicesSection = () => {
       <Container maxWidth="lg">
         <Box display={'flex'} justifyContent={'center'}>
           <Box
-            maxWidth={{ xs: '90%', md: '700px' }}
+            maxWidth={{ xs: '90%', md: '1000px' }}
             display={'flex'}
             justifyContent={'center'}
             alignContent={'center'}
@@ -31,11 +31,15 @@ const ServicesSection = () => {
               variant="h2"
               sx={{ color: headingColor }}
               fontSize={{ xs: '3.0rem', md: '8rem' }}
+              fontFamily={'Lora'}
+              fontWeight={'600'}
             >
               avec plaisir!
             </Typography>
             <Typography
               variant="h2"
+              fontFamily={'Lora'}
+              fontWeight={'600'}
               sx={{ color: headingColor }}
               fontSize={{ xs: '1.1rem', md: '3rem' }}
             >
