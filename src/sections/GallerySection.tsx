@@ -1,4 +1,4 @@
-import { Box, Typography, Container, Grid } from '@mui/material'
+import { Box, Container, Grid } from '@mui/material'
 
 const galleryImages = [
   '/images/imgi_50_NRP_9654-low-scaled.jpg',
@@ -19,19 +19,6 @@ const GallerySection = () => {
       }}
     >
       <Container maxWidth="lg">
-        <Typography
-          variant="h3"
-          sx={{
-            textAlign: 'center',
-            mb: 8,
-            color: '#ffffff',
-            fontSize: { xs: '1.8rem', md: '2.5rem' },
-            fontWeight: 400,
-          }}
-        >
-          Galerie
-        </Typography>
-
         <Grid container spacing={2}>
           {galleryImages.map((image, index) => (
             <Grid size={{ xs: 12, sm: 6, md: 4 }} key={index}>
