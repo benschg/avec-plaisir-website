@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import {
   AppBar,
   Toolbar,
@@ -10,19 +11,43 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
+  Divider,
 } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import CloseIcon from '@mui/icons-material/Close'
 
 const Navigation = () => {
   const [mobileOpen, setMobileOpen] = useState(false)
+  const location = useLocation()
+  const navigate = useNavigate()
 
   const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId)
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
-      setMobileOpen(false) // Close drawer after navigation
+    // If not on home page, navigate to home first
+    if (location.pathname !== '/') {
+      navigate('/')
+      // Wait for navigation and then scroll
+      setTimeout(() => {
+        const element = document.getElementById(sectionId)
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' })
+        }
+      }, 100)
+    } else {
+      const element = document.getElementById(sectionId)
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' })
+      }
     }
+    setMobileOpen(false) // Close drawer after navigation
+  }
+
+  const navigateToPage = (path: string) => {
+    navigate(path)
+    setMobileOpen(false) // Close drawer after navigation
+  }
+
+  const handleLogoClick = () => {
+    navigate('/')
   }
 
   const handleDrawerToggle = () => {
@@ -33,6 +58,12 @@ const Navigation = () => {
     { text: 'Kontakt', id: 'kontakt' },
     { text: 'Angebot', id: 'angebot' },
     { text: 'Team', id: 'team' },
+  ]
+
+  const legalItems = [
+    { text: 'Impressum', path: '/impressum' },
+    { text: 'AGB', path: '/agbs' },
+    { text: 'Datenschutz', path: '/datenschutz' },
   ]
 
   return (
@@ -48,18 +79,28 @@ const Navigation = () => {
       >
         <Toolbar sx={{ justifyContent: 'space-between', py: 1 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <img
-              src="/images/avecplaisir-logo.png"
-              alt="avec plaisir zürich"
-              style={{
-                height: '40px',
-                width: 'auto',
+            <Box
+              onClick={handleLogoClick}
+              sx={{
+                cursor: 'pointer',
+                '&:hover': {
+                  opacity: 0.8,
+                },
               }}
-            />
+            >
+              <img
+                src="/images/avecplaisir-logo.png"
+                alt="avec plaisir zürich"
+                style={{
+                  height: '40px',
+                  width: 'auto',
+                }}
+              />
+            </Box>
           </Box>
 
           {/* Desktop Menu */}
-          <Box sx={{ display: { xs: 'none', sm: 'flex' }, gap: 4 }}>
+          <Box sx={{ display: { xs: 'none', sm: 'flex' }, gap: 4, alignItems: 'center' }}>
             {menuItems.map((item) => (
               <Button
                 key={item.id}
@@ -78,6 +119,29 @@ const Navigation = () => {
                 {item.text}
               </Button>
             ))}
+
+            {/* Legal Links - smaller text */}
+            <Box sx={{ display: 'flex', gap: 2, ml: 2, borderLeft: '1px solid rgba(255,255,255,0.3)', pl: 2 }}>
+              {legalItems.map((item) => (
+                <Button
+                  key={item.path}
+                  onClick={() => navigateToPage(item.path)}
+                  sx={{
+                    color: '#ffffff',
+                    textTransform: 'none',
+                    fontSize: '0.85rem',
+                    fontWeight: 300,
+                    minWidth: 'auto',
+                    '&:hover': {
+                      backgroundColor: 'transparent',
+                      color: 'rgba(255, 255, 255, 0.8)',
+                    },
+                  }}
+                >
+                  {item.text}
+                </Button>
+              ))}
+            </Box>
           </Box>
 
           {/* Mobile Menu Button */}
@@ -131,6 +195,32 @@ const Navigation = () => {
                     primaryTypographyProps={{
                       fontSize: '1.2rem',
                       fontWeight: 400,
+                    }}
+                  />
+                </ListItemButton>
+              </ListItem>
+            ))}
+
+            {/* Divider and Legal Links */}
+            <Divider sx={{ my: 2, backgroundColor: 'rgba(255, 255, 255, 0.2)' }} />
+
+            {legalItems.map((item) => (
+              <ListItem key={item.path} disablePadding>
+                <ListItemButton
+                  onClick={() => navigateToPage(item.path)}
+                  sx={{
+                    textAlign: 'center',
+                    color: '#ffffff',
+                    '&:hover': {
+                      backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                    },
+                  }}
+                >
+                  <ListItemText
+                    primary={item.text}
+                    primaryTypographyProps={{
+                      fontSize: '1rem',
+                      fontWeight: 300,
                     }}
                   />
                 </ListItemButton>
