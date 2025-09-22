@@ -1,10 +1,15 @@
 import { Box, Container, Typography, Grid, Link } from '@mui/material'
 import { Link as RouterLink, useNavigate, useLocation } from 'react-router-dom'
 import InstagramIcon from '@mui/icons-material/Instagram'
+import { useEffect } from 'react'
 
 const Footer = () => {
   const navigate = useNavigate()
   const location = useLocation()
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [location.pathname])
 
   const scrollToSection = (sectionId: string) => {
     // If not on home page, navigate to home first
