@@ -10,9 +10,9 @@ const Home = () => {
     <Box>
       <HeroSection />
       <ContactSection />
+      <GallerySection />
       <ServicesSection />
       <TeamSection />
-      <GallerySection />
     </Box>
   )
 }
