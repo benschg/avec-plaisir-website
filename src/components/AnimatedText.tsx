@@ -1,13 +1,17 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, ReactNode } from 'react'
 import { Box } from '@mui/material'
 import { useTextColor } from './DynamicBackground'
+
+type AnimatedItem =
+  | string
+  | { type: 'svg'; src: string; alt?: string; filter?: string }
 
 const AnimatedText = ({
   words,
   fontSize = { xs: '1.8rem', md: '8rem' },
   interval = 3000,
 }: {
-  words: string[]
+  words: AnimatedItem[]
   fontSize?: { xs: string; md: string }
   interval?: number
 }) => {
@@ -73,16 +77,37 @@ const AnimatedText = ({
           verticalAlign: 'baseline',
         }}
       >
-        {words.map((word, index) => {
+        {words.map((item, index) => {
           const isCurrent = index === currentWordIndex
           const isNext = index === (currentWordIndex + 1) % words.length
 
           if (!isCurrent && !isNext) return null
 
+          const renderContent = () => {
+            if (typeof item === 'string') {
+              return item
+            } else if (item.type === 'svg') {
+              return (
+                <img
+                  src={item.src}
+                  alt={item.alt || ''}
+                  style={{
+                    height: '1em',
+                    width: 'auto',
+                    verticalAlign: 'baseline',
+                    display: 'inline-block',
+                    filter: item.filter || 'none',
+                  }}
+                />
+              )
+            }
+            return null
+          }
+
           return (
             <Box
               component="span"
-              key={`${word}-${index}`}
+              key={`${typeof item === 'string' ? item : item.src}-${index}`}
               sx={{
                 position: 'absolute',
                 left: 0,
@@ -103,9 +128,11 @@ const AnimatedText = ({
                     : 0,
                 transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
                 whiteSpace: 'nowrap',
+                display: 'flex',
+                alignItems: 'center',
               }}
             >
-              {word}
+              {renderContent()}
             </Box>
           )
         })}

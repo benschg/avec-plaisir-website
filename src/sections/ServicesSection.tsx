@@ -134,7 +134,16 @@ const ServicesSection = () => {
           }}
         >
           <AnimatedText
-            words={['plaisir!', 'fleurs?', '*']}
+            words={[
+              'plaisir!',
+              'fleurs?',
+              {
+                type: 'svg',
+                src: '/avec-plaisir-flower-white.svg',
+                alt: 'flower',
+                filter: 'invert(1)',
+              },
+            ]}
             fontSize={{ xs: '2rem', md: '6rem' }}
             interval={4000}
           />
