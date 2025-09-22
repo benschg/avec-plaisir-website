@@ -1,4 +1,4 @@
-import { useState, useEffect, ReactNode } from 'react'
+import { useState, useEffect } from 'react'
 import { Box } from '@mui/material'
 import { useTextColor } from './DynamicBackground'
 
@@ -87,16 +87,23 @@ const AnimatedText = ({
             if (typeof item === 'string') {
               return item
             } else if (item.type === 'svg') {
+              // Use a mask to apply the current text color to the SVG
               return (
-                <img
-                  src={item.src}
-                  alt={item.alt || ''}
-                  style={{
-                    height: '1em',
-                    width: 'auto',
-                    verticalAlign: 'baseline',
+                <Box
+                  component="span"
+                  sx={{
                     display: 'inline-block',
-                    filter: item.filter || 'none',
+                    width: '1em',
+                    height: '1em',
+                    backgroundColor: 'currentColor',
+                    maskImage: `url(${item.src})`,
+                    maskSize: 'contain',
+                    maskRepeat: 'no-repeat',
+                    maskPosition: 'center',
+                    WebkitMaskImage: `url(${item.src})`,
+                    WebkitMaskSize: 'contain',
+                    WebkitMaskRepeat: 'no-repeat',
+                    WebkitMaskPosition: 'center',
                   }}
                 />
               )

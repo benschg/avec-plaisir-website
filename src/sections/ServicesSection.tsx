@@ -141,7 +141,6 @@ const ServicesSection = () => {
                 type: 'svg',
                 src: '/avec-plaisir-flower-white.svg',
                 alt: 'flower',
-                filter: 'invert(1)',
               },
             ]}
             fontSize={{ xs: '2rem', md: '6rem' }}
