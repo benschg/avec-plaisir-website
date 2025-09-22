@@ -1,7 +1,9 @@
 import { Box, Typography, Container, Grid } from '@mui/material'
 import { teamMembers } from '../data/teamMembers'
+import { useTextColor } from '../components/DynamicBackground'
 
 const TeamSection = () => {
+  const { textColor } = useTextColor()
   return (
     <Box
       id="team"
@@ -22,12 +24,20 @@ const TeamSection = () => {
           >
             <Grid size={{ xs: 12, md: 6 }} spacing="gap">
               <Box gap="40px" display={'flex'} flexDirection={'column'}>
-                <img
-                  src="/images/Flower-wht-150x150.png"
-                  alt="avec plaisir flower logo"
-                  style={{
+                <Box
+                  sx={{
                     width: '40px',
-                    objectFit: 'contain',
+                    height: '40px',
+                    backgroundColor: textColor,
+                    maskImage: 'url(/avec-plaisir-flower-white.svg)',
+                    maskSize: 'contain',
+                    maskRepeat: 'no-repeat',
+                    maskPosition: 'center',
+                    WebkitMaskImage: 'url(/avec-plaisir-flower-white.svg)',
+                    WebkitMaskSize: 'contain',
+                    WebkitMaskRepeat: 'no-repeat',
+                    WebkitMaskPosition: 'center',
+                    transition: 'background-color 0.8s ease',
                   }}
                 />
 

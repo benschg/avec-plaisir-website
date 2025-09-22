@@ -4,6 +4,7 @@ import FallingFlowers from './FallingFlowers'
 import DynamicBackground from './DynamicBackground'
 import ScrollStepper from './ScrollStepper'
 import Footer from './Footer'
+import ContactCallToAction from '../sections/ContactCallToAction'
 
 interface LayoutProps {
   children: React.ReactNode
@@ -23,6 +24,7 @@ const Layout = ({ children, showScrollStepper = false }: LayoutProps) => {
         <Box component="main" sx={{ position: 'relative', zIndex: 0, flex: 1 }}>
           {children}
         </Box>
+        <ContactCallToAction />
         <Footer />
       </Box>
     </DynamicBackground>

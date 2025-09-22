@@ -36,7 +36,7 @@ const AnimatedText = ({
       sx={{
         display: 'inline-flex',
         alignItems: 'baseline',
-        fontFamily: 'Inter',
+        fontFamily: 'Lora',
         fontSize: fontSize,
         fontWeight: 300,
         color: headingColor,
@@ -47,7 +47,7 @@ const AnimatedText = ({
       <Box
         sx={{
           position: 'relative',
-          minWidth: '2em',
+          minWidth: '4em',
           height: '1.3em',
           display: 'inline-block',
           overflow: 'hidden',
@@ -58,9 +58,14 @@ const AnimatedText = ({
           component="span"
           sx={{
             position: 'absolute',
-            left: 0,
+            right: 0,
             top: 0,
             whiteSpace: 'nowrap',
+            textAlign: 'right',
+            display: 'flex',
+            alignItems: 'center',
+            width: '100%',
+            justifyContent: 'flex-end',
           }}
         >
           avec
@@ -70,7 +75,7 @@ const AnimatedText = ({
       <Box
         sx={{
           position: 'relative',
-          minWidth: { xs: '3em', md: '3em' },
+          minWidth: { xs: '4em', md: '4em' },
           height: '1.3em',
           display: 'inline-block',
           overflow: 'hidden',
