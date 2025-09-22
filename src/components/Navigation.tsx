@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import {
   AppBar,
   Toolbar,
@@ -16,13 +17,42 @@ import CloseIcon from '@mui/icons-material/Close'
 
 const Navigation = () => {
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const location = useLocation()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const isScrolled = window.scrollY > 50
+      setScrolled(isScrolled)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId)
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
-      setMobileOpen(false) // Close drawer after navigation
+    // If not on home page, navigate to home first
+    if (location.pathname !== '/') {
+      navigate('/')
+      // Wait for navigation and then scroll
+      setTimeout(() => {
+        const element = document.getElementById(sectionId)
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' })
+        }
+      }, 100)
+    } else {
+      const element = document.getElementById(sectionId)
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' })
+      }
     }
+    setMobileOpen(false) // Close drawer after navigation
+  }
+
+  const handleLogoClick = () => {
+    navigate('/')
   }
 
   const handleDrawerToggle = () => {
@@ -38,28 +68,56 @@ const Navigation = () => {
   return (
     <>
       <AppBar
-        position="fixed"
+        position="relative"
         elevation={0}
         sx={{
-          backgroundColor: '#f1938d',
+          // backgroundColor: '#f1938d',
           backdropFilter: 'blur(10px)',
           borderBottom: '1px solid rgba(0,0,0,0.05)',
+          transition: 'all 0.3s ease-in-out',
+          ...(scrolled && {
+            py: 0.5,
+          }),
         }}
       >
-        <Toolbar sx={{ justifyContent: 'space-between', py: 1 }}>
+        <Toolbar
+          sx={{
+            justifyContent: 'space-between',
+            py: scrolled ? 0.5 : 1,
+            transition: 'all 0.3s ease-in-out',
+          }}
+        >
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <img
-              src="/images/avecplaisir-logo.png"
-              alt="avec plaisir zürich"
-              style={{
-                height: '40px',
-                width: 'auto',
+            <Box
+              onClick={handleLogoClick}
+              sx={{
+                cursor: 'pointer',
+                '&:hover': {
+                  opacity: 0.8,
+                },
               }}
-            />
+            >
+              <img
+                src="/images/avecplaisir-logo.png"
+                alt="avec plaisir zürich"
+                style={{
+                  marginTop: scrolled ? '10px' : '20px',
+                  height: scrolled ? '45px' : '60px',
+                  width: 'auto',
+                  transition: 'all 0.3s ease-in-out',
+                }}
+              />
+            </Box>
           </Box>
 
           {/* Desktop Menu */}
-          <Box sx={{ display: { xs: 'none', sm: 'flex' }, gap: 4 }}>
+          <Box
+            sx={{
+              display: { xs: 'none', sm: 'flex' },
+              gap: 4,
+              alignItems: 'center',
+            }}
+          >
             {menuItems.map((item) => (
               <Button
                 key={item.id}

@@ -16,6 +16,11 @@ export const sectionsConfig: SectionConfig[] = [
     displayName: 'Contact Section',
   },
   {
+    id: 'gallery',
+    title: 'Galerie',
+    displayName: 'Gallery Section',
+  },
+  {
     id: 'angebot',
     title: 'Angebot',
     displayName: 'Services Section',
@@ -25,17 +30,12 @@ export const sectionsConfig: SectionConfig[] = [
     title: 'Team',
     displayName: 'Team Section',
   },
-  {
-    id: 'gallery',
-    title: 'Galerie',
-    displayName: 'Gallery Section',
-  },
 ]
 
 // Helper function to get section by id
 export const getSectionById = (id: string) =>
-  sectionsConfig.find(section => section.id === id)
+  sectionsConfig.find((section) => section.id === id)
 
 // Helper function to get section index
 export const getSectionIndex = (id: string) =>
-  sectionsConfig.findIndex(section => section.id === id)
+  sectionsConfig.findIndex((section) => section.id === id)

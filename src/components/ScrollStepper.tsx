@@ -29,11 +29,14 @@ const ScrollStepper = () => {
       // Get all section elements using configuration
       const sectionElements = sectionsConfig.map((section, index) => ({
         id: section.id,
-        element: section.id === 'hero'
-          ? document.querySelector('#hero') || document.querySelector('main > *:first-child')
-          : section.id === 'gallery'
-          ? document.querySelector('[id*="gallery"]') || document.querySelector(`main > *:nth-child(${index + 1})`)
-          : document.getElementById(section.id),
+        element:
+          section.id === 'hero'
+            ? document.querySelector('#hero') ||
+              document.querySelector('main > *:first-child')
+            : section.id === 'gallery'
+              ? document.querySelector('[id*="gallery"]') ||
+                document.querySelector(`main > *:nth-child(${index + 1})`)
+              : document.getElementById(section.id),
       }))
 
       const updatedSections = sectionElements.map((section, index) => {
@@ -89,7 +92,6 @@ const ScrollStepper = () => {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
-
 
   return (
     <Box

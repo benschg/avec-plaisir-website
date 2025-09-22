@@ -1,12 +1,6 @@
 import { Box, Typography, Container, Grid, Link, Divider } from '@mui/material'
 import { contactInfo } from '../data/contactInfo'
-import {
-  LocationOn,
-  Phone,
-  Email,
-  Instagram,
-  Schedule,
-} from '@mui/icons-material'
+import { LocationOn, Phone, Email, Instagram, Alarm } from '@mui/icons-material'
 import type { ReactNode } from 'react'
 
 const ContactItem = ({
@@ -29,8 +23,8 @@ const ContactItem = ({
           variant="body1"
           sx={{
             color: '#666666',
-            fontSize: { xs: '1.0rem', md: '1.2rem' },
-            lineHeight: 1.7,
+            fontSize: { xs: '1.0rem', md: '1.4rem' },
+            lineHeight: 2.0,
             whiteSpace: 'pre-line',
           }}
         >
@@ -44,7 +38,7 @@ const ContactItem = ({
     return (
       <Link
         href={link}
-        target={link.startsWith('http') ? '_blank' : undefined}
+        target={link.startsWith('http') ? '_blank' : '_self'}
         rel={link.startsWith('http') ? 'noopener noreferrer' : undefined}
         sx={{
           textDecoration: 'none',
@@ -66,7 +60,7 @@ const ContactItem = ({
 const ContactSection = () => {
   return (
     <Box id="kontakt" sx={{ py: 10, my: 4 }}>
-      <Container maxWidth="md">
+      <Container>
         <Grid container spacing={8}>
           <Grid size={{ xs: 12, md: 6 }}>
             {/* Shop Image */}
@@ -74,11 +68,15 @@ const ContactSection = () => {
               sx={{
                 mb: 8,
                 textAlign: 'center',
+                display: 'flex',
+                alignItems: 'center',
+                height: '100%',
               }}
             >
               <Box
                 sx={{
                   maxWidth: 600,
+
                   mx: 'auto',
                   borderRadius: 2,
                   overflow: 'hidden',
@@ -101,38 +99,61 @@ const ContactSection = () => {
             {/* Contact Information */}
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
               <ContactItem
-                icon={<LocationOn sx={{ mr: 2, color: '#666666' }} />}
+                icon={
+                  <LocationOn
+                    sx={{ mr: 2, color: '#666666', fontSize: '2rem' }}
+                  />
+                }
                 description={contactInfo.address}
+                link="https://maps.app.goo.gl/vwy2pXMkgtcJvcev6"
               />
 
-              <Divider sx={{ my: 2, backgroundColor: 'rgba(255, 255, 255, 0.2)' }} />
+              <Divider
+                sx={{ my: 2, backgroundColor: 'rgba(255, 255, 255, 0.2)' }}
+              />
 
               <ContactItem
-                icon={<Phone sx={{ mr: 2, color: '#666666' }} />}
+                icon={
+                  <Phone sx={{ mr: 2, color: '#666666', fontSize: '2rem' }} />
+                }
                 description={contactInfo.phone}
                 link={`tel:${contactInfo.phone}`}
               />
 
-              <Divider sx={{ my: 2, backgroundColor: 'rgba(255, 255, 255, 0.2)' }} />
+              <Divider
+                sx={{ my: 2, backgroundColor: 'rgba(255, 255, 255, 0.2)' }}
+              />
 
               <ContactItem
-                icon={<Email sx={{ mr: 2, color: '#666666' }} />}
+                icon={
+                  <Email sx={{ mr: 2, color: '#666666', fontSize: '2rem' }} />
+                }
                 description={contactInfo.email}
                 link={`mailto:${contactInfo.email}`}
               />
 
-              <Divider sx={{ my: 2, backgroundColor: 'rgba(255, 255, 255, 0.2)' }} />
+              <Divider
+                sx={{ my: 2, backgroundColor: 'rgba(255, 255, 255, 0.2)' }}
+              />
 
               <ContactItem
-                icon={<Instagram sx={{ mr: 2, color: '#666666' }} />}
+                icon={
+                  <Instagram
+                    sx={{ mr: 2, color: '#666666', fontSize: '2rem' }}
+                  />
+                }
                 description={contactInfo.instagram}
                 link={`https://instagram.com/${contactInfo.instagram.substring(1)}`}
               />
 
-              <Divider sx={{ my: 2, backgroundColor: 'rgba(255, 255, 255, 0.2)' }} />
+              <Divider
+                sx={{ my: 2, backgroundColor: 'rgba(255, 255, 255, 0.2)' }}
+              />
 
               <ContactItem
-                icon={<Schedule sx={{ mr: 2, color: '#666666' }} />}
+                icon={
+                  <Alarm sx={{ mr: 2, color: '#666666', fontSize: '2rem' }} />
+                }
                 description={[
                   contactInfo.hours.weekdays,
                   contactInfo.hours.saturday,

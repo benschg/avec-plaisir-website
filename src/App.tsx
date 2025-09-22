@@ -1,31 +1,52 @@
-import { ThemeProvider, CssBaseline, Box } from '@mui/material'
+import { ThemeProvider, CssBaseline } from '@mui/material'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { theme } from './theme'
-import Navigation from './components/Navigation'
-import FallingFlowers from './components/FallingFlowers'
-import DynamicBackground from './components/DynamicBackground'
-import ScrollStepper from './components/ScrollStepper'
-import HeroSection from './sections/HeroSection'
-import ServicesSection from './sections/ServicesSection'
-import TeamSection from './sections/TeamSection'
-import GallerySection from './sections/GallerySection'
-import ContactSection from './sections/ContactSection'
+import Layout from './components/Layout'
+import Home from './pages/Home'
+import Impressum from './pages/Impressum'
+import AGBs from './pages/AGBs'
+import Datenschutz from './pages/Datenschutz'
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <DynamicBackground>
-        <FallingFlowers />
-        <Navigation />
-        <ScrollStepper />
-        <Box component="main" sx={{ position: 'relative', zIndex: 0 }}>
-          <HeroSection />
-          <ContactSection />
-          <ServicesSection />
-          <TeamSection />
-          <GallerySection />
-        </Box>
-      </DynamicBackground>
+      <Router>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Layout showScrollStepper={true}>
+                <Home />
+              </Layout>
+            }
+          />
+          <Route
+            path="/impressum"
+            element={
+              <Layout>
+                <Impressum />
+              </Layout>
+            }
+          />
+          <Route
+            path="/agbs"
+            element={
+              <Layout>
+                <AGBs />
+              </Layout>
+            }
+          />
+          <Route
+            path="/datenschutz"
+            element={
+              <Layout>
+                <Datenschutz />
+              </Layout>
+            }
+          />
+        </Routes>
+      </Router>
     </ThemeProvider>
   )
 }
