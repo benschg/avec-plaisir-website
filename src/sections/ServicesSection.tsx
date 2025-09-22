@@ -30,7 +30,7 @@ const ServicesSection = () => {
             <Typography
               variant="h2"
               sx={{ color: headingColor }}
-              fontSize={{ xs: '1.8rem', md: '8rem' }}
+              fontSize={{ xs: '3.0rem', md: '8rem' }}
             >
               avec plaisir!
             </Typography>

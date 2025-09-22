@@ -30,6 +30,12 @@ export const sectionColorConfigs: Record<string, SectionColorConfig> = {
     headingColor: '#ffffff',
     secondaryTextColor: 'rgba(0, 0, 0, 0.7)',
   },
+  gallery: {
+    background: '#9ba7aa',
+    textColor: '#ffffff',
+    headingColor: '#ffffff',
+    // secondaryTextColor: 'rgba(255, 255, 255, 0.8)',
+  },
   angebot: {
     background: '#ffffff',
     // textColor: '#ffffff',
@@ -41,11 +47,5 @@ export const sectionColorConfigs: Record<string, SectionColorConfig> = {
     // textColor: '#333333',
     // headingColor: '#333333',
     // secondaryTextColor: 'rgba(0, 0, 0, 0.7)',
-  },
-  gallery: {
-    background: '#9ba7aa',
-    // textColor: '#ffffff',
-    // headingColor: '#ffffff',
-    // secondaryTextColor: 'rgba(255, 255, 255, 0.8)',
   },
 }
