@@ -51,11 +51,6 @@ const Navigation = () => {
     setMobileOpen(false) // Close drawer after navigation
   }
 
-  const navigateToPage = (path: string) => {
-    navigate(path)
-    setMobileOpen(false) // Close drawer after navigation
-  }
-
   const handleLogoClick = () => {
     navigate('/')
   }
@@ -73,7 +68,7 @@ const Navigation = () => {
   return (
     <>
       <AppBar
-        position="fixed"
+        position="relative"
         elevation={0}
         sx={{
           // backgroundColor: '#f1938d',
