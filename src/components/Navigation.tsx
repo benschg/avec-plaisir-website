@@ -18,18 +18,31 @@ import CloseIcon from '@mui/icons-material/Close'
 const Navigation = () => {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [visible, setVisible] = useState(true)
+  const [lastScrollY, setLastScrollY] = useState(0)
   const location = useLocation()
   const navigate = useNavigate()
 
   useEffect(() => {
     const handleScroll = () => {
-      const isScrolled = window.scrollY > 50
+      const currentScrollY = window.scrollY
+      const isScrolled = currentScrollY > 50
+
+      // Show header when scrolling up or at top
+      if (currentScrollY < lastScrollY || currentScrollY < 10) {
+        setVisible(true)
+      } else {
+        // Hide header when scrolling down
+        setVisible(false)
+      }
+
       setScrolled(isScrolled)
+      setLastScrollY(currentScrollY)
     }
 
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  }, [lastScrollY])
 
   const scrollToSection = (sectionId: string) => {
     // If not on home page, navigate to home first
@@ -98,11 +111,11 @@ const Navigation = () => {
               }}
             >
               <img
-                src="/images/avecplaisir-logo.png"
+                src="/avec-plaisir-text-logo.svg"
                 alt="avec plaisir zürich"
                 style={{
                   marginTop: scrolled ? '10px' : '20px',
-                  height: scrolled ? '45px' : '60px',
+                  height: scrolled ? '45px' : '100px',
                   width: 'auto',
                   transition: 'all 0.3s ease-in-out',
                 }}
