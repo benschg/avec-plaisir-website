@@ -31,8 +31,7 @@ const ScrollStepper = () => {
         id: section.id,
         element:
           section.id === 'hero'
-            ? document.querySelector('#hero') ||
-              document.querySelector('main > *:first-child')
+            ? document.querySelector('#hero')
             : section.id === 'gallery'
               ? document.querySelector('[id*="gallery"]') ||
                 document.querySelector(`main > *:nth-child(${index + 1})`)
@@ -55,9 +54,12 @@ const ScrollStepper = () => {
         const sectionBottom = sectionTop + sectionHeight
 
         // Check if section is in viewport
-        const isActive =
-          scrollPosition + windowHeight / 2 >= sectionTop &&
-          scrollPosition + windowHeight / 2 < sectionBottom
+        // For the first section (hero), consider it active when at the top of the page
+        const isActive = index === 0
+          ? window.scrollY < Math.max(100, sectionHeight * 0.3) ||
+            (scrollPosition + windowHeight / 2 >= sectionTop && scrollPosition + windowHeight / 2 < sectionBottom)
+          : scrollPosition + windowHeight / 2 >= sectionTop &&
+            scrollPosition + windowHeight / 2 < sectionBottom
 
         // Calculate progress through section (0-100)
         let progress = 0
@@ -101,7 +103,7 @@ const ScrollStepper = () => {
         top: '50%',
         transform: 'translateY(-50%)',
         zIndex: 1000,
-        display: { xs: 'none', md: 'flex' },
+        display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         '&:hover .section-label': {
