@@ -81,13 +81,14 @@ const Navigation = () => {
   return (
     <>
       <AppBar
-        position="relative"
+        position="fixed"
         elevation={0}
         sx={{
           // backgroundColor: '#f1938d',
           backdropFilter: 'blur(10px)',
-          borderBottom: '1px solid rgba(0,0,0,0.05)',
-          transition: 'all 0.3s ease-in-out',
+          borderBottom: scrolled ? '1px solid rgba(0,0,0,0.05)' : 'none',
+          transform: visible ? 'translateY(0)' : 'translateY(-100%)',
+          transition: 'transform 0.3s ease-in-out',
           ...(scrolled && {
             py: 0.5,
           }),
