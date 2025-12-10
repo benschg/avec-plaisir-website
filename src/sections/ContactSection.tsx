@@ -1,6 +1,13 @@
 import { Box, Typography, Container, Grid, Link, Divider } from '@mui/material'
 import { contactInfo } from '../data/contactInfo'
-import { LocationOn, Phone, Email, Instagram, Alarm } from '@mui/icons-material'
+import {
+  LocationOn,
+  Phone,
+  Email,
+  Instagram,
+  Alarm,
+  Park,
+} from '@mui/icons-material'
 import type { ReactNode } from 'react'
 
 const ContactItem = ({
@@ -169,6 +176,26 @@ const ContactSection = () => {
                   contactInfo.hours.sunday,
                 ].join('\n')}
               />
+
+              {contactInfo.holidayClosure && (
+                <>
+                  <Divider
+                    sx={{ my: 2, backgroundColor: 'rgba(255, 255, 255, 0.2)' }}
+                  />
+
+                  <ContactItem
+                    icon={
+                      <Park
+                        sx={{ mr: 2, color: '#666666', fontSize: '2rem' }}
+                      />
+                    }
+                    description={[
+                      contactInfo.holidayClosure.dates,
+                      contactInfo.holidayClosure.reopening,
+                    ].join('\n')}
+                  />
+                </>
+              )}
             </Box>
           </Grid>
         </Grid>

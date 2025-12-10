@@ -63,12 +63,12 @@ const Footer = () => {
               Öffnungszeiten:
             </Typography>
             <Typography variant="body2" sx={{ mb: 1 }}>
-              Montag - Freitag: 9:00 - 18:00 Uhr
+              Montag bis Freitag 9 – 18 Uhr
             </Typography>
             <Typography variant="body2" sx={{ mb: 1 }}>
-              Samstag: 9:00 - 15:00 Uhr
+              Samstag 9 – 15 Uhr
             </Typography>
-            <Typography variant="body2">Sonntag: Geschlossen</Typography>
+            <Typography variant="body2">Sonntag geschlossen</Typography>
           </Grid>
 
           {/* Right side - Links */}
