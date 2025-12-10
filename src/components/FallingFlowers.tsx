@@ -14,7 +14,11 @@ const FallingFlowers = () => {
 
       const rotation = Math.random() * 60 - 30 // Slight random rotation
       const scale = 0.6 + Math.random() * 0.4
-      const fadeOutDuration = 1500 // 1.5 seconds to fade
+      const isColored = Math.random() < 0.1 // 10% chance to be colored
+      const fadeOutDuration = isColored ? 3000 : 1500 // Colored icons live longer
+      // Random hue rotation for colored icons
+      const randomHue = Math.floor(Math.random() * 360)
+      const colorFilter = `brightness(0) saturate(100%) invert(50%) sepia(100%) saturate(500%) hue-rotate(${randomHue}deg)`
 
       Object.assign(icon.style, {
         position: 'absolute',
@@ -28,6 +32,7 @@ const FallingFlowers = () => {
         transition: `opacity ${fadeOutDuration}ms ease-out, transform ${fadeOutDuration}ms ease-out`,
         opacity: '0.8',
         zIndex: '9999',
+        filter: isColored ? colorFilter : 'none',
       })
 
       containerRef.current.appendChild(icon)
