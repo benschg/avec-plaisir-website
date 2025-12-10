@@ -14,15 +14,17 @@ const ServiceCard = ({ icon, title, description }: ServiceCardProps) => {
         py: 4,
         px: 3,
         height: '100%',
+        minHeight: '500px',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        justifyContent: 'center',
       }}
     >
       <Box
         sx={{
-          width: 120,
-          height: 120,
+          width: 240,
+          height: 160,
           mx: 'auto',
           mb: 3,
           display: 'flex',
