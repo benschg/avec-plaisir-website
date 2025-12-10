@@ -57,13 +57,20 @@ const TeamSection = () => {
                   sx={{
                     lineHeight: 1.7,
                     fontSize: { xs: '1rem', md: '1.1rem' },
-                    fontStyle: 'italic',
                     borderLeft: '4px solid currentColor',
                     paddingLeft: 2,
                     marginLeft: 1,
                   }}
                 >
-                  "{member.bio}"
+                  "
+                  {member.bio.split(/(_[^_]+_)/g).map((part, i) =>
+                    part.startsWith('_') && part.endsWith('_') ? (
+                      <em key={i}>{part.slice(1, -1)}</em>
+                    ) : (
+                      part
+                    )
+                  )}
+                  "
                 </Typography>
                 <Typography
                   variant="h4"
