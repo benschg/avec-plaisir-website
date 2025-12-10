@@ -2,6 +2,7 @@ import { useEffect, useState, createContext, useContext } from 'react'
 import { Box, GlobalStyles } from '@mui/material'
 import { sectionColorConfigs } from '../config/sectionColors'
 import { sectionsConfig } from '../config/sections'
+import { useLenis } from '../hooks/useLenis'
 
 // Function to determine if background is light or dark
 const isLightColor = (color: string): boolean => {
@@ -22,7 +23,12 @@ export const TextColorContext = createContext({
 
 export const useTextColor = () => useContext(TextColorContext)
 
-const DynamicBackground = ({ children }: { children?: React.ReactNode }) => {
+const DynamicBackgroundInner = ({
+  children,
+}: {
+  children?: React.ReactNode
+}) => {
+  const { lenis } = useLenis()
   const [currentConfig, setCurrentConfig] = useState(sectionColorConfigs.hero)
   const [textColors, setTextColors] = useState({
     textColor: '#ffffff',
@@ -31,17 +37,20 @@ const DynamicBackground = ({ children }: { children?: React.ReactNode }) => {
   })
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY + window.innerHeight / 2
+    const handleScroll = (scrollY: number) => {
+      const scrollPosition = scrollY + window.innerHeight / 2
 
       // Get all sections using centralized configuration
       const sections = sectionsConfig.map((section, index) => ({
         id: section.id,
-        element: section.id === 'hero'
-          ? document.querySelector('#hero') || document.querySelector('main > *:first-child')
-          : section.id === 'gallery'
-          ? document.querySelector('[id*="gallery"]') || document.querySelector(`main > *:nth-child(${index + 1})`)
-          : document.getElementById(section.id),
+        element:
+          section.id === 'hero'
+            ? document.querySelector('#hero') ||
+              document.querySelector('main > *:first-child')
+            : section.id === 'gallery'
+              ? document.querySelector('[id*="gallery"]') ||
+                document.querySelector(`main > *:nth-child(${index + 1})`)
+              : document.getElementById(section.id),
       }))
 
       // Find current section
@@ -49,7 +58,7 @@ const DynamicBackground = ({ children }: { children?: React.ReactNode }) => {
         const section = sections[i]
         if (section.element) {
           const rect = section.element.getBoundingClientRect()
-          const sectionTop = rect.top + window.scrollY
+          const sectionTop = rect.top + scrollY
 
           if (scrollPosition >= sectionTop) {
             const newConfig = sectionColorConfigs[section.id]
@@ -61,9 +70,15 @@ const DynamicBackground = ({ children }: { children?: React.ReactNode }) => {
               const isLight = isLightColor(backgroundColor)
 
               setTextColors({
-                textColor: newConfig.textColor || (isLight ? '#333333' : '#ffffff'),
-                headingColor: newConfig.headingColor || (isLight ? '#333333' : '#ffffff'),
-                secondaryTextColor: newConfig.secondaryTextColor || (isLight ? 'rgba(0, 0, 0, 0.7)' : 'rgba(255, 255, 255, 0.8)'),
+                textColor:
+                  newConfig.textColor || (isLight ? '#333333' : '#ffffff'),
+                headingColor:
+                  newConfig.headingColor || (isLight ? '#333333' : '#ffffff'),
+                secondaryTextColor:
+                  newConfig.secondaryTextColor ||
+                  (isLight
+                    ? 'rgba(0, 0, 0, 0.7)'
+                    : 'rgba(255, 255, 255, 0.8)'),
               })
             }
             break
@@ -72,24 +87,24 @@ const DynamicBackground = ({ children }: { children?: React.ReactNode }) => {
       }
     }
 
-    // Initial check
-    handleScroll()
-
-    // Add scroll listener with throttling
-    let ticking = false
-    const scrollListener = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          handleScroll()
-          ticking = false
-        })
-        ticking = true
+    if (lenis) {
+      // Use Lenis scroll events
+      const onScroll = () => {
+        handleScroll(lenis.scroll)
       }
-    }
 
-    window.addEventListener('scroll', scrollListener)
-    return () => window.removeEventListener('scroll', scrollListener)
-  }, [currentConfig.background])
+      lenis.on('scroll', onScroll)
+      // Initial check
+      handleScroll(lenis.scroll)
+
+      return () => {
+        lenis.off('scroll', onScroll)
+      }
+    } else {
+      // Fallback to window scroll for initial render
+      handleScroll(0)
+    }
+  }, [lenis, currentConfig.background])
 
   return (
     <TextColorContext.Provider value={textColors}>
@@ -127,7 +142,7 @@ const DynamicBackground = ({ children }: { children?: React.ReactNode }) => {
           // Keep images and icons unaffected
           'img, svg': {
             color: 'inherit',
-          }
+          },
         }}
       />
       {children}
@@ -135,4 +150,4 @@ const DynamicBackground = ({ children }: { children?: React.ReactNode }) => {
   )
 }
 
-export default DynamicBackground
+export default DynamicBackgroundInner

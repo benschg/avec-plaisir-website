@@ -15,6 +15,10 @@ export interface ContactInfo {
     saturday: string
     sunday: string
   }
+  holidayClosure?: {
+    dates: string
+    reopening: string
+  }
 }
 
 export interface TeamMember {

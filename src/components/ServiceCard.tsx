@@ -11,10 +11,9 @@ const ServiceCard = ({ icon, title, description }: ServiceCardProps) => {
     <Box
       sx={{
         textAlign: 'center',
-        py: 4,
-        px: 3,
+        py: 2,
+        px: 2,
         height: '100%',
-        minHeight: '500px',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',

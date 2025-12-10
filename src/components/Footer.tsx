@@ -1,15 +1,12 @@
 import { Box, Container, Typography, Grid, Link } from '@mui/material'
 import { Link as RouterLink, useNavigate, useLocation } from 'react-router-dom'
 import InstagramIcon from '@mui/icons-material/Instagram'
-import { useEffect } from 'react'
+import { useLenis } from '../hooks/useLenis'
 
 const Footer = () => {
   const navigate = useNavigate()
   const location = useLocation()
-
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [location.pathname])
+  const { scrollTo } = useLenis()
 
   const scrollToSection = (sectionId: string) => {
     // If not on home page, navigate to home first
@@ -19,25 +16,28 @@ const Footer = () => {
       setTimeout(() => {
         const element = document.getElementById(sectionId)
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth' })
+          scrollTo(element, { duration: 1.2 })
         }
       }, 100)
     } else {
       const element = document.getElementById(sectionId)
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth' })
+        scrollTo(element, { duration: 1.2 })
       }
     }
   }
 
   return (
     <Box
+      id="footer"
       component="footer"
       sx={{
         backgroundColor: '#5e747a',
         color: 'white',
-        py: 6,
-        mt: 'auto',
+        height: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
       }}
     >
       <Container maxWidth="lg">
@@ -63,12 +63,12 @@ const Footer = () => {
               Öffnungszeiten:
             </Typography>
             <Typography variant="body2" sx={{ mb: 1 }}>
-              Montag - Freitag: 9:00 - 18:00 Uhr
+              Montag bis Freitag 9 – 18 Uhr
             </Typography>
             <Typography variant="body2" sx={{ mb: 1 }}>
-              Samstag: 9:00 - 15:00 Uhr
+              Samstag 9 – 15 Uhr
             </Typography>
-            <Typography variant="body2">Sonntag: Geschlossen</Typography>
+            <Typography variant="body2">Sonntag geschlossen</Typography>
           </Grid>
 
           {/* Right side - Links */}

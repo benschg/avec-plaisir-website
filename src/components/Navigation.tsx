@@ -14,22 +14,41 @@ import {
 } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import CloseIcon from '@mui/icons-material/Close'
+import { useLenis } from '../hooks/useLenis'
 
 const Navigation = () => {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [visible, setVisible] = useState(true)
+  const [lastScrollY, setLastScrollY] = useState(0)
   const location = useLocation()
   const navigate = useNavigate()
+  const { lenis, scrollTo } = useLenis()
 
   useEffect(() => {
+    if (!lenis) return
+
     const handleScroll = () => {
-      const isScrolled = window.scrollY > 50
+      const currentScrollY = lenis.scroll
+      const isScrolled = currentScrollY > 50
+
+      // Show header when scrolling up or at top
+      if (currentScrollY < lastScrollY || currentScrollY < 10) {
+        setVisible(true)
+      } else {
+        // Hide header when scrolling down
+        setVisible(false)
+      }
+
       setScrolled(isScrolled)
+      setLastScrollY(currentScrollY)
     }
 
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+    lenis.on('scroll', handleScroll)
+    return () => {
+      lenis.off('scroll', handleScroll)
+    }
+  }, [lenis, lastScrollY])
 
   const scrollToSection = (sectionId: string) => {
     // If not on home page, navigate to home first
@@ -39,13 +58,13 @@ const Navigation = () => {
       setTimeout(() => {
         const element = document.getElementById(sectionId)
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth' })
+          scrollTo(element, { duration: 1.2 })
         }
       }, 100)
     } else {
       const element = document.getElementById(sectionId)
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth' })
+        scrollTo(element, { duration: 1.2 })
       }
     }
     setMobileOpen(false) // Close drawer after navigation
@@ -68,13 +87,14 @@ const Navigation = () => {
   return (
     <>
       <AppBar
-        position="relative"
+        position="fixed"
         elevation={0}
         sx={{
           // backgroundColor: '#f1938d',
           backdropFilter: 'blur(10px)',
-          borderBottom: '1px solid rgba(0,0,0,0.05)',
-          transition: 'all 0.3s ease-in-out',
+          borderBottom: scrolled ? '1px solid rgba(0,0,0,0.05)' : 'none',
+          transform: visible ? 'translateY(0)' : 'translateY(-100%)',
+          transition: 'transform 0.3s ease-in-out',
           ...(scrolled && {
             py: 0.5,
           }),
@@ -98,11 +118,11 @@ const Navigation = () => {
               }}
             >
               <img
-                src="/images/avecplaisir-logo.png"
+                src="/avec-plaisir-text-logo.svg"
                 alt="avec plaisir zürich"
                 style={{
                   marginTop: scrolled ? '10px' : '20px',
-                  height: scrolled ? '45px' : '60px',
+                  height: scrolled ? '45px' : '100px',
                   width: 'auto',
                   transition: 'all 0.3s ease-in-out',
                 }}

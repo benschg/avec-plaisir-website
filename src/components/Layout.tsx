@@ -1,10 +1,10 @@
+import { useRef, useEffect, useState } from 'react'
 import { Box } from '@mui/material'
 import Navigation from './Navigation'
 import FallingFlowers from './FallingFlowers'
 import DynamicBackground from './DynamicBackground'
 import ScrollStepper from './ScrollStepper'
-import Footer from './Footer'
-import ContactCallToAction from '../sections/ContactCallToAction'
+import { LenisProvider } from '../hooks/useLenis'
 
 interface LayoutProps {
   children: React.ReactNode
@@ -12,22 +12,33 @@ interface LayoutProps {
 }
 
 const Layout = ({ children, showScrollStepper = false }: LayoutProps) => {
+  const wrapperRef = useRef<HTMLDivElement>(null)
+  const [wrapper, setWrapper] = useState<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    if (wrapperRef.current) {
+      setWrapper(wrapperRef.current)
+    }
+  }, [])
+
   return (
-    <DynamicBackground>
-      <Box
-        component={'div'}
-        sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}
-      >
-        <FallingFlowers />
-        <Navigation />
-        {showScrollStepper && <ScrollStepper />}
-        <Box component="main" sx={{ position: 'relative', zIndex: 0, flex: 1 }}>
+    <LenisProvider wrapper={wrapper}>
+      <DynamicBackground>
+        <Box
+          ref={wrapperRef}
+          component={'div'}
+          sx={{
+            height: '100vh',
+            overflowY: 'auto',
+          }}
+        >
+          <FallingFlowers />
+          <Navigation />
+          {showScrollStepper && <ScrollStepper />}
           {children}
         </Box>
-        <ContactCallToAction />
-        <Footer />
-      </Box>
-    </DynamicBackground>
+      </DynamicBackground>
+    </LenisProvider>
   )
 }
 

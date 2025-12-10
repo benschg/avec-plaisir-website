@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Box, Typography } from '@mui/material'
 import { useTextColor } from './DynamicBackground'
 import { sectionsConfig } from '../config/sections'
+import { useLenis } from '../hooks/useLenis'
 
 interface SectionProgress {
   id: string
@@ -12,6 +13,7 @@ interface SectionProgress {
 
 const ScrollStepper = () => {
   const { textColor, headingColor } = useTextColor()
+  const { lenis, scrollTo } = useLenis()
   const [sections, setSections] = useState<SectionProgress[]>(
     sectionsConfig.map((section, index) => ({
       id: section.id,
@@ -22,8 +24,10 @@ const ScrollStepper = () => {
   )
 
   useEffect(() => {
+    if (!lenis) return
+
     const handleScroll = () => {
-      const scrollPosition = window.scrollY
+      const scrollPosition = lenis.scroll
       const windowHeight = window.innerHeight
 
       // Get all section elements using configuration
@@ -31,8 +35,7 @@ const ScrollStepper = () => {
         id: section.id,
         element:
           section.id === 'hero'
-            ? document.querySelector('#hero') ||
-              document.querySelector('main > *:first-child')
+            ? document.querySelector('#hero')
             : section.id === 'gallery'
               ? document.querySelector('[id*="gallery"]') ||
                 document.querySelector(`main > *:nth-child(${index + 1})`)
@@ -55,9 +58,14 @@ const ScrollStepper = () => {
         const sectionBottom = sectionTop + sectionHeight
 
         // Check if section is in viewport
+        // For the first section (hero), consider it active when at the top of the page
         const isActive =
-          scrollPosition + windowHeight / 2 >= sectionTop &&
-          scrollPosition + windowHeight / 2 < sectionBottom
+          index === 0
+            ? lenis.scroll < Math.max(100, sectionHeight * 0.3) ||
+              (scrollPosition + windowHeight / 2 >= sectionTop &&
+                scrollPosition + windowHeight / 2 < sectionBottom)
+            : scrollPosition + windowHeight / 2 >= sectionTop &&
+              scrollPosition + windowHeight / 2 < sectionBottom
 
         // Calculate progress through section (0-100)
         let progress = 0
@@ -88,10 +96,21 @@ const ScrollStepper = () => {
       setSections(updatedSections)
     }
 
-    handleScroll()
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+    // Listen to Lenis scroll events
+    lenis.on('scroll', handleScroll)
+    handleScroll() // Initial call
+
+    return () => {
+      lenis.off('scroll', handleScroll)
+    }
+  }, [lenis])
+
+  const handleSectionClick = (sectionId: string) => {
+    const element = document.getElementById(sectionId)
+    if (element) {
+      scrollTo(element, { duration: 1.2 })
+    }
+  }
 
   return (
     <Box
@@ -101,7 +120,7 @@ const ScrollStepper = () => {
         top: '50%',
         transform: 'translateY(-50%)',
         zIndex: 1000,
-        display: { xs: 'none', md: 'flex' },
+        display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         '&:hover .section-label': {
@@ -128,12 +147,7 @@ const ScrollStepper = () => {
               position: 'relative',
               width: 'auto',
             }}
-            onClick={() => {
-              const element = document.getElementById(section.id)
-              if (element) {
-                element.scrollIntoView({ behavior: 'smooth' })
-              }
-            }}
+            onClick={() => handleSectionClick(section.id)}
           >
             {/* Section title - positioned to the left */}
             <Typography
