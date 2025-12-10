@@ -59,7 +59,16 @@ const ContactItem = ({
 
 const ContactSection = () => {
   return (
-    <Box id="kontakt" sx={{ py: 10, my: 4 }}>
+    <Box
+      id="kontakt"
+      sx={{
+        height: '100vh',
+        overflowY: 'auto',
+        display: 'flex',
+        alignItems: 'center',
+        py: 4,
+      }}
+    >
       <Container>
         <Grid container spacing={8}>
           <Grid size={{ xs: 12, md: 6 }}>

@@ -21,14 +21,34 @@ export const sectionsConfig: SectionConfig[] = [
     displayName: 'Gallery Section',
   },
   {
-    id: 'angebot',
+    id: 'visit',
+    title: 'Besuch',
+    displayName: 'Visit Section',
+  },
+  {
+    id: 'angebot-intro',
     title: 'Angebot',
+    displayName: 'Services Intro',
+  },
+  {
+    id: 'angebot',
+    title: 'Services',
     displayName: 'Services Section',
+  },
+  {
+    id: 'avec-animated',
+    title: 'Avec',
+    displayName: 'Animated Text',
   },
   {
     id: 'team',
     title: 'Team',
     displayName: 'Team Section',
+  },
+  {
+    id: 'footer',
+    title: 'Footer',
+    displayName: 'Footer',
   },
 ]
 

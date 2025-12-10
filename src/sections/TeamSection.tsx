@@ -8,8 +8,11 @@ const TeamSection = () => {
     <Box
       id="team"
       sx={{
-        py: 10,
-        my: 4,
+        height: '100vh',
+        overflowY: 'auto',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
       }}
     >
       <Container maxWidth="md">

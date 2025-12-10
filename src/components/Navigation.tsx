@@ -14,6 +14,7 @@ import {
 } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import CloseIcon from '@mui/icons-material/Close'
+import { useLenis } from '../hooks/useLenis'
 
 const Navigation = () => {
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -22,10 +23,13 @@ const Navigation = () => {
   const [lastScrollY, setLastScrollY] = useState(0)
   const location = useLocation()
   const navigate = useNavigate()
+  const { lenis, scrollTo } = useLenis()
 
   useEffect(() => {
+    if (!lenis) return
+
     const handleScroll = () => {
-      const currentScrollY = window.scrollY
+      const currentScrollY = lenis.scroll
       const isScrolled = currentScrollY > 50
 
       // Show header when scrolling up or at top
@@ -40,9 +44,11 @@ const Navigation = () => {
       setLastScrollY(currentScrollY)
     }
 
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [lastScrollY])
+    lenis.on('scroll', handleScroll)
+    return () => {
+      lenis.off('scroll', handleScroll)
+    }
+  }, [lenis, lastScrollY])
 
   const scrollToSection = (sectionId: string) => {
     // If not on home page, navigate to home first
@@ -52,13 +58,13 @@ const Navigation = () => {
       setTimeout(() => {
         const element = document.getElementById(sectionId)
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth' })
+          scrollTo(element, { duration: 1.2 })
         }
       }, 100)
     } else {
       const element = document.getElementById(sectionId)
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth' })
+        scrollTo(element, { duration: 1.2 })
       }
     }
     setMobileOpen(false) // Close drawer after navigation

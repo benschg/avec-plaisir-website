@@ -10,7 +10,6 @@ const ServiceImage = ({ src, alt }: ServiceImageProps) => {
     <Box
       sx={{
         height: '100%',
-        minHeight: '300px',
         display: 'flex',
         alignItems: 'stretch',
         justifyContent: 'center',
