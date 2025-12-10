@@ -8,6 +8,7 @@ import GallerySection from '../sections/GallerySection'
 import VisitSection from '../sections/VisitSection'
 import ContactSection from '../sections/ContactSection'
 import Footer from '../components/Footer'
+import ContactCallToAction from '../sections/ContactCallToAction'
 
 const Home = () => {
   return (
@@ -20,6 +21,7 @@ const Home = () => {
       <ServicesSection />
       <AnimatedTextSection />
       <TeamSection />
+      <ContactCallToAction />
       <Footer />
     </Box>
   )

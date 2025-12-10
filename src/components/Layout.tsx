@@ -4,7 +4,6 @@ import Navigation from './Navigation'
 import FallingFlowers from './FallingFlowers'
 import DynamicBackground from './DynamicBackground'
 import ScrollStepper from './ScrollStepper'
-import ContactCallToAction from '../sections/ContactCallToAction'
 import { LenisProvider } from '../hooks/useLenis'
 
 interface LayoutProps {
@@ -37,7 +36,6 @@ const Layout = ({ children, showScrollStepper = false }: LayoutProps) => {
           <Navigation />
           {showScrollStepper && <ScrollStepper />}
           {children}
-          <ContactCallToAction />
         </Box>
       </DynamicBackground>
     </LenisProvider>

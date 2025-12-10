@@ -46,6 +46,11 @@ export const sectionsConfig: SectionConfig[] = [
     displayName: 'Team Section',
   },
   {
+    id: 'cta',
+    title: 'Beratung',
+    displayName: 'Contact CTA',
+  },
+  {
     id: 'footer',
     title: 'Footer',
     displayName: 'Footer',
