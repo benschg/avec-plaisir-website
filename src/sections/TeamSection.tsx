@@ -8,7 +8,8 @@ const TeamSection = () => {
     <Box
       id="team"
       sx={{
-        height: '100vh',
+        minHeight: '100vh',
+        height: { xs: 'auto', md: '100vh' },
         overflowY: 'auto',
         display: 'flex',
         flexDirection: 'column',

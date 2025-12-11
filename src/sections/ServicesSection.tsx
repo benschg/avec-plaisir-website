@@ -7,7 +7,8 @@ const ServicesSection = () => {
     <Box
       id="angebot"
       sx={{
-        height: '100vh',
+        minHeight: '100vh',
+        height: { xs: 'auto', md: '100vh' },
         display: 'flex',
         alignItems: 'center',
         py: 2,

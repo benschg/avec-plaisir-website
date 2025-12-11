@@ -8,7 +8,8 @@ const ServicesIntroSection = () => {
     <Box
       id="angebot-intro"
       sx={{
-        height: '100vh',
+        minHeight: '100vh',
+        height: { xs: 'auto', md: '100vh' },
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',

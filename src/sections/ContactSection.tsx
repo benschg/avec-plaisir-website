@@ -69,7 +69,8 @@ const ContactSection = () => {
     <Box
       id="kontakt"
       sx={{
-        height: '100vh',
+        minHeight: '100vh',
+        height: { xs: 'auto', md: '100vh' },
         overflowY: 'auto',
         display: 'flex',
         alignItems: 'center',

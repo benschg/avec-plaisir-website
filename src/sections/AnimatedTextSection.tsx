@@ -6,7 +6,8 @@ const AnimatedTextSection = () => {
     <Box
       id="avec-animated"
       sx={{
-        height: '100vh',
+        minHeight: '100vh',
+        height: { xs: 'auto', md: '100vh' },
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
