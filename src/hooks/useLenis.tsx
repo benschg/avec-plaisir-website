@@ -105,6 +105,12 @@ export const LenisProvider = ({ children, wrapper }: LenisProviderProps) => {
         // Use 'center' alignment to center sections in viewport
         snapInstance.addElement(section, { align: ['center'] })
       })
+
+      // Also add snap points for elements with .snap-section class (e.g., service panels)
+      const snapSections = document.querySelectorAll('.snap-section')
+      snapSections.forEach((section) => {
+        snapInstance.addElement(section as HTMLElement, { align: ['center'] })
+      })
     }
 
     // Setup snap points after DOM is ready

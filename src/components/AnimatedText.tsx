@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react'
+import { useRef, useEffect } from 'react'
 import { Box } from '@mui/material'
 import { useTextColor } from './DynamicBackground'
+import gsap from 'gsap'
 
 type AnimatedItem =
   | string
-  | { type: 'svg'; src: string; alt?: string; filter?: string }
+  | { type: 'svg'; src: string; alt?: string }
 
 const AnimatedText = ({
   words,
@@ -16,138 +17,151 @@ const AnimatedText = ({
   interval?: number
 }) => {
   const { headingColor } = useTextColor()
-  const [currentWordIndex, setCurrentWordIndex] = useState(0)
-  const [isAnimating, setIsAnimating] = useState(false)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const currentIndexRef = useRef(0)
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setIsAnimating(true)
-      setTimeout(() => {
-        setCurrentWordIndex((prev) => (prev + 1) % words.length)
-        setIsAnimating(false)
-      }, 400)
-    }, interval)
+    if (!containerRef.current) return
+
+    const items = containerRef.current.querySelectorAll(
+      '.animated-word'
+    ) as NodeListOf<HTMLElement>
+    if (items.length === 0) return
+
+    // Set initial state - first item visible, others hidden below
+    // Use xPercent: -50 to maintain center positioning with left: 50%
+    gsap.set(items, {
+      yPercent: 120,
+      xPercent: -50,
+      opacity: 0,
+      visibility: 'hidden',
+    })
+    gsap.set(items[0], {
+      yPercent: 0,
+      xPercent: -50,
+      opacity: 1,
+      visibility: 'visible',
+    })
+
+    // Set container width based on first item
+    const container = containerRef.current
+    container.style.width = `${items[0].offsetWidth}px`
+
+    const animateNext = () => {
+      const currentIndex = currentIndexRef.current
+      const nextIndex = (currentIndex + 1) % words.length
+      const currentItem = items[currentIndex]
+      const nextItem = items[nextIndex]
+
+      // Animate container width to match next item
+      gsap.to(container, {
+        width: nextItem.offsetWidth,
+        duration: 0.4,
+        ease: 'power2.inOut',
+      })
+
+      // Animate current out (up) and next in (from below)
+      gsap.to(currentItem, {
+        yPercent: -120,
+        opacity: 0,
+        duration: 0.4,
+        ease: 'power2.inOut',
+        onComplete: () => {
+          gsap.set(currentItem, { visibility: 'hidden' })
+        },
+      })
+
+      gsap.set(nextItem, { visibility: 'visible' })
+      gsap.fromTo(
+        nextItem,
+        { yPercent: 120, xPercent: -50, opacity: 0 },
+        {
+          yPercent: 0,
+          xPercent: -50,
+          opacity: 1,
+          duration: 0.4,
+          ease: 'power2.inOut',
+        }
+      )
+
+      currentIndexRef.current = nextIndex
+    }
+
+    const timer = setInterval(animateNext, interval)
 
     return () => clearInterval(timer)
   }, [words.length, interval])
 
+  const renderContent = (item: AnimatedItem) => {
+    if (typeof item === 'string') {
+      return item
+    } else if (item.type === 'svg') {
+      return (
+        <Box
+          component="span"
+          sx={{
+            display: 'inline-block',
+            width: '1em',
+            height: '1em',
+            backgroundColor: 'currentColor',
+            maskImage: `url(${item.src})`,
+            maskSize: 'contain',
+            maskRepeat: 'no-repeat',
+            maskPosition: 'center',
+            WebkitMaskImage: `url(${item.src})`,
+            WebkitMaskSize: 'contain',
+            WebkitMaskRepeat: 'no-repeat',
+            WebkitMaskPosition: 'center',
+          }}
+        />
+      )
+    }
+    return null
+  }
+
   return (
     <Box
       sx={{
-        display: 'inline-flex',
-        alignItems: 'baseline',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
         fontFamily: 'Lora',
         fontSize: fontSize,
         fontWeight: 300,
         color: headingColor,
-        lineHeight: 1.3,
+        lineHeight: 1,
         gap: '0.3em',
       }}
     >
-      <Box
-        sx={{
-          position: 'relative',
-          minWidth: '4em',
-          height: '1.3em',
-          display: 'inline-block',
-          overflow: 'hidden',
-          verticalAlign: 'baseline',
-        }}
-      >
-        <Box
-          component="span"
-          sx={{
-            position: 'absolute',
-            right: 0,
-            top: 0,
-            whiteSpace: 'nowrap',
-            textAlign: 'right',
-            display: 'flex',
-            alignItems: 'center',
-            width: '100%',
-            justifyContent: 'flex-end',
-          }}
-        >
-          avec
-        </Box>
-      </Box>
+      <Box component="span">avec</Box>
 
       <Box
+        ref={containerRef}
         sx={{
           position: 'relative',
-          minWidth: { xs: '4em', md: '4em' },
-          height: '1.3em',
-          display: 'inline-block',
+          height: '1.2em',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
           overflow: 'hidden',
-          verticalAlign: 'baseline',
         }}
       >
-        {words.map((item, index) => {
-          const isCurrent = index === currentWordIndex
-          const isNext = index === (currentWordIndex + 1) % words.length
-
-          if (!isCurrent && !isNext) return null
-
-          const renderContent = () => {
-            if (typeof item === 'string') {
-              return item
-            } else if (item.type === 'svg') {
-              // Use a mask to apply the current text color to the SVG
-              return (
-                <Box
-                  component="span"
-                  sx={{
-                    display: 'inline-block',
-                    width: '1em',
-                    height: '1em',
-                    backgroundColor: 'currentColor',
-                    maskImage: `url(${item.src})`,
-                    maskSize: 'contain',
-                    maskRepeat: 'no-repeat',
-                    maskPosition: 'center',
-                    WebkitMaskImage: `url(${item.src})`,
-                    WebkitMaskSize: 'contain',
-                    WebkitMaskRepeat: 'no-repeat',
-                    WebkitMaskPosition: 'center',
-                  }}
-                />
-              )
-            }
-            return null
-          }
-
-          return (
-            <Box
-              component="span"
-              key={`${typeof item === 'string' ? item : item.src}-${index}`}
-              sx={{
-                position: 'absolute',
-                left: 0,
-                top: 0,
-                transform: isCurrent
-                  ? isAnimating
-                    ? 'translateY(-120%)'
-                    : 'translateY(0)'
-                  : isAnimating
-                    ? 'translateY(0)'
-                    : 'translateY(120%)',
-                opacity: isCurrent
-                  ? isAnimating
-                    ? 0
-                    : 1
-                  : isAnimating
-                    ? 1
-                    : 0,
-                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                whiteSpace: 'nowrap',
-                display: 'flex',
-                alignItems: 'center',
-              }}
-            >
-              {renderContent()}
-            </Box>
-          )
-        })}
+        {words.map((item, index) => (
+          <Box
+            component="span"
+            key={index}
+            className="animated-word"
+            sx={{
+              position: 'absolute',
+              left: '50%',
+              whiteSpace: 'nowrap',
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            {renderContent(item)}
+          </Box>
+        ))}
       </Box>
     </Box>
   )
