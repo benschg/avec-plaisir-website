@@ -12,7 +12,7 @@ interface SectionProgress {
 }
 
 const ScrollStepper = () => {
-  const { textColor, headingColor } = useTextColor()
+  const { textColor, headingColor, backgroundColor } = useTextColor()
   const { lenis, scrollTo } = useLenis()
   const [sections, setSections] = useState<SectionProgress[]>(
     sectionsConfig.map((section, index) => ({
@@ -123,15 +123,59 @@ const ScrollStepper = () => {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        '&:hover .section-label': {
+        '&:hover .labels-container': {
           opacity: 1,
-          transform: 'translateY(-50%) translateX(-10px)',
           visibility: 'visible',
         },
       }}
     >
       {/* Section indicators */}
       <Box sx={{ position: 'relative' }}>
+        {/* Labels container with page background */}
+        <Box
+          className="labels-container"
+          sx={{
+            position: 'absolute',
+            right: 24,
+            top: 0,
+            opacity: 0,
+            visibility: 'hidden',
+            transition: 'opacity 0.3s ease, visibility 0.3s ease',
+            backgroundColor,
+            borderRadius: 2,
+            py: 1,
+            px: 1.5,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 0,
+          }}
+        >
+          {sections.map((section, index) => (
+            <Typography
+              key={section.id}
+              variant="caption"
+              onClick={() => handleSectionClick(section.id)}
+              sx={{
+                display: 'block',
+                color: textColor,
+                fontSize: '0.75rem',
+                fontWeight: section.isActive ? 600 : 400,
+                textTransform: 'capitalize',
+                whiteSpace: 'nowrap',
+                cursor: 'pointer',
+                height: index < sections.length - 1 ? 32 : 'auto',
+                lineHeight: index < sections.length - 1 ? '20px' : 'normal',
+                opacity: section.isActive ? 1 : 0.6,
+                transition: 'all 0.3s ease',
+                '&:hover': {
+                  opacity: 1,
+                },
+              }}
+            >
+              {section.title}
+            </Typography>
+          ))}
+        </Box>
         {sections.map((section, index) => (
           <Box
             key={section.id}
@@ -149,28 +193,6 @@ const ScrollStepper = () => {
             }}
             onClick={() => handleSectionClick(section.id)}
           >
-            {/* Section title - positioned to the left */}
-            <Typography
-              className="section-label"
-              variant="caption"
-              sx={{
-                position: 'absolute',
-                right: '100%',
-                top: '50%',
-                transform: 'translateY(-50%) translateX(20px)',
-                color: textColor,
-                fontSize: '0.75rem',
-                fontWeight: section.isActive ? 600 : 400,
-                transition: 'all 0.3s ease',
-                textTransform: 'capitalize',
-                opacity: 0,
-                visibility: 'hidden',
-                whiteSpace: 'nowrap',
-                mr: 1,
-              }}
-            >
-              {section.title}
-            </Typography>
 
             {/* Section dot */}
             <Box
