@@ -116,7 +116,7 @@ const ScrollStepper = () => {
     <Box
       sx={{
         position: 'fixed',
-        right: 24,
+        right: { xs: -4, md: 24 },
         top: '50%',
         transform: 'translateY(-50%)',
         zIndex: 1000,
