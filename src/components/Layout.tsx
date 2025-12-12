@@ -27,10 +27,7 @@ const Layout = ({ children, showScrollStepper = false }: LayoutProps) => {
         <Box
           ref={wrapperRef}
           component={'div'}
-          sx={{
-            height: '100vh',
-            overflowY: 'auto',
-          }}
+          className="lenis-wrapper"
         >
           <FallingFlowers />
           <Navigation />

@@ -9,7 +9,11 @@ import {
 } from 'react'
 import Lenis from 'lenis'
 import Snap from 'lenis/snap'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { sectionsConfig } from '../config/sections'
+
+gsap.registerPlugin(ScrollTrigger)
 
 interface LenisContextType {
   lenis: Lenis | null
@@ -47,7 +51,6 @@ export const LenisProvider = ({ children, wrapper }: LenisProviderProps) => {
   const lenisRef = useRef<Lenis | null>(null)
   const snapRef = useRef<Snap | null>(null)
   const [lenis, setLenis] = useState<Lenis | null>(null)
-  const rafRef = useRef<number | null>(null)
 
   // Get section elements for snapping
   const getSectionElements = useCallback(() => {
@@ -70,10 +73,8 @@ export const LenisProvider = ({ children, wrapper }: LenisProviderProps) => {
   useEffect(() => {
     if (!wrapper) return
 
-    // Initialize Lenis
+    // Initialize Lenis - use native window scroll for better ScrollTrigger compatibility
     const lenisInstance = new Lenis({
-      wrapper: wrapper,
-      content: wrapper,
       smoothWheel: true,
       lerp: 0.08,
       duration: 1.4,
@@ -101,7 +102,14 @@ export const LenisProvider = ({ children, wrapper }: LenisProviderProps) => {
 
       sections.forEach((section) => {
         // Use element-based snapping which handles dynamic positioning
-        snapInstance.addElement(section, { align: ['start'] })
+        // Use 'center' alignment to center sections in viewport
+        snapInstance.addElement(section, { align: ['center'] })
+      })
+
+      // Also add snap points for elements with .snap-section class (e.g., service panels)
+      const snapSections = document.querySelectorAll('.snap-section')
+      snapSections.forEach((section) => {
+        snapInstance.addElement(section as HTMLElement, { align: ['center'] })
       })
     }
 
@@ -110,19 +118,21 @@ export const LenisProvider = ({ children, wrapper }: LenisProviderProps) => {
       setupSnapPoints()
     }, 100)
 
-    // Animation frame loop
-    const raf = (time: number) => {
-      lenisInstance.raf(time)
-      rafRef.current = requestAnimationFrame(raf)
-    }
+    // Integrate Lenis with GSAP ScrollTrigger
+    // Sync ScrollTrigger with Lenis scroll updates
+    lenisInstance.on('scroll', ScrollTrigger.update)
 
-    rafRef.current = requestAnimationFrame(raf)
+    // Use GSAP ticker to drive Lenis (single RAF loop)
+    const tickerCallback = (time: number) => {
+      lenisInstance.raf(time * 1000)
+    }
+    gsap.ticker.add(tickerCallback)
+    gsap.ticker.lagSmoothing(0)
 
     return () => {
       clearTimeout(timeoutId)
-      if (rafRef.current) {
-        cancelAnimationFrame(rafRef.current)
-      }
+      gsap.ticker.remove(tickerCallback)
+      lenisInstance.off('scroll', ScrollTrigger.update)
       snapInstance.destroy()
       lenisInstance.destroy()
       lenisRef.current = null

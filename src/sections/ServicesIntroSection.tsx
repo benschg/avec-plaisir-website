@@ -42,7 +42,7 @@ const ServicesIntroSection = () => {
               sx={{ color: headingColor }}
               fontSize={{ xs: '1.1rem', md: '3rem' }}
             >
-              Ihre Blumen nach Wunsch.
+              Deine Blumen nach Wunsch.
             </Typography>
 
             <Typography
@@ -52,9 +52,9 @@ const ServicesIntroSection = () => {
               variant="body1"
               fontSize={{ xs: '1.1rem', md: '1.5rem' }}
             >
-              Wir erfüllen Ihren Blumenwunsch mit grosser Freude. Egal ob
+              Wir erfüllen deinen Blumenwunsch mit grosser Freude. Egal ob
               einmalig oder wiederkehrend, für den Küchentisch oder ein grosses
-              Bankett, Ihre Bestellung wird mit äusserster Sorgfalt und so
+              Bankett, deine Bestellung wird mit äusserster Sorgfalt und so
               schnell wie möglich erledigt.
             </Typography>
           </Box>

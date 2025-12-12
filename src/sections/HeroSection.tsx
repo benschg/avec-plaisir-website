@@ -14,7 +14,7 @@ const HeroSection = () => {
         flexDirection: 'column',
         justifyContent: 'space-evenly',
         boxSizing: 'border-box',
-        pt: { xs: 8, md: 10 },
+        pt: { xs: 18, md: 10 },
         pb: { xs: 4, md: 6 },
       }}
     >
@@ -71,6 +71,7 @@ const HeroSection = () => {
             maxWidth: 600,
             mx: 'auto',
             lineHeight: 1.7,
+            whiteSpace: 'pre-line',
           }}
         >
           {content.hero.intro}

@@ -1,9 +1,76 @@
+import { useRef, useLayoutEffect } from 'react'
 import { Box, Container, Typography } from '@mui/material'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const VisitSection = () => {
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const imageRef = useRef<HTMLImageElement>(null)
+  const leftTextRef = useRef<HTMLSpanElement>(null)
+  const rightTextRef = useRef<HTMLSpanElement>(null)
+
+  useLayoutEffect(() => {
+    if (!sectionRef.current || !imageRef.current) return
+
+    const ctx = gsap.context(() => {
+      // Animate image from right to left as we scroll past
+      gsap.fromTo(
+        imageRef.current,
+        { xPercent: 25 },
+        {
+          xPercent: -25,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 1,
+          },
+        }
+      )
+
+      // "wir freuen uns" moves up
+      gsap.fromTo(
+        leftTextRef.current,
+        { yPercent: 60 },
+        {
+          yPercent: -60,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 1,
+          },
+        }
+      )
+
+      // "auf deinen Besuch!" moves down
+      gsap.fromTo(
+        rightTextRef.current,
+        { yPercent: -60 },
+        {
+          yPercent: 60,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 1,
+          },
+        }
+      )
+    })
+
+    return () => ctx.revert()
+  }, [])
+
   return (
     <Box
       id="visit"
+      ref={sectionRef}
       sx={{
         minHeight: '100vh',
         height: { xs: 'auto', md: '100vh' },
@@ -26,23 +93,25 @@ const VisitSection = () => {
             overflow: 'hidden',
           }}
         >
-          {/* Background Image */}
+          {/* Background Image with horizontal parallax */}
           <img
+            ref={imageRef}
             src="/images/NRP_9162-low-scaled-uai-2133x1707.jpg"
             alt="Flower shop interior"
             style={{
-              width: '90%',
+              width: '120%',
               height: '100%',
               objectFit: 'cover',
               position: 'absolute',
               top: 0,
-              left: '5%',
+              left: '-10%',
               zIndex: 1,
             }}
           />
 
           {/* Left vertical text */}
           <Typography
+            ref={leftTextRef}
             variant="h4"
             sx={{
               position: 'absolute',
@@ -65,6 +134,7 @@ const VisitSection = () => {
 
           {/* Right vertical text */}
           <Typography
+            ref={rightTextRef}
             variant="h4"
             sx={{
               position: 'absolute',
@@ -82,7 +152,7 @@ const VisitSection = () => {
               whiteSpace: 'nowrap',
             }}
           >
-            auf Ihren Besuch!
+            auf deinen Besuch!
           </Typography>
         </Box>
       </Container>

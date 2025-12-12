@@ -23,7 +23,7 @@ const AnimatedTextSection = () => {
             alt: 'flower',
           },
         ]}
-        fontSize={{ xs: '2rem', md: '6rem' }}
+        fontSize={{ xs: '3.5rem', md: '6rem' }}
         interval={4000}
       />
     </Box>

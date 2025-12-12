@@ -71,29 +71,28 @@ const ContactSection = () => {
       sx={{
         minHeight: '100vh',
         height: { xs: 'auto', md: '100vh' },
-        overflowY: 'auto',
         display: 'flex',
         alignItems: 'center',
-        py: 4,
+        py: { xs: 10, md: 4 },
       }}
     >
       <Container>
-        <Grid container spacing={8}>
+        <Grid container spacing={{ xs: 4, md: 8 }}>
           <Grid size={{ xs: 12, md: 6 }}>
             {/* Shop Image */}
             <Box
               sx={{
-                mb: 8,
+                mb: { xs: 2, md: 8 },
                 textAlign: 'center',
                 display: 'flex',
                 alignItems: 'center',
-                height: '100%',
+                justifyContent: 'center',
+                height: { xs: 'auto', md: '100%' },
               }}
             >
               <Box
                 sx={{
-                  maxWidth: 600,
-
+                  maxWidth: { xs: 280, md: 600 },
                   mx: 'auto',
                   borderRadius: 2,
                   overflow: 'hidden',
@@ -118,7 +117,11 @@ const ContactSection = () => {
               <ContactItem
                 icon={
                   <LocationOn
-                    sx={{ mr: 2, color: '#666666', fontSize: '2rem' }}
+                    sx={{
+                      mr: { xs: 1, md: 2 },
+                      color: '#666666',
+                      fontSize: '2rem',
+                    }}
                   />
                 }
                 description={contactInfo.address}
@@ -126,37 +129,62 @@ const ContactSection = () => {
               />
 
               <Divider
-                sx={{ my: 2, backgroundColor: 'rgba(255, 255, 255, 0.2)' }}
+                sx={{
+                  my: { xs: 1, md: 2 },
+                  backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                }}
               />
 
               <ContactItem
                 icon={
-                  <Phone sx={{ mr: 2, color: '#666666', fontSize: '2rem' }} />
+                  <Phone
+                    sx={{
+                      mr: { xs: 1, md: 2 },
+                      color: '#666666',
+                      fontSize: { xs: '1.5rem', md: '2rem' },
+                    }}
+                  />
                 }
                 description={contactInfo.phone}
                 link={`tel:${contactInfo.phone}`}
               />
 
               <Divider
-                sx={{ my: 2, backgroundColor: 'rgba(255, 255, 255, 0.2)' }}
+                sx={{
+                  my: { xs: 1, md: 2 },
+                  backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                }}
               />
 
               <ContactItem
                 icon={
-                  <Email sx={{ mr: 2, color: '#666666', fontSize: '2rem' }} />
+                  <Email
+                    sx={{
+                      mr: { xs: 1, md: 2 },
+                      color: '#666666',
+                      fontSize: { xs: '1.5rem', md: '2rem' },
+                    }}
+                  />
                 }
                 description={contactInfo.email}
                 link={`mailto:${contactInfo.email}`}
               />
 
               <Divider
-                sx={{ my: 2, backgroundColor: 'rgba(255, 255, 255, 0.2)' }}
+                sx={{
+                  my: { xs: 1, md: 2 },
+                  backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                }}
               />
 
               <ContactItem
                 icon={
                   <Instagram
-                    sx={{ mr: 2, color: '#666666', fontSize: '2rem' }}
+                    sx={{
+                      mr: { xs: 1, md: 2 },
+                      color: '#666666',
+                      fontSize: { xs: '1.5rem', md: '2rem' },
+                    }}
                   />
                 }
                 description={contactInfo.instagram}
@@ -164,12 +192,21 @@ const ContactSection = () => {
               />
 
               <Divider
-                sx={{ my: 2, backgroundColor: 'rgba(255, 255, 255, 0.2)' }}
+                sx={{
+                  my: { xs: 1, md: 2 },
+                  backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                }}
               />
 
               <ContactItem
                 icon={
-                  <Alarm sx={{ mr: 2, color: '#666666', fontSize: '2rem' }} />
+                  <Alarm
+                    sx={{
+                      mr: { xs: 1, md: 2 },
+                      color: '#666666',
+                      fontSize: { xs: '1.5rem', md: '2rem' },
+                    }}
+                  />
                 }
                 description={[
                   contactInfo.hours.weekdays,
@@ -181,13 +218,20 @@ const ContactSection = () => {
               {contactInfo.holidayClosure && (
                 <>
                   <Divider
-                    sx={{ my: 2, backgroundColor: 'rgba(255, 255, 255, 0.2)' }}
+                    sx={{
+                      my: { xs: 1, md: 2 },
+                      backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                    }}
                   />
 
                   <ContactItem
                     icon={
                       <Park
-                        sx={{ mr: 2, color: '#666666', fontSize: '2rem' }}
+                        sx={{
+                          mr: { xs: 1, md: 2 },
+                          color: '#666666',
+                          fontSize: { xs: '1.5rem', md: '2rem' },
+                        }}
                       />
                     }
                     description={[

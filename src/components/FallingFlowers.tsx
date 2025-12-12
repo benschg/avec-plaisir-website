@@ -1,9 +1,17 @@
 import { useEffect, useRef } from 'react'
 import { Box } from '@mui/material'
+import { useTextColor } from './DynamicBackground'
 
 const FallingFlowers = () => {
   const containerRef = useRef<HTMLDivElement>(null)
   const iconPath = '/avec-plaisir-flower-white.svg'
+  const { textColor } = useTextColor()
+
+  // Store textColor in a ref so the event handler always has the current value
+  const textColorRef = useRef(textColor)
+  useEffect(() => {
+    textColorRef.current = textColor
+  }, [textColor])
 
   useEffect(() => {
     const createIconTrail = (x: number, y: number) => {
@@ -14,11 +22,22 @@ const FallingFlowers = () => {
 
       const rotation = Math.random() * 60 - 30 // Slight random rotation
       const scale = 0.6 + Math.random() * 0.4
-      const isColored = Math.random() < 0.1 // 10% chance to be colored
-      const fadeOutDuration = isColored ? 3000 : 1500 // Colored icons live longer
-      // Random hue rotation for colored icons
-      const randomHue = Math.floor(Math.random() * 360)
-      const colorFilter = `brightness(0) saturate(100%) invert(50%) sepia(100%) saturate(500%) hue-rotate(${randomHue}deg)`
+      const isInverted = Math.random() < 0.03 // 3% chance to be inverted color
+      const fadeOutDuration = isInverted ? 3000 : 1500 // Inverted icons live longer
+
+      // Determine filter based on current text color and inversion state
+      const currentTextColor = textColorRef.current
+      const isLightText =
+        currentTextColor === '#ffffff' || currentTextColor.toLowerCase() === '#fff'
+
+      let filter = 'none'
+      if (isInverted) {
+        // Inverted: if text is white, flower is black; if text is dark, flower is white
+        filter = isLightText ? 'invert(1)' : 'none'
+      } else {
+        // Normal: match the text color (white SVG needs invert when text is dark)
+        filter = isLightText ? 'none' : 'invert(1)'
+      }
 
       Object.assign(icon.style, {
         position: 'absolute',
@@ -32,7 +51,7 @@ const FallingFlowers = () => {
         transition: `opacity ${fadeOutDuration}ms ease-out, transform ${fadeOutDuration}ms ease-out`,
         opacity: '0.8',
         zIndex: '9999',
-        filter: isColored ? colorFilter : 'none',
+        filter: filter,
       })
 
       containerRef.current.appendChild(icon)

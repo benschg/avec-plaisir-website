@@ -27,7 +27,7 @@ const ContactCallToAction = () => {
           variant="h4"
           sx={{ fontSize: '3em', fontWeight: '300', fontFamily: 'Jost', mb: 4 }}
         >
-          Brauchen Sie blumige Beratung? Wir freuen uns auf Ihre
+          Brauchst du blumige Beratung? Wir freuen uns auf deine
           Kontaktaufnahme!
         </Typography>
         <Button
