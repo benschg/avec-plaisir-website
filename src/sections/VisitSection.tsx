@@ -80,6 +80,7 @@ const VisitSection = () => {
       }}
     >
       <Container maxWidth="lg">
+        {/* Outer container for positioning text - no overflow clipping */}
         <Box
           sx={{
             position: 'relative',
@@ -90,24 +91,30 @@ const VisitSection = () => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            overflow: 'hidden',
           }}
         >
-          {/* Background Image with horizontal parallax */}
-          <img
-            ref={imageRef}
-            src="/images/NRP_9162-low-scaled-uai-2133x1707.jpg"
-            alt="Flower shop interior"
-            style={{
-              width: '120%',
-              height: '100%',
-              objectFit: 'cover',
+          {/* Image container with overflow hidden */}
+          <Box
+            sx={{
               position: 'absolute',
-              top: 0,
-              left: '-10%',
-              zIndex: 1,
+              inset: 0,
+              overflow: 'hidden',
             }}
-          />
+          >
+            <img
+              ref={imageRef}
+              src="/images/NRP_9162-low-scaled-uai-2133x1707.jpg"
+              alt="Flower shop interior"
+              style={{
+                width: '120%',
+                height: '100%',
+                objectFit: 'cover',
+                position: 'absolute',
+                top: 0,
+                left: '-10%',
+              }}
+            />
+          </Box>
 
           {/* Left vertical text */}
           <Typography
@@ -115,7 +122,7 @@ const VisitSection = () => {
             variant="h4"
             sx={{
               position: 'absolute',
-              left: { xs: '5%', md: 10 },
+              left: { xs: 0, md: 10 },
               top: { xs: '50%', md: '50%' },
               transform: {
                 xs: 'translate(-50%, -50%) rotate(-90deg)',
@@ -138,7 +145,7 @@ const VisitSection = () => {
             variant="h4"
             sx={{
               position: 'absolute',
-              right: { xs: '5%', md: 10 },
+              right: { xs: 0, md: 10 },
               top: { xs: '50%', md: '50%' },
               transform: {
                 xs: 'translate(50%, -50%) rotate(90deg)',
