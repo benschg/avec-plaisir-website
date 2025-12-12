@@ -1,6 +1,6 @@
 export const content = {
   hero: {
-    greeting: 'Bonjour in Deinem Blumenladen im Kreis 3',
+    greeting: 'Bonjour in deinem Blumenladen im Kreis 3',
     title: 'avec plaisir zürich',
     subtitle: 'avec plaisir!',
     intro:
