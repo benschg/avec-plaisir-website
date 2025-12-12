@@ -74,6 +74,16 @@ html body {
   overflow: hidden;
 }
 
+/* Hide scrollbar for main scroll container */
+.lenis-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.lenis-wrapper {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
 html.lenis,
 html.lenis body {
   height: auto;
