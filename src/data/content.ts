@@ -4,7 +4,7 @@ export const content = {
     title: 'avec plaisir zürich',
     subtitle: 'avec plaisir!',
     intro:
-      'Bei uns findest du saisonale und lokale Blumen und Topfpflanzen. Ausserdem pflegen wir ein ausgewähltes Sortiment an Vasen, Gefässen, Accessories und Vintageprodukten. Dein Besuch ist unsere Freude!',
+      'Bei uns findest du saisonale und lokale Blumen, mit ausgewählte Pflanzen und besondere Fundstücke. Von Vasen über Accessories bis Vintage. Alles mit viel Herz und Liebe zum Detail kuratiert. Wir beraten dich gerne persönlich.\n\nÀ bientôt!',
     ownerQuote:
       'Ein ganzes Meer an Blumen sind in den letzten 30 Jahren durch meine Floristenhände geflossen.',
     ownerName: '- Monika Fähndrich',

@@ -71,6 +71,7 @@ const HeroSection = () => {
             maxWidth: 600,
             mx: 'auto',
             lineHeight: 1.7,
+            whiteSpace: 'pre-line',
           }}
         >
           {content.hero.intro}
