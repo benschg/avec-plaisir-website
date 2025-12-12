@@ -82,7 +82,7 @@ const VisitSection = () => {
               whiteSpace: 'nowrap',
             }}
           >
-            auf Ihren Besuch!
+            auf deinen Besuch!
           </Typography>
         </Box>
       </Container>
