@@ -14,11 +14,12 @@ const isLightColor = (color: string): boolean => {
   return brightness > 128
 }
 
-// Create context for text color
+// Create context for text color and background
 export const TextColorContext = createContext({
   textColor: '#ffffff',
   headingColor: '#ffffff',
   secondaryTextColor: 'rgba(255, 255, 255, 0.8)',
+  backgroundColor: '#000000',
 })
 
 export const useTextColor = () => useContext(TextColorContext)
@@ -34,6 +35,7 @@ const DynamicBackgroundInner = ({
     textColor: '#ffffff',
     headingColor: '#ffffff',
     secondaryTextColor: 'rgba(255, 255, 255, 0.8)',
+    backgroundColor: sectionColorConfigs.hero.background,
   })
 
   useEffect(() => {
@@ -79,6 +81,7 @@ const DynamicBackgroundInner = ({
                   (isLight
                     ? 'rgba(0, 0, 0, 0.7)'
                     : 'rgba(255, 255, 255, 0.8)'),
+                backgroundColor: newConfig.background,
               })
             }
             break
