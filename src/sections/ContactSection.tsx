@@ -113,7 +113,14 @@ const ContactSection = () => {
 
           <Grid size={{ xs: 12, md: 6 }}>
             {/* Contact Information */}
-            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                maxWidth: { xs: '400px', md: '100%' },
+                mx: { xs: 'auto', md: 0 },
+              }}
+            >
               <ContactItem
                 icon={
                   <Box

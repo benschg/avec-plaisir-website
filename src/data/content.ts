@@ -6,7 +6,7 @@ export const content = {
     intro:
       'Bei uns findest du saisonale und lokale Blumen, ausgewählte Pflanzen und besondere Fundstücke. Von Vasen über Accessories bis Vintage. Alles mit viel Liebe zum Detail kuratiert. Wir beraten dich gerne persönlich.\n\nÀ bientôt!',
     ownerQuote:
-      'Ein ganzes Meer an Blumen sind in den letzten 30 Jahren durch meine Floristenhände geflossen.',
+      'Ein ganzes Meer an Blumen ist in den letzten 30 Jahren durch meine Floristenhände geflossen.',
     ownerName: '- Monika Fähndrich',
   },
   contact: {

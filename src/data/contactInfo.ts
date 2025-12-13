@@ -11,7 +11,7 @@ export const contactInfo: ContactInfo = {
     sunday: 'Sonntag geschlossen',
   },
   holidayClosure: {
-    dates: '26. Dezember 25 – 3. Januar 26 geschlossen',
-    reopening: 'Wieder offen ab 5. Januar',
+    dates: '26. Dezember 2025 – 3. Januar 2026 geschlossen',
+    reopening: 'Wieder offen ab 5. Januar 2026',
   },
 }
