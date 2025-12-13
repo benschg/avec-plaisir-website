@@ -13,7 +13,10 @@
       "Bash(git add:*)",
       "Bash(git commit -m \"$(cat <<''EOF''\nConvert SVG files to Git LFS and update Claude settings\n\n- Convert avec-plaisir-flower-white.svg, vite.svg, and react.svg to Git LFS format\n- Add yarn list to allowed Bash commands in Claude settings\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n)\")",
       "Bash(git restore:*)",
-      "Bash(git lfs:*)"
+      "Bash(git lfs:*)",
+      "Bash(yarn remove:*)",
+      "Bash(yarn build)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nReplace MUI icons with Lucide icons and improve layout\n\n- Replace @mui/icons-material with lucide-react package\n- Update ContactSection: MapPin, Phone, Mail, Instagram, Clock, TreePine icons\n- Update Navigation: Menu and X icons for mobile drawer\n- Update Footer: Instagram icon\n- Improve icon alignment in ContactSection (center-aligned with first line of text)\n- Widen HeroSection text containers from ''md'' to ''lg'' for better layout on large screens\n- Increase intro text max width from 600px to 800px\n\nBenefits: Smaller bundle size, modern icon design, better text layout\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n)\")"
     ],
     "deny": [],
     "ask": []

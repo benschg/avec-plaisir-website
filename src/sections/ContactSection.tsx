@@ -1,13 +1,13 @@
 import { Box, Typography, Container, Grid, Link, Divider } from '@mui/material'
 import { contactInfo } from '../data/contactInfo'
 import {
-  LocationOn,
+  MapPin,
   Phone,
-  Email,
+  Mail,
   Instagram,
-  Alarm,
-  Park,
-} from '@mui/icons-material'
+  Clock,
+  TreePine,
+} from 'lucide-react'
 import type { ReactNode } from 'react'
 
 const ContactItem = ({
@@ -22,7 +22,7 @@ const ContactItem = ({
   link?: string
 }) => {
   const content = (
-    <Box display={'flex'} flexDirection={'row'}>
+    <Box display={'flex'} flexDirection={'row'} alignItems={'flex-start'}>
       {icon}
       <Box display={'flex'} flexDirection={'column'}>
         {title && <Typography variant="h2">{title}</Typography>}
@@ -116,13 +116,17 @@ const ContactSection = () => {
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
               <ContactItem
                 icon={
-                  <LocationOn
+                  <Box
                     sx={{
                       mr: { xs: 1, md: 2 },
                       color: '#666666',
-                      fontSize: '2rem',
+                      display: 'flex',
+                      alignItems: 'center',
+                      pt: 0.5,
                     }}
-                  />
+                  >
+                    <MapPin size={32} />
+                  </Box>
                 }
                 description={contactInfo.address}
                 link="https://maps.app.goo.gl/vwy2pXMkgtcJvcev6"
@@ -137,13 +141,17 @@ const ContactSection = () => {
 
               <ContactItem
                 icon={
-                  <Phone
+                  <Box
                     sx={{
                       mr: { xs: 1, md: 2 },
                       color: '#666666',
-                      fontSize: { xs: '1.5rem', md: '2rem' },
+                      display: 'flex',
+                      alignItems: 'center',
+                      pt: 0.5,
                     }}
-                  />
+                  >
+                    <Phone size={32} />
+                  </Box>
                 }
                 description={contactInfo.phone}
                 link={`tel:${contactInfo.phone}`}
@@ -158,13 +166,17 @@ const ContactSection = () => {
 
               <ContactItem
                 icon={
-                  <Email
+                  <Box
                     sx={{
                       mr: { xs: 1, md: 2 },
                       color: '#666666',
-                      fontSize: { xs: '1.5rem', md: '2rem' },
+                      display: 'flex',
+                      alignItems: 'center',
+                      pt: 0.5,
                     }}
-                  />
+                  >
+                    <Mail size={32} />
+                  </Box>
                 }
                 description={contactInfo.email}
                 link={`mailto:${contactInfo.email}`}
@@ -179,13 +191,17 @@ const ContactSection = () => {
 
               <ContactItem
                 icon={
-                  <Instagram
+                  <Box
                     sx={{
                       mr: { xs: 1, md: 2 },
                       color: '#666666',
-                      fontSize: { xs: '1.5rem', md: '2rem' },
+                      display: 'flex',
+                      alignItems: 'center',
+                      pt: 0.5,
                     }}
-                  />
+                  >
+                    <Instagram size={32} />
+                  </Box>
                 }
                 description={contactInfo.instagram}
                 link={`https://instagram.com/${contactInfo.instagram.substring(1)}`}
@@ -200,13 +216,17 @@ const ContactSection = () => {
 
               <ContactItem
                 icon={
-                  <Alarm
+                  <Box
                     sx={{
                       mr: { xs: 1, md: 2 },
                       color: '#666666',
-                      fontSize: { xs: '1.5rem', md: '2rem' },
+                      display: 'flex',
+                      alignItems: 'center',
+                      pt: 0.5,
                     }}
-                  />
+                  >
+                    <Clock size={32} />
+                  </Box>
                 }
                 description={[
                   contactInfo.hours.weekdays,
@@ -226,13 +246,17 @@ const ContactSection = () => {
 
                   <ContactItem
                     icon={
-                      <Park
+                      <Box
                         sx={{
                           mr: { xs: 1, md: 2 },
                           color: '#666666',
-                          fontSize: { xs: '1.5rem', md: '2rem' },
+                          display: 'flex',
+                          alignItems: 'center',
+                          pt: 0.5,
                         }}
-                      />
+                      >
+                        <TreePine size={32} />
+                      </Box>
                     }
                     description={[
                       contactInfo.holidayClosure.dates,

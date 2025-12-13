@@ -19,7 +19,7 @@ const HeroSection = () => {
       }}
     >
       {/* Greeting */}
-      <Container maxWidth="md">
+      <Container maxWidth="lg">
         <Typography
           variant="h1"
           sx={{
@@ -36,7 +36,7 @@ const HeroSection = () => {
       </Container>
 
       {/* Logo and Intro */}
-      <Container maxWidth="md" sx={{ textAlign: 'center' }}>
+      <Container maxWidth="lg" sx={{ textAlign: 'center' }}>
         <Box
           sx={{
             mb: 4,
@@ -68,7 +68,7 @@ const HeroSection = () => {
             fontSize: { xs: '1.5rem', md: '1.8rem' },
             color: textColor,
             transition: 'color 0.8s ease',
-            maxWidth: 600,
+            maxWidth: 800,
             mx: 'auto',
             lineHeight: 1.7,
             whiteSpace: 'pre-line',

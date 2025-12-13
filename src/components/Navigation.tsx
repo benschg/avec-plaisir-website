@@ -12,8 +12,7 @@ import {
   ListItemButton,
   ListItemText,
 } from '@mui/material'
-import MenuIcon from '@mui/icons-material/Menu'
-import CloseIcon from '@mui/icons-material/Close'
+import { Menu, X } from 'lucide-react'
 import { useLenis } from '../hooks/useLenis'
 
 const Navigation = () => {
@@ -166,7 +165,7 @@ const Navigation = () => {
             onClick={handleDrawerToggle}
             sx={{ display: { sm: 'none' }, color: '#ffffff' }}
           >
-            <MenuIcon />
+            <Menu />
           </IconButton>
         </Toolbar>
       </AppBar>
@@ -188,7 +187,7 @@ const Navigation = () => {
         <Box sx={{ p: 2 }}>
           <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
             <IconButton onClick={handleDrawerToggle} sx={{ color: '#ffffff' }}>
-              <CloseIcon />
+              <X />
             </IconButton>
           </Box>
           <List>

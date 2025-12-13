@@ -1,6 +1,6 @@
 import { Box, Container, Typography, Grid, Link } from '@mui/material'
 import { Link as RouterLink, useNavigate, useLocation } from 'react-router-dom'
-import InstagramIcon from '@mui/icons-material/Instagram'
+import { Instagram } from 'lucide-react'
 import { useLenis } from '../hooks/useLenis'
 
 const Footer = () => {
@@ -214,7 +214,7 @@ const Footer = () => {
                     },
                   }}
                 >
-                  <InstagramIcon fontSize="small" />
+                  <Instagram size={20} />
                   Instagram
                 </Link>
 
