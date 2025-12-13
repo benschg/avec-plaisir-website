@@ -7,7 +7,13 @@
       "Bash(yarn install)",
       "Bash(yarn add:*)",
       "Bash(mkdir:*)",
-      "WebFetch(domain:www.avecplaisir-zuerich.ch)"
+      "WebFetch(domain:www.avecplaisir-zuerich.ch)",
+      "Bash(yarn list:*)",
+      "Bash(cat:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nConvert SVG files to Git LFS and update Claude settings\n\n- Convert avec-plaisir-flower-white.svg, vite.svg, and react.svg to Git LFS format\n- Add yarn list to allowed Bash commands in Claude settings\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git restore:*)",
+      "Bash(git lfs:*)"
     ],
     "deny": [],
     "ask": []
