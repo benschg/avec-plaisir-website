@@ -140,10 +140,12 @@ function SortableImageCard({
             width: 120,
             height: 80,
             objectFit: 'cover',
-            opacity: image.active ? 1 : 0.4,
+            opacity: image.active ? 1 : 0.6,
+            filter: image.active ? 'none' : 'grayscale(100%)',
             cursor: 'pointer',
+            transition: 'all 0.2s ease-in-out',
             '&:hover': {
-              opacity: image.active ? 0.9 : 0.5,
+              opacity: image.active ? 0.9 : 0.7,
             },
           }}
         />
@@ -262,10 +264,12 @@ function SortableImageCard({
         sx={{
           height: 150,
           objectFit: 'cover',
-          opacity: image.active ? 1 : 0.4,
+          opacity: image.active ? 1 : 0.6,
+          filter: image.active ? 'none' : 'grayscale(100%)',
           cursor: 'pointer',
+          transition: 'all 0.2s ease-in-out',
           '&:hover': {
-            opacity: image.active ? 0.9 : 0.5,
+            opacity: image.active ? 0.9 : 0.7,
           },
         }}
       />
@@ -458,6 +462,11 @@ export default function AdminGallery() {
     setImages((prev) =>
       prev.map((img) => (img.id === id ? { ...img, active } : img))
     )
+
+    // Update detailImage if it's the same image
+    if (detailImage && detailImage.id === id) {
+      setDetailImage({ ...detailImage, active })
+    }
 
     try {
       await updateGalleryImage(id, { active })

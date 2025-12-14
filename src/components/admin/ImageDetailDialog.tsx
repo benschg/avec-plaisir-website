@@ -286,8 +286,9 @@ export default function ImageDetailDialog({
               maxWidth: '100%',
               maxHeight: '100%',
               objectFit: 'contain',
-              transition: 'opacity 0.3s ease-in-out',
-              opacity: loadingMeta ? 0.7 : 1,
+              transition: 'all 0.3s ease-in-out',
+              opacity: loadingMeta ? 0.7 : (image.active ? 1 : 0.6),
+              filter: image.active ? 'none' : 'grayscale(100%)',
             }}
           />
         </Box>
