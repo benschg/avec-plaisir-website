@@ -1,6 +1,5 @@
 import { Box } from '@mui/material'
 import HeroSection from '../sections/HeroSection'
-import ServicesIntroSection from '../sections/ServicesIntroSection'
 import ServicesSection from '../sections/ServicesSection'
 import AnimatedTextSection from '../sections/AnimatedTextSection'
 import TeamSection from '../sections/TeamSection'
@@ -17,7 +16,6 @@ const Home = () => {
       <ContactSection />
       <GallerySection />
       <VisitSection />
-      <ServicesIntroSection />
       <ServicesSection />
       <AnimatedTextSection />
       <TeamSection />
