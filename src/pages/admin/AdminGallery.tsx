@@ -27,6 +27,7 @@ import {
   closestCenter,
   KeyboardSensor,
   PointerSensor,
+  TouchSensor,
   useSensor,
   useSensors,
   type DragEndEvent,
@@ -114,7 +115,12 @@ function SortableImageCard({
             />
           )}
           <Box
-            sx={{ cursor: 'grab', display: 'flex', alignItems: 'center' }}
+            sx={{
+              cursor: 'grab',
+              display: 'flex',
+              alignItems: 'center',
+              touchAction: 'none'
+            }}
             {...attributes}
             {...listeners}
           >
@@ -187,7 +193,17 @@ export default function AdminGallery() {
   }>({ open: false, message: '', severity: 'success' })
 
   const sensors = useSensors(
-    useSensor(PointerSensor),
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    }),
+    useSensor(TouchSensor, {
+      activationConstraint: {
+        delay: 200,
+        tolerance: 8,
+      },
+    }),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
     })
@@ -389,7 +405,7 @@ export default function AdminGallery() {
 
   return (
     <Box>
-      <Typography variant="h4" fontWeight="bold" gutterBottom>
+      <Typography variant="h4" fontWeight="bold" gutterBottom sx={{ fontSize: { xs: '1.75rem', sm: '2.125rem' } }}>
         Galerie
       </Typography>
       <Typography variant="body1" color="text.secondary" mb={2}>
@@ -400,6 +416,8 @@ export default function AdminGallery() {
       <Tabs
         value={activeGallery}
         onChange={handleTabChange}
+        variant="scrollable"
+        scrollButtons="auto"
         sx={{ mb: 3, borderBottom: 1, borderColor: 'divider' }}
       >
         {galleryIds.map((id) => (
@@ -407,7 +425,7 @@ export default function AdminGallery() {
         ))}
       </Tabs>
 
-      <Box mb={4}>
+      <Box mb={{ xs: 3, sm: 4 }}>
         <ImageUploader onUpload={handleUpload} disabled={uploading} />
       </Box>
 
@@ -416,10 +434,11 @@ export default function AdminGallery() {
         <Box
           sx={{
             display: 'flex',
-            alignItems: 'center',
+            flexDirection: { xs: 'column', sm: 'row' },
+            alignItems: { xs: 'stretch', sm: 'center' },
             gap: 2,
             mb: 2,
-            p: 1.5,
+            p: { xs: 1.5, sm: 1.5 },
             bgcolor: selectedIds.size > 0 ? 'primary.50' : 'grey.50',
             borderRadius: 1,
           }}
@@ -433,7 +452,7 @@ export default function AdminGallery() {
           </Button>
           {selectedIds.size > 0 && (
             <>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="body2" color="text.secondary" sx={{ display: { xs: 'none', sm: 'block' } }}>
                 {selectedIds.size} ausgewählt
               </Typography>
               <Button
@@ -443,7 +462,7 @@ export default function AdminGallery() {
                 startIcon={<Trash2 size={16} />}
                 onClick={() => setBatchDeleteDialog(true)}
               >
-                Löschen
+                {selectedIds.size} {selectedIds.size === 1 ? 'Bild' : 'Bilder'} löschen
               </Button>
             </>
           )}

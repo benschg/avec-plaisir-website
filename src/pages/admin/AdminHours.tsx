@@ -94,14 +94,14 @@ export default function AdminHours() {
 
   return (
     <Box>
-      <Typography variant="h4" fontWeight="bold" gutterBottom>
+      <Typography variant="h4" fontWeight="bold" gutterBottom sx={{ fontSize: { xs: '1.75rem', sm: '2.125rem' } }}>
         Öffnungszeiten
       </Typography>
-      <Typography variant="body1" color="text.secondary" mb={4}>
+      <Typography variant="body1" color="text.secondary" mb={{ xs: 3, sm: 4 }}>
         Verwalte die Öffnungszeiten und Feiertags-Schliessungen.
       </Typography>
 
-      <Paper sx={{ p: 3, mb: 3 }}>
+      <Paper sx={{ p: { xs: 2, sm: 3 }, mb: { xs: 2, sm: 3 } }}>
         <Typography variant="h6" gutterBottom>
           Reguläre Öffnungszeiten
         </Typography>
@@ -130,7 +130,7 @@ export default function AdminHours() {
         </Box>
       </Paper>
 
-      <Paper sx={{ p: 3, mb: 3 }}>
+      <Paper sx={{ p: { xs: 2, sm: 3 }, mb: { xs: 2, sm: 3 } }}>
         <Typography variant="h6" gutterBottom>
           Feiertags-Schliessung
         </Typography>
@@ -170,6 +170,7 @@ export default function AdminHours() {
         onClick={handleSave}
         disabled={saving}
         startIcon={saving ? <CircularProgress size={20} /> : <Save size={20} />}
+        fullWidth={window.innerWidth < 600}
       >
         {saving ? 'Speichern...' : 'Speichern'}
       </Button>

@@ -63,7 +63,7 @@ export default function ImageUploader({
     <Paper
       {...getRootProps()}
       sx={{
-        p: 4,
+        p: { xs: 2, sm: 4 },
         border: '2px dashed',
         borderColor: isDragActive ? 'primary.main' : 'grey.300',
         backgroundColor: isDragActive ? 'action.hover' : 'background.paper',
@@ -83,7 +83,7 @@ export default function ImageUploader({
         size={48}
         style={{ color: '#9e9e9e', marginBottom: 16 }}
       />
-      <Typography variant="body1" gutterBottom>
+      <Typography variant="body1" gutterBottom sx={{ fontSize: { xs: '0.9rem', sm: '1rem' } }}>
         {isDragActive
           ? 'Bilder hier ablegen...'
           : 'Bilder hierher ziehen oder klicken zum Auswählen'}
