@@ -141,9 +141,9 @@ export default function ImageDetailDialog({
   if (!image) return null
 
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
+    <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth fullScreen={window.innerWidth < 600}>
       <DialogTitle>Bilddetails</DialogTitle>
-      <DialogContent>
+      <DialogContent sx={{ pt: { xs: 2, sm: 3 } }}>
         <Grid container spacing={3}>
           {/* Image Preview */}
           <Grid size={{ xs: 12, md: 5 }}>

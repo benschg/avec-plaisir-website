@@ -28,8 +28,9 @@ export default function AdminLogin() {
       alignItems="center"
       minHeight="100vh"
       bgcolor="grey.100"
+      px={{ xs: 2, sm: 0 }}
     >
-      <Paper sx={{ p: 4, maxWidth: 400, width: '100%', textAlign: 'center' }}>
+      <Paper sx={{ p: { xs: 3, sm: 4 }, maxWidth: 400, width: '100%', textAlign: 'center' }}>
         <Typography variant="h4" gutterBottom fontWeight="bold">
           Admin Login
         </Typography>

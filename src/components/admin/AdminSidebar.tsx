@@ -20,19 +20,14 @@ const navItems = [
   { to: '/admin/gallery', label: 'Galerie', icon: Images },
 ]
 
-export default function AdminSidebar() {
-  return (
-    <Drawer
-      variant="permanent"
-      sx={{
-        width: DRAWER_WIDTH,
-        flexShrink: 0,
-        '& .MuiDrawer-paper': {
-          width: DRAWER_WIDTH,
-          boxSizing: 'border-box',
-        },
-      }}
-    >
+interface AdminSidebarProps {
+  mobileOpen: boolean
+  onDrawerToggle: () => void
+}
+
+export default function AdminSidebar({ mobileOpen, onDrawerToggle }: AdminSidebarProps) {
+  const drawerContent = (
+    <>
       <Toolbar>
         <Box>
           <Typography variant="h6" fontWeight="bold">
@@ -50,6 +45,7 @@ export default function AdminSidebar() {
               component={NavLink}
               to={item.to}
               end={item.end}
+              onClick={onDrawerToggle}
               sx={{
                 '&.active': {
                   bgcolor: 'action.selected',
@@ -70,7 +66,44 @@ export default function AdminSidebar() {
           </ListItem>
         ))}
       </List>
-    </Drawer>
+    </>
+  )
+
+  return (
+    <Box component="nav" sx={{ width: { sm: DRAWER_WIDTH }, flexShrink: { sm: 0 } }}>
+      {/* Mobile drawer */}
+      <Drawer
+        variant="temporary"
+        open={mobileOpen}
+        onClose={onDrawerToggle}
+        ModalProps={{
+          keepMounted: true, // Better mobile performance
+        }}
+        sx={{
+          display: { xs: 'block', sm: 'none' },
+          '& .MuiDrawer-paper': {
+            width: DRAWER_WIDTH,
+            boxSizing: 'border-box',
+          },
+        }}
+      >
+        {drawerContent}
+      </Drawer>
+      {/* Desktop drawer */}
+      <Drawer
+        variant="permanent"
+        sx={{
+          display: { xs: 'none', sm: 'block' },
+          '& .MuiDrawer-paper': {
+            width: DRAWER_WIDTH,
+            boxSizing: 'border-box',
+          },
+        }}
+        open
+      >
+        {drawerContent}
+      </Drawer>
+    </Box>
   )
 }
 

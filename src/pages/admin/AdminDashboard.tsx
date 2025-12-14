@@ -27,17 +27,17 @@ const quickActions = [
 export default function AdminDashboard() {
   return (
     <Box>
-      <Typography variant="h4" fontWeight="bold" gutterBottom>
+      <Typography variant="h4" fontWeight="bold" gutterBottom sx={{ fontSize: { xs: '1.75rem', sm: '2.125rem' } }}>
         Willkommen
       </Typography>
-      <Typography variant="body1" color="text.secondary" mb={4}>
+      <Typography variant="body1" color="text.secondary" mb={{ xs: 3, sm: 4 }}>
         Verwalte hier die Inhalte der avec plaisir Website.
       </Typography>
 
       <Typography variant="h6" gutterBottom>
         Schnellzugriff
       </Typography>
-      <Grid container spacing={3}>
+      <Grid container spacing={{ xs: 2, sm: 3 }}>
         {quickActions.map((action) => (
           <Grid size={{ xs: 12, sm: 6, md: 4 }} key={action.to}>
             <Card>
