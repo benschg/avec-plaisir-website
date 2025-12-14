@@ -7,6 +7,7 @@ import {
   deleteDoc,
   query,
   orderBy,
+  where,
   serverTimestamp,
   Timestamp,
   writeBatch,
@@ -19,14 +20,17 @@ import {
 } from 'firebase/storage'
 import imageCompression from 'browser-image-compression'
 import { db, storage } from '../config/firebase'
-import type { GalleryImage } from '../types/admin'
+import type { GalleryImage, GalleryId } from '../types/admin'
 
 const GALLERY_COLLECTION = 'gallery'
 
-export async function getGalleryImages(): Promise<GalleryImage[]> {
+export async function getGalleryImages(
+  galleryId: GalleryId
+): Promise<GalleryImage[]> {
   try {
     const q = query(
       collection(db, GALLERY_COLLECTION),
+      where('galleryId', '==', galleryId),
       orderBy('order', 'asc')
     )
     const snapshot = await getDocs(q)
@@ -35,6 +39,7 @@ export async function getGalleryImages(): Promise<GalleryImage[]> {
       const data = doc.data()
       return {
         id: doc.id,
+        galleryId: data.galleryId,
         thumbnailUrl: data.thumbnailUrl,
         webUrl: data.webUrl,
         alt: data.alt,
@@ -53,6 +58,7 @@ export async function getGalleryImages(): Promise<GalleryImage[]> {
 }
 
 export async function addGalleryImage(
+  galleryId: GalleryId,
   file: File,
   alt: string,
   order: number,
@@ -85,19 +91,23 @@ export async function addGalleryImage(
     const baseName = `${timestamp}-${cleanName}`
 
     // Upload thumbnail
-    const thumbnailRef = ref(storage, `gallery/thumbnails/${baseName}`)
+    const thumbnailRef = ref(
+      storage,
+      `gallery/${galleryId}/thumbnails/${baseName}`
+    )
     await uploadBytes(thumbnailRef, thumbnailFile)
     const thumbnailUrl = await getDownloadURL(thumbnailRef)
     onProgress?.(70)
 
     // Upload web version
-    const webRef = ref(storage, `gallery/web/${baseName}`)
+    const webRef = ref(storage, `gallery/${galleryId}/web/${baseName}`)
     await uploadBytes(webRef, webFile)
     const webUrl = await getDownloadURL(webRef)
     onProgress?.(90)
 
     // Create Firestore document
     const docRef = await addDoc(collection(db, GALLERY_COLLECTION), {
+      galleryId,
       thumbnailUrl,
       webUrl,
       alt,
@@ -109,6 +119,7 @@ export async function addGalleryImage(
 
     return {
       id: docRef.id,
+      galleryId,
       thumbnailUrl,
       webUrl,
       alt,
@@ -160,7 +171,7 @@ export async function deleteGalleryImage(image: GalleryImage): Promise<void> {
     await deleteDoc(docRef)
 
     // Extract filename from URL and delete from Storage
-    // URLs look like: https://firebasestorage.googleapis.com/.../gallery%2Fthumbnails%2Ffilename?...
+    // URLs look like: https://firebasestorage.googleapis.com/.../gallery%2F...%2Ffilename?...
     try {
       const thumbnailPath = decodeURIComponent(
         image.thumbnailUrl.split('/o/')[1].split('?')[0]

@@ -17,6 +17,7 @@ export interface ContactInfoData {
 
 export interface GalleryImage {
   id: string
+  galleryId: string
   thumbnailUrl: string
   webUrl: string
   alt: string
@@ -24,3 +25,13 @@ export interface GalleryImage {
   active: boolean
   uploadedAt: Date
 }
+
+// Hardcoded gallery definitions
+export const GALLERIES = {
+  trauerfloristik: {
+    id: 'trauerfloristik',
+    name: 'Trauerfloristik',
+  },
+} as const
+
+export type GalleryId = keyof typeof GALLERIES

@@ -18,6 +18,8 @@ import {
   DialogContentText,
   DialogActions,
   Button,
+  Tabs,
+  Tab,
 } from '@mui/material'
 import { Trash2, GripVertical } from 'lucide-react'
 import {
@@ -45,7 +47,7 @@ import {
   updateGalleryOrder,
   deleteGalleryImage,
 } from '../../services/gallery.service'
-import type { GalleryImage } from '../../types/admin'
+import { GALLERIES, type GalleryImage, type GalleryId } from '../../types/admin'
 
 interface SortableImageCardProps {
   image: GalleryImage
@@ -130,7 +132,10 @@ function SortableImageCard({
   )
 }
 
+const galleryIds = Object.keys(GALLERIES) as GalleryId[]
+
 export default function AdminGallery() {
+  const [activeGallery, setActiveGallery] = useState<GalleryId>(galleryIds[0])
   const [images, setImages] = useState<GalleryImage[]>([])
   const [loading, setLoading] = useState(true)
   const [uploading, setUploading] = useState(false)
@@ -150,12 +155,12 @@ export default function AdminGallery() {
 
   useEffect(() => {
     loadImages()
-  }, [])
+  }, [activeGallery])
 
   const loadImages = async () => {
     try {
       setLoading(true)
-      const data = await getGalleryImages()
+      const data = await getGalleryImages(activeGallery)
       setImages(data)
     } catch (error) {
       console.error('Error loading images:', error)
@@ -169,11 +174,15 @@ export default function AdminGallery() {
     }
   }
 
+  const handleTabChange = (_: React.SyntheticEvent, newValue: GalleryId) => {
+    setActiveGallery(newValue)
+  }
+
   const handleUpload = async (file: File) => {
     try {
       setUploading(true)
       const maxOrder = images.reduce((max, img) => Math.max(max, img.order), 0)
-      const newImage = await addGalleryImage(file, '', maxOrder + 1)
+      const newImage = await addGalleryImage(activeGallery, file, '', maxOrder + 1)
       setImages((prev) => [...prev, newImage])
       setSnackbar({
         open: true,
@@ -266,31 +275,37 @@ export default function AdminGallery() {
     }
   }
 
-  if (loading) {
-    return (
-      <Box display="flex" justifyContent="center" py={4}>
-        <CircularProgress />
-      </Box>
-    )
-  }
-
   return (
     <Box>
       <Typography variant="h4" fontWeight="bold" gutterBottom>
         Galerie
       </Typography>
-      <Typography variant="body1" color="text.secondary" mb={4}>
-        Verwalte die Bilder der Galerie. Ziehe Bilder um die Reihenfolge zu
+      <Typography variant="body1" color="text.secondary" mb={2}>
+        Verwalte die Bilder der Galerien. Ziehe Bilder um die Reihenfolge zu
         ändern.
       </Typography>
+
+      <Tabs
+        value={activeGallery}
+        onChange={handleTabChange}
+        sx={{ mb: 3, borderBottom: 1, borderColor: 'divider' }}
+      >
+        {galleryIds.map((id) => (
+          <Tab key={id} label={GALLERIES[id].name} value={id} />
+        ))}
+      </Tabs>
 
       <Box mb={4}>
         <ImageUploader onUpload={handleUpload} disabled={uploading} />
       </Box>
 
-      {images.length === 0 ? (
+      {loading ? (
+        <Box display="flex" justifyContent="center" py={4}>
+          <CircularProgress />
+        </Box>
+      ) : images.length === 0 ? (
         <Typography color="text.secondary" textAlign="center" py={4}>
-          Noch keine Bilder vorhanden
+          Noch keine Bilder in dieser Galerie
         </Typography>
       ) : (
         <DndContext
