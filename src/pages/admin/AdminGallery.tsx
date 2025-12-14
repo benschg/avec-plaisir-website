@@ -20,8 +20,10 @@ import {
   Tabs,
   Tab,
   Checkbox,
+  ToggleButtonGroup,
+  ToggleButton,
 } from '@mui/material'
-import { Trash2, GripVertical } from 'lucide-react'
+import { Trash2, GripVertical, LayoutGrid, List } from 'lucide-react'
 import {
   DndContext,
   closestCenter,
@@ -59,6 +61,7 @@ interface SortableImageCardProps {
   selected: boolean
   onSelectChange: (id: string, selected: boolean) => void
   selectMode: boolean
+  viewMode: 'grid' | 'row'
 }
 
 function SortableImageCard({
@@ -69,6 +72,7 @@ function SortableImageCard({
   selected,
   onSelectChange,
   selectMode,
+  viewMode,
 }: SortableImageCardProps) {
   const {
     attributes,
@@ -83,6 +87,113 @@ function SortableImageCard({
     transform: CSS.Transform.toString(transform),
     transition,
     opacity: isDragging ? 0.5 : 1,
+  }
+
+  if (viewMode === 'row') {
+    return (
+      <Card
+        ref={setNodeRef}
+        style={style}
+        sx={{
+          display: 'flex',
+          outline: selected ? '2px solid' : 'none',
+          outlineColor: 'primary.main',
+          mb: 1,
+        }}
+      >
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 0.5,
+            px: 1,
+            bgcolor: selected ? 'primary.light' : 'grey.100',
+          }}
+        >
+          {selectMode && (
+            <Checkbox
+              size="small"
+              checked={selected}
+              onChange={(e) => onSelectChange(image.id, e.target.checked)}
+              sx={{ p: 0 }}
+            />
+          )}
+          <Box
+            sx={{
+              cursor: 'grab',
+              display: 'flex',
+              alignItems: 'center',
+              touchAction: 'none',
+            }}
+            {...attributes}
+            {...listeners}
+          >
+            <GripVertical size={18} style={{ color: '#9e9e9e' }} />
+          </Box>
+        </Box>
+        <CardMedia
+          component="img"
+          image={image.thumbnailUrl}
+          alt={image.alt}
+          onClick={() => onClick(image)}
+          sx={{
+            width: 120,
+            height: 80,
+            objectFit: 'cover',
+            opacity: image.active ? 1 : 0.4,
+            cursor: 'pointer',
+            '&:hover': {
+              opacity: image.active ? 0.9 : 0.5,
+            },
+          }}
+        />
+        <CardContent
+          sx={{
+            flex: 1,
+            p: 1.5,
+            display: 'flex',
+            alignItems: 'center',
+            '&:last-child': { pb: 1.5 },
+          }}
+        >
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{
+              flex: 1,
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            {image.description || 'Keine Beschreibung'}
+          </Typography>
+        </CardContent>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 1,
+            px: 2,
+            bgcolor: selected ? 'primary.light' : 'grey.100',
+          }}
+        >
+          <Switch
+            size="small"
+            checked={image.active}
+            onChange={(e) => onActiveChange(image.id, e.target.checked)}
+          />
+          <IconButton
+            size="small"
+            color="error"
+            onClick={() => onDelete(image)}
+            sx={{ p: 0.5 }}
+          >
+            <Trash2 size={16} />
+          </IconButton>
+        </Box>
+      </Card>
+    )
   }
 
   return (
@@ -105,13 +216,13 @@ function SortableImageCard({
           bgcolor: selected ? 'primary.light' : 'grey.100',
         }}
       >
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
           {selectMode && (
             <Checkbox
               size="small"
               checked={selected}
               onChange={(e) => onSelectChange(image.id, e.target.checked)}
-              sx={{ p: 0, mr: 0.5 }}
+              sx={{ p: 0 }}
             />
           )}
           <Box
@@ -127,11 +238,21 @@ function SortableImageCard({
             <GripVertical size={18} style={{ color: '#9e9e9e' }} />
           </Box>
         </Box>
-        <Switch
-          size="small"
-          checked={image.active}
-          onChange={(e) => onActiveChange(image.id, e.target.checked)}
-        />
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+          <Switch
+            size="small"
+            checked={image.active}
+            onChange={(e) => onActiveChange(image.id, e.target.checked)}
+          />
+          <IconButton
+            size="small"
+            color="error"
+            onClick={() => onDelete(image)}
+            sx={{ p: 0.5 }}
+          >
+            <Trash2 size={16} />
+          </IconButton>
+        </Box>
       </Box>
       <CardMedia
         component="img"
@@ -156,19 +277,10 @@ function SortableImageCard({
             overflow: 'hidden',
             textOverflow: 'ellipsis',
             whiteSpace: 'nowrap',
-            mb: 1,
           }}
         >
           {image.description || 'Keine Beschreibung'}
         </Typography>
-        <IconButton
-          size="small"
-          color="error"
-          onClick={() => onDelete(image)}
-          sx={{ float: 'right' }}
-        >
-          <Trash2 size={16} />
-        </IconButton>
       </CardContent>
     </Card>
   )
@@ -186,6 +298,7 @@ export default function AdminGallery() {
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
   const [batchDeleteDialog, setBatchDeleteDialog] = useState(false)
   const [deleting, setDeleting] = useState(false)
+  const [viewMode, setViewMode] = useState<'grid' | 'row'>('grid')
   const [snackbar, setSnackbar] = useState<{
     open: boolean
     message: string
@@ -429,7 +542,7 @@ export default function AdminGallery() {
         <ImageUploader onUpload={handleUpload} disabled={uploading} />
       </Box>
 
-      {/* Selection controls */}
+      {/* Selection controls and view toggle */}
       {images.length > 0 && (
         <Box
           sx={{
@@ -466,6 +579,21 @@ export default function AdminGallery() {
               </Button>
             </>
           )}
+          <Box sx={{ marginLeft: 'auto' }}>
+            <ToggleButtonGroup
+              value={viewMode}
+              exclusive
+              onChange={(_, newMode) => newMode && setViewMode(newMode)}
+              size="small"
+            >
+              <ToggleButton value="grid" aria-label="grid view">
+                <LayoutGrid size={16} />
+              </ToggleButton>
+              <ToggleButton value="row" aria-label="row view">
+                <List size={16} />
+              </ToggleButton>
+            </ToggleButtonGroup>
+          </Box>
         </Box>
       )}
 
@@ -485,12 +613,13 @@ export default function AdminGallery() {
         >
           <SortableContext
             items={images.map((img) => img.id)}
-            strategy={rectSortingStrategy}
+            strategy={viewMode === 'grid' ? rectSortingStrategy : undefined}
           >
-            <Grid container spacing={2}>
-              {images.map((image) => (
-                <Grid size={{ xs: 6, sm: 4, md: 3 }} key={image.id}>
+            {viewMode === 'row' ? (
+              <Box>
+                {images.map((image) => (
                   <SortableImageCard
+                    key={image.id}
                     image={image}
                     onActiveChange={handleActiveChange}
                     onDelete={setDeleteDialog}
@@ -498,10 +627,28 @@ export default function AdminGallery() {
                     selected={selectedIds.has(image.id)}
                     onSelectChange={handleSelectChange}
                     selectMode={selectedIds.size > 0}
+                    viewMode={viewMode}
                   />
-                </Grid>
-              ))}
-            </Grid>
+                ))}
+              </Box>
+            ) : (
+              <Grid container spacing={2}>
+                {images.map((image) => (
+                  <Grid size={{ xs: 6, sm: 4, md: 3 }} key={image.id}>
+                    <SortableImageCard
+                      image={image}
+                      onActiveChange={handleActiveChange}
+                      onDelete={setDeleteDialog}
+                      onClick={setDetailImage}
+                      selected={selectedIds.has(image.id)}
+                      onSelectChange={handleSelectChange}
+                      selectMode={selectedIds.size > 0}
+                      viewMode={viewMode}
+                    />
+                  </Grid>
+                ))}
+              </Grid>
+            )}
           </SortableContext>
         </DndContext>
       )}
@@ -564,6 +711,26 @@ export default function AdminGallery() {
         open={!!detailImage}
         onClose={() => setDetailImage(null)}
         onSave={handleDetailSave}
+        onNext={() => {
+          if (!detailImage) return
+          const currentIndex = images.findIndex((img) => img.id === detailImage.id)
+          if (currentIndex < images.length - 1) {
+            setDetailImage(images[currentIndex + 1])
+          }
+        }}
+        onPrevious={() => {
+          if (!detailImage) return
+          const currentIndex = images.findIndex((img) => img.id === detailImage.id)
+          if (currentIndex > 0) {
+            setDetailImage(images[currentIndex - 1])
+          }
+        }}
+        onDelete={setDeleteDialog}
+        onActiveChange={handleActiveChange}
+        hasNext={detailImage ? images.findIndex((img) => img.id === detailImage.id) < images.length - 1 : false}
+        hasPrevious={detailImage ? images.findIndex((img) => img.id === detailImage.id) > 0 : false}
+        currentIndex={detailImage ? images.findIndex((img) => img.id === detailImage.id) : undefined}
+        totalImages={images.length}
       />
     </Box>
   )
