@@ -1,21 +1,18 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import {
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogActions,
-  Button,
   TextField,
   Box,
   Typography,
-  Grid,
   Skeleton,
   Divider,
   Link,
   IconButton,
   Switch,
 } from '@mui/material'
-import { ExternalLink, Image as ImageIcon, ChevronLeft, ChevronRight, Trash2, X } from 'lucide-react'
+import { ExternalLink, Trash2, X } from 'lucide-react'
 import type { GalleryImage } from '../../types/admin'
 
 interface ImageMetadata {
@@ -166,22 +163,6 @@ export default function ImageDetailDialog({
 
     return () => clearTimeout(timeoutId)
   }, [alt, description, image, open, onSave])
-
-  const handleSave = useCallback(async () => {
-    if (!image) return
-
-    setSaving(true)
-    try {
-      await onSave(image.id, { alt, description })
-      onClose()
-    } catch (error) {
-      console.error('Error saving:', error)
-    } finally {
-      setSaving(false)
-    }
-  }, [image, alt, description, onSave, onClose])
-
-  const hasChanges = image && (alt !== image.alt || description !== image.description)
 
   if (!image) return null
 
