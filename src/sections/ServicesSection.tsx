@@ -244,7 +244,6 @@ const ServicesSection = () => {
               alignItems: 'center',
               justifyContent: 'center',
               minHeight: '100vh',
-              backgroundColor: 'white',
               position: 'relative',
               zIndex: 2,
             }}
