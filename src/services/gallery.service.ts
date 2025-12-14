@@ -46,7 +46,11 @@ async function convertHeicToJpeg(file: File): Promise<File> {
   const jpegBlob = Array.isArray(blob) ? blob[0] : blob
   const newName = file.name.replace(/\.heic$/i, '.jpg').replace(/\.heif$/i, '.jpg')
 
-  return new File([jpegBlob], newName, { type: 'image/jpeg' })
+  // Create a new File object with lastModified to avoid browser-image-compression issues
+  return new File([jpegBlob], newName, {
+    type: 'image/jpeg',
+    lastModified: Date.now(),
+  })
 }
 
 export async function getGalleryImages(
