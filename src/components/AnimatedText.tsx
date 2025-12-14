@@ -144,6 +144,7 @@ const AnimatedText = ({
           alignItems: 'center',
           justifyContent: 'center',
           overflow: 'hidden',
+          my: '0.2em',
         }}
       >
         {words.map((item, index) => (
