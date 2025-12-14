@@ -1,12 +1,16 @@
-import { Box, Typography } from '@mui/material'
+import { Box, Typography, Button } from '@mui/material'
 
 interface ServiceCardProps {
   icon: string
   title: string
   description: string
+  actionButton?: {
+    label: string
+    onClick: () => void
+  }
 }
 
-const ServiceCard = ({ icon, title, description }: ServiceCardProps) => {
+const ServiceCard = ({ icon, title, description, actionButton }: ServiceCardProps) => {
   return (
     <Box
       sx={{
@@ -62,6 +66,23 @@ const ServiceCard = ({ icon, title, description }: ServiceCardProps) => {
       >
         {description}
       </Typography>
+      {actionButton && (
+        <Button
+          variant="outlined"
+          onClick={actionButton.onClick}
+          sx={{
+            mt: { xs: 2, md: 2, lg: 3 },
+            borderColor: '#333333',
+            color: '#333333',
+            '&:hover': {
+              borderColor: '#000000',
+              backgroundColor: 'rgba(0, 0, 0, 0.04)',
+            },
+          }}
+        >
+          {actionButton.label}
+        </Button>
+      )}
     </Box>
   )
 }
