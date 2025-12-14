@@ -6,9 +6,14 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material'
+import { useEffect, useRef } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import ServiceImage from '../components/ServiceImage'
 import ServiceCard from '../components/ServiceCard'
 import { useTextColor } from '../components/DynamicBackground'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const services = [
   {
@@ -45,19 +50,85 @@ const ServicesSection = () => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
   const { headingColor } = useTextColor()
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const introRef = useRef<HTMLDivElement>(null)
+  const gridRef = useRef<HTMLDivElement>(null)
+  const mobileIntroRef = useRef<HTMLDivElement>(null)
+  const mobileCardsRef = useRef<HTMLDivElement>(null)
 
-  // Mobile: alternating full-screen image/card pairs with snap
+  useEffect(() => {
+    if (isMobile && mobileIntroRef.current && mobileCardsRef.current) {
+      // Mobile ScrollTrigger setup - wait for layout to settle
+      const timeoutId = setTimeout(() => {
+        if (mobileIntroRef.current && mobileCardsRef.current) {
+          const ctx = gsap.context(() => {
+            // Pin the intro section
+            ScrollTrigger.create({
+              trigger: mobileIntroRef.current,
+              start: 'top top',
+              end: () => `+=${mobileCardsRef.current!.offsetHeight}`,
+              pin: mobileIntroRef.current,
+              pinSpacing: false,
+              anticipatePin: 1,
+            })
+
+            // Pin each image/card pair
+            const items = mobileCardsRef.current!.querySelectorAll('.service-item')
+            items.forEach((item) => {
+              const image = item.querySelector('.service-image')
+              const card = item.querySelector('.service-card')
+
+              if (image && card) {
+                // Pin the image while the card scrolls over
+                ScrollTrigger.create({
+                  trigger: item,
+                  start: 'top top',
+                  end: 'bottom top',
+                  pin: image,
+                  pinSpacing: false,
+                  anticipatePin: 1,
+                })
+              }
+            })
+          }, mobileCardsRef)
+
+          return () => ctx.revert()
+        }
+      }, 200)
+
+      return () => clearTimeout(timeoutId)
+    } else if (!isMobile && sectionRef.current && introRef.current && gridRef.current) {
+      // Desktop ScrollTrigger setup
+      const ctx = gsap.context(() => {
+        ScrollTrigger.create({
+          trigger: sectionRef.current,
+          start: 'top top',
+          end: () => `+=${gridRef.current!.offsetHeight}`,
+          pin: introRef.current,
+          pinSpacing: false,
+          scrub: true,
+        })
+      }, sectionRef)
+
+      return () => ctx.revert()
+    }
+  }, [isMobile])
+
+  // Mobile: pinned intro with alternating pinned images and scrolling cards
   if (isMobile) {
     return (
-      <Box id="angebot">
-        {/* Intro section */}
+      <Box id="angebot" sx={{ position: 'relative' }}>
+        {/* Intro section - will be pinned */}
         <Box
+          ref={mobileIntroRef}
           sx={{
             minHeight: '100vh',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             py: 4,
+            position: 'relative',
+            zIndex: 1,
           }}
         >
           <Container maxWidth="lg">
@@ -107,58 +178,73 @@ const ServicesSection = () => {
           </Container>
         </Box>
 
-        {/* Services cards */}
-        {services.map((service, index) => (
-          <Box key={index}>
-            {/* Image panel */}
-            <Box
-              className="snap-section"
-              data-snap-id={`service-image-${index}`}
-              sx={{
-                minHeight: '100vh',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                p: { xs: 2, sm: 3 },
-              }}
-            >
-              <ServiceImage src={service.image} alt={service.title} />
-            </Box>
+        {/* Services - image stays pinned while card scrolls over */}
+        <Box ref={mobileCardsRef}>
+          {services.map((service, index) => (
+            <Box key={index} className="service-item" sx={{ position: 'relative' }}>
+              {/* Image - will be pinned */}
+              <Box
+                className="service-image"
+                sx={{
+                  height: '100vh',
+                  width: '100%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  p: { xs: 2, sm: 3 },
+                  backgroundColor: '#f5f5f5',
+                  position: 'relative',
+                  zIndex: 1,
+                }}
+              >
+                <Box sx={{ height: '100%', width: '100%' }}>
+                  <ServiceImage src={service.image} alt={service.title} />
+                </Box>
+              </Box>
 
-            {/* Card panel */}
-            <Box
-              className="snap-section"
-              data-snap-id={`service-card-${index}`}
-              sx={{
-                minHeight: '100vh',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                p: { xs: 3, sm: 4 },
-              }}
-            >
-              <ServiceCard
-                icon={service.icon}
-                title={service.title}
-                description={service.description}
-              />
+              {/* Card - will scroll over image */}
+              <Box
+                className="service-card"
+                sx={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  justifyContent: 'center',
+                  pt: { xs: 4, sm: 5 },
+                  pb: { xs: 12, sm: 16 },
+                  px: { xs: 3, sm: 4 },
+                  backgroundColor: 'white',
+                  position: 'relative',
+                  zIndex: 2,
+                }}
+              >
+                <Box sx={{ maxWidth: '600px', width: '100%' }}>
+                  <ServiceCard
+                    icon={service.icon}
+                    title={service.title}
+                    description={service.description}
+                  />
+                </Box>
+              </Box>
             </Box>
-          </Box>
-        ))}
+          ))}
+        </Box>
       </Box>
     )
   }
 
   // Desktop: Grid layout with intro
   return (
-    <Box id="angebot">
-      {/* Intro section */}
+    <Box id="angebot" ref={sectionRef} sx={{ position: 'relative' }}>
+      {/* Intro section - will be pinned */}
       <Box
+        ref={introRef}
         sx={{
           minHeight: '100vh',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
+          position: 'relative',
+          zIndex: 1,
         }}
       >
         <Container maxWidth="lg">
@@ -208,9 +294,13 @@ const ServicesSection = () => {
         </Container>
       </Box>
 
-      {/* Services grid */}
+      {/* Services grid - will scroll over intro */}
       <Box
+        ref={gridRef}
         sx={{
+          position: 'relative',
+          zIndex: 2,
+          backgroundColor: 'white',
           minHeight: '100vh',
           display: 'flex',
           alignItems: 'center',
