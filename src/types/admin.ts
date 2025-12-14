@@ -20,7 +20,9 @@ export interface GalleryImage {
   galleryId: string
   thumbnailUrl: string
   webUrl: string
+  fullUrl: string
   alt: string
+  description: string
   order: number
   active: boolean
   uploadedAt: Date

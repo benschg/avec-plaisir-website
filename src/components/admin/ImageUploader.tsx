@@ -4,7 +4,7 @@ import { Box, Typography, LinearProgress, Paper } from '@mui/material'
 import { Upload } from 'lucide-react'
 
 interface ImageUploaderProps {
-  onUpload: (file: File) => Promise<void>
+  onUpload: (file: File, onProgress: (progress: number) => void) => Promise<void>
   disabled?: boolean
 }
 
@@ -14,24 +14,38 @@ export default function ImageUploader({
 }: ImageUploaderProps) {
   const [uploading, setUploading] = useState(false)
   const [progress, setProgress] = useState(0)
+  const [currentFile, setCurrentFile] = useState(0)
+  const [totalFiles, setTotalFiles] = useState(0)
 
   const onDrop = useCallback(
     async (acceptedFiles: File[]) => {
       if (disabled || acceptedFiles.length === 0) return
 
-      for (const file of acceptedFiles) {
-        setUploading(true)
-        setProgress(0)
+      setUploading(true)
+      setTotalFiles(acceptedFiles.length)
+
+      for (let i = 0; i < acceptedFiles.length; i++) {
+        const file = acceptedFiles[i]
+        setCurrentFile(i + 1)
+        // Calculate base progress for this file in the batch
+        const fileBaseProgress = (i / acceptedFiles.length) * 100
+        const fileWeight = 100 / acceptedFiles.length
 
         try {
-          await onUpload(file)
+          await onUpload(file, (fileProgress) => {
+            // Combine batch progress with individual file progress
+            const totalProgress = fileBaseProgress + (fileProgress / 100) * fileWeight
+            setProgress(totalProgress)
+          })
         } catch (error) {
           console.error('Upload failed:', error)
         }
-
-        setUploading(false)
-        setProgress(0)
       }
+
+      setUploading(false)
+      setProgress(0)
+      setCurrentFile(0)
+      setTotalFiles(0)
     },
     [onUpload, disabled]
   )
@@ -39,7 +53,7 @@ export default function ImageUploader({
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: {
-      'image/*': ['.jpeg', '.jpg', '.png', '.webp'],
+      'image/*': ['.jpeg', '.jpg', '.png', '.webp', '.heic', '.heif'],
     },
     multiple: true,
     disabled: disabled || uploading,
@@ -75,14 +89,16 @@ export default function ImageUploader({
           : 'Bilder hierher ziehen oder klicken zum Auswählen'}
       </Typography>
       <Typography variant="caption" color="text.secondary">
-        JPG, PNG oder WebP
+        JPG, PNG, WebP oder HEIC
       </Typography>
 
       {uploading && (
         <Box sx={{ mt: 2 }}>
           <LinearProgress variant="determinate" value={progress} />
           <Typography variant="caption" color="text.secondary">
-            {Math.round(progress)}%
+            {totalFiles > 1
+              ? `Bild ${currentFile} von ${totalFiles} (${Math.round(progress)}%)`
+              : `${Math.round(progress)}%`}
           </Typography>
         </Box>
       )}

@@ -5,7 +5,6 @@ import {
   Card,
   CardMedia,
   CardContent,
-  TextField,
   Switch,
   IconButton,
   Grid,
@@ -20,6 +19,7 @@ import {
   Button,
   Tabs,
   Tab,
+  Checkbox,
 } from '@mui/material'
 import { Trash2, GripVertical } from 'lucide-react'
 import {
@@ -40,6 +40,7 @@ import {
 } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import ImageUploader from '../../components/admin/ImageUploader'
+import ImageDetailDialog from '../../components/admin/ImageDetailDialog'
 import {
   getGalleryImages,
   addGalleryImage,
@@ -51,16 +52,22 @@ import { GALLERIES, type GalleryImage, type GalleryId } from '../../types/admin'
 
 interface SortableImageCardProps {
   image: GalleryImage
-  onAltChange: (id: string, alt: string) => void
   onActiveChange: (id: string, active: boolean) => void
   onDelete: (image: GalleryImage) => void
+  onClick: (image: GalleryImage) => void
+  selected: boolean
+  onSelectChange: (id: string, selected: boolean) => void
+  selectMode: boolean
 }
 
 function SortableImageCard({
   image,
-  onAltChange,
   onActiveChange,
   onDelete,
+  onClick,
+  selected,
+  onSelectChange,
+  selectMode,
 }: SortableImageCardProps) {
   const {
     attributes,
@@ -78,7 +85,15 @@ function SortableImageCard({
   }
 
   return (
-    <Card ref={setNodeRef} style={style} sx={{ height: '100%' }}>
+    <Card
+      ref={setNodeRef}
+      style={style}
+      sx={{
+        height: '100%',
+        outline: selected ? '2px solid' : 'none',
+        outlineColor: 'primary.main',
+      }}
+    >
       <Box
         sx={{
           display: 'flex',
@@ -86,39 +101,60 @@ function SortableImageCard({
           justifyContent: 'space-between',
           px: 1,
           py: 0.5,
-          bgcolor: 'grey.100',
-          cursor: 'grab',
+          bgcolor: selected ? 'primary.light' : 'grey.100',
         }}
-        {...attributes}
-        {...listeners}
       >
-        <GripVertical size={18} style={{ color: '#9e9e9e' }} />
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          {selectMode && (
+            <Checkbox
+              size="small"
+              checked={selected}
+              onChange={(e) => onSelectChange(image.id, e.target.checked)}
+              sx={{ p: 0, mr: 0.5 }}
+            />
+          )}
+          <Box
+            sx={{ cursor: 'grab', display: 'flex', alignItems: 'center' }}
+            {...attributes}
+            {...listeners}
+          >
+            <GripVertical size={18} style={{ color: '#9e9e9e' }} />
+          </Box>
+        </Box>
         <Switch
           size="small"
           checked={image.active}
           onChange={(e) => onActiveChange(image.id, e.target.checked)}
-          onClick={(e) => e.stopPropagation()}
         />
       </Box>
       <CardMedia
         component="img"
         image={image.thumbnailUrl}
         alt={image.alt}
+        onClick={() => onClick(image)}
         sx={{
           height: 150,
           objectFit: 'cover',
           opacity: image.active ? 1 : 0.4,
+          cursor: 'pointer',
+          '&:hover': {
+            opacity: image.active ? 0.9 : 0.5,
+          },
         }}
       />
       <CardContent sx={{ p: 1.5, '&:last-child': { pb: 1.5 } }}>
-        <TextField
-          size="small"
-          placeholder="Alt-Text"
-          value={image.alt}
-          onChange={(e) => onAltChange(image.id, e.target.value)}
-          fullWidth
-          sx={{ mb: 1 }}
-        />
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          sx={{
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+            mb: 1,
+          }}
+        >
+          {image.description || 'Keine Beschreibung'}
+        </Typography>
         <IconButton
           size="small"
           color="error"
@@ -140,6 +176,10 @@ export default function AdminGallery() {
   const [loading, setLoading] = useState(true)
   const [uploading, setUploading] = useState(false)
   const [deleteDialog, setDeleteDialog] = useState<GalleryImage | null>(null)
+  const [detailImage, setDetailImage] = useState<GalleryImage | null>(null)
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
+  const [batchDeleteDialog, setBatchDeleteDialog] = useState(false)
+  const [deleting, setDeleting] = useState(false)
   const [snackbar, setSnackbar] = useState<{
     open: boolean
     message: string
@@ -176,13 +216,71 @@ export default function AdminGallery() {
 
   const handleTabChange = (_: React.SyntheticEvent, newValue: GalleryId) => {
     setActiveGallery(newValue)
+    setSelectedIds(new Set()) // Clear selection when switching galleries
   }
 
-  const handleUpload = async (file: File) => {
+  const handleSelectChange = (id: string, selected: boolean) => {
+    setSelectedIds((prev) => {
+      const next = new Set(prev)
+      if (selected) {
+        next.add(id)
+      } else {
+        next.delete(id)
+      }
+      return next
+    })
+  }
+
+  const handleSelectAll = () => {
+    if (selectedIds.size === images.length) {
+      setSelectedIds(new Set())
+    } else {
+      setSelectedIds(new Set(images.map((img) => img.id)))
+    }
+  }
+
+  const handleBatchDelete = async () => {
+    if (selectedIds.size === 0) return
+
+    setDeleting(true)
+    const toDelete = images.filter((img) => selectedIds.has(img.id))
+    let deletedCount = 0
+
+    for (const image of toDelete) {
+      try {
+        await deleteGalleryImage(image)
+        deletedCount++
+      } catch (error) {
+        console.error('Error deleting image:', error)
+      }
+    }
+
+    setImages((prev) => prev.filter((img) => !selectedIds.has(img.id)))
+    setSelectedIds(new Set())
+    setBatchDeleteDialog(false)
+    setDeleting(false)
+
+    setSnackbar({
+      open: true,
+      message: `${deletedCount} Bild${deletedCount !== 1 ? 'er' : ''} gelöscht`,
+      severity: 'success',
+    })
+  }
+
+  const handleUpload = async (
+    file: File,
+    onProgress: (progress: number) => void
+  ) => {
     try {
       setUploading(true)
       const maxOrder = images.reduce((max, img) => Math.max(max, img.order), 0)
-      const newImage = await addGalleryImage(activeGallery, file, '', maxOrder + 1)
+      const newImage = await addGalleryImage(
+        activeGallery,
+        file,
+        '',
+        maxOrder + 1,
+        onProgress
+      )
       setImages((prev) => [...prev, newImage])
       setSnackbar({
         open: true,
@@ -201,15 +299,29 @@ export default function AdminGallery() {
     }
   }
 
-  const handleAltChange = async (id: string, alt: string) => {
+  const handleDetailSave = async (
+    id: string,
+    data: { alt: string; description: string }
+  ) => {
     setImages((prev) =>
-      prev.map((img) => (img.id === id ? { ...img, alt } : img))
+      prev.map((img) => (img.id === id ? { ...img, ...data } : img))
     )
 
     try {
-      await updateGalleryImage(id, { alt })
+      await updateGalleryImage(id, data)
+      setSnackbar({
+        open: true,
+        message: 'Änderungen gespeichert',
+        severity: 'success',
+      })
     } catch (error) {
-      console.error('Error updating alt:', error)
+      console.error('Error updating image:', error)
+      setSnackbar({
+        open: true,
+        message: 'Fehler beim Speichern',
+        severity: 'error',
+      })
+      throw error
     }
   }
 
@@ -299,6 +411,45 @@ export default function AdminGallery() {
         <ImageUploader onUpload={handleUpload} disabled={uploading} />
       </Box>
 
+      {/* Selection controls */}
+      {images.length > 0 && (
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 2,
+            mb: 2,
+            p: 1.5,
+            bgcolor: selectedIds.size > 0 ? 'primary.50' : 'grey.50',
+            borderRadius: 1,
+          }}
+        >
+          <Button
+            size="small"
+            variant="outlined"
+            onClick={handleSelectAll}
+          >
+            {selectedIds.size === images.length ? 'Keine auswählen' : 'Alle auswählen'}
+          </Button>
+          {selectedIds.size > 0 && (
+            <>
+              <Typography variant="body2" color="text.secondary">
+                {selectedIds.size} ausgewählt
+              </Typography>
+              <Button
+                size="small"
+                variant="contained"
+                color="error"
+                startIcon={<Trash2 size={16} />}
+                onClick={() => setBatchDeleteDialog(true)}
+              >
+                Löschen
+              </Button>
+            </>
+          )}
+        </Box>
+      )}
+
       {loading ? (
         <Box display="flex" justifyContent="center" py={4}>
           <CircularProgress />
@@ -322,9 +473,12 @@ export default function AdminGallery() {
                 <Grid size={{ xs: 6, sm: 4, md: 3 }} key={image.id}>
                   <SortableImageCard
                     image={image}
-                    onAltChange={handleAltChange}
                     onActiveChange={handleActiveChange}
                     onDelete={setDeleteDialog}
+                    onClick={setDetailImage}
+                    selected={selectedIds.has(image.id)}
+                    onSelectChange={handleSelectChange}
+                    selectMode={selectedIds.size > 0}
                   />
                 </Grid>
               ))}
@@ -350,6 +504,28 @@ export default function AdminGallery() {
         </DialogActions>
       </Dialog>
 
+      {/* Batch delete confirmation dialog */}
+      <Dialog
+        open={batchDeleteDialog}
+        onClose={() => !deleting && setBatchDeleteDialog(false)}
+      >
+        <DialogTitle>{selectedIds.size} Bilder löschen?</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Möchtest du {selectedIds.size} Bild{selectedIds.size !== 1 ? 'er' : ''}{' '}
+            wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setBatchDeleteDialog(false)} disabled={deleting}>
+            Abbrechen
+          </Button>
+          <Button onClick={handleBatchDelete} color="error" disabled={deleting}>
+            {deleting ? 'Lösche...' : 'Alle löschen'}
+          </Button>
+        </DialogActions>
+      </Dialog>
+
       <Snackbar
         open={snackbar.open}
         autoHideDuration={4000}
@@ -362,6 +538,14 @@ export default function AdminGallery() {
           {snackbar.message}
         </Alert>
       </Snackbar>
+
+      {/* Image detail dialog */}
+      <ImageDetailDialog
+        image={detailImage}
+        open={!!detailImage}
+        onClose={() => setDetailImage(null)}
+        onSave={handleDetailSave}
+      />
     </Box>
   )
 }
