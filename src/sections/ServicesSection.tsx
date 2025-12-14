@@ -6,13 +6,16 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import ServiceImage from '../components/ServiceImage'
 import ServiceCard from '../components/ServiceCard'
 import AnimatedText from '../components/AnimatedText'
+import PhotoGallery from '../components/PhotoGallery'
 import { useTextColor } from '../components/DynamicBackground'
+import { getGalleryImages } from '../services/gallery.service'
+import type { GalleryImage } from '../types/admin'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -56,6 +59,29 @@ const ServicesSection = () => {
   const gridRef = useRef<HTMLDivElement>(null)
   const mobileIntroRef = useRef<HTMLDivElement>(null)
   const mobileCardsRef = useRef<HTMLDivElement>(null)
+
+  const [galleryOpen, setGalleryOpen] = useState(false)
+  const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([])
+  const [loadingGallery, setLoadingGallery] = useState(false)
+
+  const handleOpenGallery = async () => {
+    if (galleryImages.length === 0 && !loadingGallery) {
+      setLoadingGallery(true)
+      try {
+        const images = await getGalleryImages('trauerfloristik')
+        setGalleryImages(images.filter((img) => img.active))
+      } catch (error) {
+        console.error('Error loading gallery:', error)
+      } finally {
+        setLoadingGallery(false)
+      }
+    }
+    setGalleryOpen(true)
+  }
+
+  const handleCloseGallery = () => {
+    setGalleryOpen(false)
+  }
 
   useEffect(() => {
     if (isMobile && mobileIntroRef.current && mobileCardsRef.current) {
@@ -230,6 +256,14 @@ const ServicesSection = () => {
                     icon={service.icon}
                     title={service.title}
                     description={service.description}
+                    actionButton={
+                      service.title === 'Trauerfloristik'
+                        ? {
+                            label: 'Fotos',
+                            onClick: handleOpenGallery,
+                          }
+                        : undefined
+                    }
                   />
                 </Box>
               </Box>
@@ -265,6 +299,13 @@ const ServicesSection = () => {
             />
           </Box>
         </Box>
+
+        {/* Photo Gallery Modal */}
+        <PhotoGallery
+          open={galleryOpen}
+          onClose={handleCloseGallery}
+          images={galleryImages}
+        />
       </Box>
     )
   }
@@ -374,6 +415,10 @@ const ServicesSection = () => {
               icon="/images/imgi_20_Avec-Plaisir-Zuerich-Trauerfloristik.png"
               title="Trauerfloristik"
               description="Blumenkranz, Sargbouquets, Urnenschmuck oder Grabbepflanzung, wir nehmen uns viel Zeit, um dir in schweren Stunden bestmöglich zur Seite zu stehen."
+              actionButton={{
+                label: 'Fotos',
+                onClick: handleOpenGallery,
+              }}
             />
           </Grid>
           <Grid size={{ xs: 12, md: 4 }} sx={{ minHeight: { xs: '300px', md: '250px', lg: '320px' } }}>
@@ -413,6 +458,13 @@ const ServicesSection = () => {
         </Grid>
       </Container>
       </Box>
+
+      {/* Photo Gallery Modal */}
+      <PhotoGallery
+        open={galleryOpen}
+        onClose={handleCloseGallery}
+        images={galleryImages}
+      />
     </Box>
   )
 }
