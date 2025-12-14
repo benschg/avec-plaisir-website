@@ -1,0 +1,28 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper function to check if user is admin
+    function isAdmin() {
+      return request.auth != null &&
+        request.auth.token.email in get(/databases/$(database)/documents/config/adminUsers).data.emails;
+    }
+
+    // Admin users config - readable by authenticated users, not writable via app
+    match /config/adminUsers {
+      allow read: if request.auth != null;
+      allow write: if false;
+    }
+
+    // Content collection - publicly readable, admin writable
+    match /content/{doc} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Gallery collection - publicly readable, admin writable
+    match /gallery/{imageId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+  }
+}
