@@ -120,10 +120,9 @@ const Navigation = () => {
                 src="/avec-plaisir-text-logo.svg"
                 alt="avec plaisir zürich"
                 style={{
-                  marginTop: scrolled ? '10px' : '20px',
-                  height: scrolled ? '45px' : '100px',
+                  marginTop: '10px',
+                  height: '45px',
                   width: 'auto',
-                  transition: 'all 0.3s ease-in-out',
                 }}
               />
             </Box>
