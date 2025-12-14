@@ -11,11 +11,16 @@ interface SectionProgress {
   progress: number
 }
 
+// Filter out sections that shouldn't appear in the stepper
+const visibleSections = sectionsConfig.filter(
+  (section) => section.id !== 'avec-animated' && section.id !== 'footer'
+)
+
 const ScrollStepper = () => {
   const { textColor, headingColor, backgroundColor } = useTextColor()
   const { lenis, scrollTo } = useLenis()
   const [sections, setSections] = useState<SectionProgress[]>(
-    sectionsConfig.map((section, index) => ({
+    visibleSections.map((section, index) => ({
       id: section.id,
       title: section.title,
       isActive: index === 0,
@@ -31,22 +36,24 @@ const ScrollStepper = () => {
       const windowHeight = window.innerHeight
 
       // Get all section elements using configuration
-      const sectionElements = sectionsConfig.map((section, index) => ({
+      const sectionElements = visibleSections.map((section) => ({
         id: section.id,
+        title: section.title,
         element:
           section.id === 'hero'
             ? document.querySelector('#hero')
             : section.id === 'gallery'
-              ? document.querySelector('[id*="gallery"]') ||
-                document.querySelector(`main > *:nth-child(${index + 1})`)
+              ? document.querySelector('[id*="gallery"]')
               : document.getElementById(section.id),
       }))
 
       const updatedSections = sectionElements.map((section, index) => {
+        const title = section.title
+
         if (!section.element) {
           return {
             id: section.id,
-            title: sections[index]?.title || section.id,
+            title,
             isActive: false,
             progress: 0,
           }
@@ -87,7 +94,7 @@ const ScrollStepper = () => {
 
         return {
           id: section.id,
-          title: sections[index]?.title || section.id,
+          title,
           isActive,
           progress,
         }
@@ -143,11 +150,9 @@ const ScrollStepper = () => {
             transition: 'opacity 0.3s ease, visibility 0.3s ease',
             backgroundColor,
             borderRadius: 2,
-            py: 1,
             px: 1.5,
             display: 'flex',
             flexDirection: 'column',
-            gap: 0,
           }}
         >
           {sections.map((section, index) => (
@@ -156,15 +161,17 @@ const ScrollStepper = () => {
               variant="caption"
               onClick={() => handleSectionClick(section.id)}
               sx={{
-                display: 'block',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'flex-end',
                 color: textColor,
                 fontSize: '0.75rem',
                 fontWeight: section.isActive ? 600 : 400,
                 textTransform: 'capitalize',
                 whiteSpace: 'nowrap',
                 cursor: 'pointer',
-                height: index < sections.length - 1 ? 32 : 'auto',
-                lineHeight: index < sections.length - 1 ? '20px' : 'normal',
+                height: 12,
+                mb: index < sections.length - 1 ? 3 : 0,
                 opacity: section.isActive ? 1 : 0.6,
                 transition: 'all 0.3s ease',
                 '&:hover': {
@@ -183,17 +190,14 @@ const ScrollStepper = () => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'flex-end',
+              height: 12,
               mb: index < sections.length - 1 ? 3 : 0,
               cursor: 'pointer',
               transition: 'all 0.3s ease',
               opacity: section.isActive ? 1 : 0.6,
-              transform: section.isActive ? 'scale(1.1)' : 'scale(1)',
-              position: 'relative',
-              width: 'auto',
             }}
             onClick={() => handleSectionClick(section.id)}
           >
-
             {/* Section dot */}
             <Box
               sx={{
