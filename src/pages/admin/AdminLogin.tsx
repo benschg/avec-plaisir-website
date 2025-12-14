@@ -15,9 +15,12 @@ export default function AdminLogin() {
 
   const handleGoogleSignIn = async () => {
     try {
+      console.log('Attempting Google sign in...')
       await signInWithGoogle()
+      console.log('Sign in redirect initiated')
     } catch (error) {
       console.error('Sign in failed:', error)
+      alert(`Sign in error: ${error instanceof Error ? error.message : 'Unknown error'}`)
     }
   }
 
