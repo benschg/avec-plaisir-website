@@ -187,7 +187,7 @@ const ServicesSection = () => {
         </Box>
 
         {/* Services - image stays pinned while card scrolls over */}
-        <Box ref={mobileCardsRef}>
+        <Box ref={mobileCardsRef} sx={{ overflow: 'hidden' }}>
           {services.map((service, index) => (
             <Box key={index} className="service-item" sx={{ position: 'relative' }}>
               {/* Image - will be pinned */}
@@ -246,6 +246,8 @@ const ServicesSection = () => {
               minHeight: '100vh',
               position: 'relative',
               zIndex: 2,
+              backgroundColor: '#9ba7aa',
+              transition: 'background-color 0.8s ease',
             }}
           >
             <AnimatedText

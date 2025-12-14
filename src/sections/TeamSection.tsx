@@ -14,6 +14,7 @@ const TeamSection = () => {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
+        py: { xs: 6, md: 0 },
       }}
     >
       <Container maxWidth="md">
