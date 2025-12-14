@@ -42,6 +42,11 @@ export const sectionColorConfigs: Record<string, SectionColorConfig> = {
     headingColor: '#c56761',
     // secondaryTextColor: 'rgba(255, 255, 255, 0.8)',
   },
+  'avec-animated': {
+    background: '#9ba7aa',
+    textColor: '#ffffff',
+    headingColor: '#ffffff',
+  },
   team: {
     background: '#5e747a',
     // textColor: '#333333',

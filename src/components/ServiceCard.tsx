@@ -11,8 +11,8 @@ const ServiceCard = ({ icon, title, description }: ServiceCardProps) => {
     <Box
       sx={{
         textAlign: 'center',
-        py: 2,
-        px: 2,
+        py: { xs: 3, md: 2, lg: 3 },
+        px: { xs: 3, md: 2, lg: 3 },
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
@@ -22,10 +22,10 @@ const ServiceCard = ({ icon, title, description }: ServiceCardProps) => {
     >
       <Box
         sx={{
-          width: 240,
-          height: 160,
+          width: { xs: 180, md: 160, lg: 240 },
+          height: { xs: 120, md: 110, lg: 160 },
           mx: 'auto',
-          mb: 3,
+          mb: { xs: 2, md: 2, lg: 3 },
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -44,10 +44,10 @@ const ServiceCard = ({ icon, title, description }: ServiceCardProps) => {
       <Typography
         variant="h5"
         sx={{
-          mb: 3,
+          mb: { xs: 2, md: 2, lg: 3 },
           color: '#333333',
           fontWeight: 500,
-          fontSize: '1.4rem',
+          fontSize: { xs: '1.2rem', md: '1.1rem', lg: '1.4rem' },
         }}
       >
         {title}
@@ -57,7 +57,7 @@ const ServiceCard = ({ icon, title, description }: ServiceCardProps) => {
         sx={{
           color: '#666666',
           lineHeight: 1.7,
-          fontSize: '1rem',
+          fontSize: { xs: '0.95rem', md: '0.85rem', lg: '1rem' },
         }}
       >
         {description}

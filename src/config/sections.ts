@@ -26,14 +26,9 @@ export const sectionsConfig: SectionConfig[] = [
     displayName: 'Visit Section',
   },
   {
-    id: 'angebot-intro',
-    title: 'Angebot',
-    displayName: 'Services Intro',
-  },
-  {
     id: 'angebot',
-    title: 'Services',
-    displayName: 'Services Section',
+    title: 'Angebot',
+    displayName: 'Angebot Section',
   },
   {
     id: 'avec-animated',
