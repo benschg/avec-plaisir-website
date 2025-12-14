@@ -11,6 +11,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import ServiceImage from '../components/ServiceImage'
 import ServiceCard from '../components/ServiceCard'
+import AnimatedText from '../components/AnimatedText'
 import { useTextColor } from '../components/DynamicBackground'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -62,6 +63,9 @@ const ServicesSection = () => {
       const timeoutId = setTimeout(() => {
         if (mobileIntroRef.current && mobileCardsRef.current) {
           const ctx = gsap.context(() => {
+            // Refresh ScrollTrigger to ensure correct calculations
+            ScrollTrigger.refresh()
+
             // Pin the intro section
             ScrollTrigger.create({
               trigger: mobileIntroRef.current,
@@ -74,7 +78,7 @@ const ServicesSection = () => {
 
             // Pin each image/card pair
             const items = mobileCardsRef.current!.querySelectorAll('.service-item')
-            items.forEach((item) => {
+            items.forEach((item, index) => {
               const image = item.querySelector('.service-image')
               const card = item.querySelector('.service-card')
 
@@ -87,9 +91,13 @@ const ServicesSection = () => {
                   pin: image,
                   pinSpacing: false,
                   anticipatePin: 1,
+                  id: `service-pin-${index}`,
                 })
               }
             })
+
+            // Final refresh to recalculate after all pins are created
+            ScrollTrigger.refresh()
           }, mobileCardsRef)
 
           return () => ctx.revert()
@@ -227,6 +235,34 @@ const ServicesSection = () => {
               </Box>
             </Box>
           ))}
+
+          {/* Final animated text section - scrolls normally without pinning */}
+          <Box
+            id="avec-animated"
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              minHeight: '100vh',
+              backgroundColor: 'white',
+              position: 'relative',
+              zIndex: 2,
+            }}
+          >
+            <AnimatedText
+              words={[
+                'plaisir!',
+                'fleurs?',
+                {
+                  type: 'svg',
+                  src: '/avec-plaisir-flower-white.svg',
+                  alt: 'flower',
+                },
+              ]}
+              fontSize={{ xs: '3.5rem', md: '6rem' }}
+              interval={4000}
+            />
+          </Box>
         </Box>
       </Box>
     )
