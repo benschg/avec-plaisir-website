@@ -15,16 +15,22 @@ const TeamSection = () => {
     if (!imageRef.current) return
 
     const ctx = gsap.context(() => {
-      gsap.to(imageRef.current, {
-        yPercent: 15,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: imageRef.current,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: 1,
+      gsap.fromTo(
+        imageRef.current,
+        {
+          yPercent: 0,
         },
-      })
+        {
+          yPercent: -15,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: imageRef.current,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 1,
+          },
+        }
+      )
     })
 
     return () => ctx.revert()
@@ -95,13 +101,15 @@ const TeamSection = () => {
                   }}
                 >
                   "
-                  {member.bio.split(/(_[^_]+_)/g).map((part, i) =>
-                    part.startsWith('_') && part.endsWith('_') ? (
-                      <em key={i}>{part.slice(1, -1)}</em>
-                    ) : (
-                      part
-                    )
-                  )}
+                  {member.bio
+                    .split(/(_[^_]+_)/g)
+                    .map((part, i) =>
+                      part.startsWith('_') && part.endsWith('_') ? (
+                        <em key={i}>{part.slice(1, -1)}</em>
+                      ) : (
+                        part
+                      )
+                    )}
                   "
                 </Typography>
                 <Typography
@@ -127,17 +135,16 @@ const TeamSection = () => {
                 position: 'relative',
               }}
             >
-              <img
+              <Box
                 ref={imageRef}
+                component="img"
                 src="/images/imgi_124_team-moni.jpg"
                 alt={member.name}
-                style={{
+                sx={{
                   width: '100%',
-                  height: '120%',
+                  height: '100%',
                   objectFit: 'cover',
-                  objectPosition: 'center bottom',
-                  position: 'relative',
-                  top: '-10%',
+                  objectPosition: { xs: 'center 80%', md: 'center 75%' },
                 }}
               />
             </Grid>
