@@ -7,6 +7,7 @@ import VisitSection from '../sections/VisitSection'
 import ContactSection from '../sections/ContactSection'
 import Footer from '../components/Footer'
 import ContactCallToAction from '../sections/ContactCallToAction'
+import BackToTop from '../components/BackToTop'
 
 const Home = () => {
   return (
@@ -19,6 +20,7 @@ const Home = () => {
       <TeamSection />
       <ContactCallToAction />
       <Footer />
+      <BackToTop />
     </Box>
   )
 }
