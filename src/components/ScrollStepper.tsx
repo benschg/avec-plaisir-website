@@ -13,7 +13,7 @@ interface SectionProgress {
 
 // Filter out sections that shouldn't appear in the stepper
 const visibleSections = sectionsConfig.filter(
-  (section) => section.id !== 'avec-animated' && section.id !== 'footer'
+  (section) => section.id !== 'footer'
 )
 
 const ScrollStepper = () => {

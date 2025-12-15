@@ -31,11 +31,6 @@ export const sectionsConfig: SectionConfig[] = [
     displayName: 'Angebot Section',
   },
   {
-    id: 'avec-animated',
-    title: 'Avec',
-    displayName: 'Animated Text',
-  },
-  {
     id: 'team',
     title: 'Team',
     displayName: 'Team Section',

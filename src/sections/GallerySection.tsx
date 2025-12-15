@@ -1,7 +1,9 @@
 import { useRef, useLayoutEffect } from 'react'
-import { Box, Container, Grid, useMediaQuery, useTheme } from '@mui/material'
+import { Box, Container, Grid, useMediaQuery, useTheme, Typography } from '@mui/material'
+import { Instagram } from 'lucide-react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { contactInfo } from '../data/contactInfo'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -55,7 +57,9 @@ const GallerySection = () => {
           sx={{
             height: '100vh',
             display: 'flex',
+            flexDirection: 'column',
             alignItems: 'center',
+            justifyContent: 'center',
             overflow: 'hidden',
           }}
         >
@@ -93,15 +97,41 @@ const GallerySection = () => {
               </Box>
             ))}
           </Box>
+
+          {/* Instagram link for mobile - fixed below images */}
+          <Box
+            component="a"
+            href={`https://instagram.com/${contactInfo.instagram.substring(1)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 1,
+              mt: 3,
+              textDecoration: 'none',
+              color: 'inherit',
+              transition: 'opacity 0.3s ease',
+              '&:hover': {
+                opacity: 0.7,
+              },
+            }}
+          >
+            <Instagram size={24} />
+            <Typography variant="body1">{contactInfo.instagram}</Typography>
+          </Box>
         </Box>
       ) : (
         // Desktop: Grid layout
         <Box
           sx={{
-            height: '100vh',
+            minHeight: '100vh',
             display: 'flex',
+            flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
+            py: 4,
           }}
         >
           <Container maxWidth="lg">
@@ -133,6 +163,30 @@ const GallerySection = () => {
                 </Grid>
               ))}
             </Grid>
+
+            {/* Instagram link for desktop */}
+            <Box
+              component="a"
+              href={`https://instagram.com/${contactInfo.instagram.substring(1)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 1,
+                mt: 4,
+                textDecoration: 'none',
+                color: 'inherit',
+                transition: 'opacity 0.3s ease',
+                '&:hover': {
+                  opacity: 0.7,
+                },
+              }}
+            >
+              <Instagram size={24} />
+              <Typography variant="body1">{contactInfo.instagram}</Typography>
+            </Box>
           </Container>
         </Box>
       )}

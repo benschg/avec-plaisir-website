@@ -39,10 +39,14 @@ const FallingFlowers = () => {
         filter = isLightText ? 'none' : 'invert(1)'
       }
 
+      // Calculate position accounting for scroll
+      const scrollY = window.scrollY || window.pageYOffset
+      const scrollX = window.scrollX || window.pageXOffset
+
       Object.assign(icon.style, {
         position: 'absolute',
-        left: `${x - 15}px`, // Center the icon on cursor
-        top: `${y - 15}px`,
+        left: `${x + scrollX - 15}px`, // Center the icon on cursor, accounting for scroll
+        top: `${y + scrollY - 15}px`,
         width: '30px',
         height: 'auto',
         pointerEvents: 'none',
@@ -70,8 +74,10 @@ const FallingFlowers = () => {
       }, fadeOutDuration)
     }
 
-    // Throttle mouse move events
+    // Throttle events
     let lastTime = 0
+    let isTouching = false
+
     const handleMouseMove = (e: MouseEvent) => {
       const now = Date.now()
       if (now - lastTime < 50) return // Create flower more frequently for a continuous trail
@@ -83,10 +89,41 @@ const FallingFlowers = () => {
       )
     }
 
+    const handleTouchStart = () => {
+      isTouching = true
+    }
+
+    const handleTouchMove = (e: TouchEvent) => {
+      // Only create flowers when actively touching
+      if (!isTouching) return
+
+      const now = Date.now()
+      if (now - lastTime < 50) return
+      lastTime = now
+
+      const touch = e.touches[0]
+      if (touch) {
+        createIconTrail(
+          touch.clientX + Math.random() * 40 - 10,
+          touch.clientY + Math.random() * 40 - 10
+        )
+      }
+    }
+
+    const handleTouchEnd = () => {
+      isTouching = false
+    }
+
     window.addEventListener('mousemove', handleMouseMove)
+    window.addEventListener('touchstart', handleTouchStart, { passive: true })
+    window.addEventListener('touchmove', handleTouchMove, { passive: true })
+    window.addEventListener('touchend', handleTouchEnd, { passive: true })
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener('touchstart', handleTouchStart)
+      window.removeEventListener('touchmove', handleTouchMove)
+      window.removeEventListener('touchend', handleTouchEnd)
     }
   }, [])
 
@@ -94,14 +131,13 @@ const FallingFlowers = () => {
     <Box
       ref={containerRef}
       sx={{
-        position: 'fixed',
+        position: 'absolute',
         top: 0,
         left: 0,
-        width: '100vw',
-        height: '100vh',
+        width: '100%',
+        minHeight: '100%',
         pointerEvents: 'none',
         zIndex: 9999,
-        overflow: 'hidden',
       }}
     />
   )

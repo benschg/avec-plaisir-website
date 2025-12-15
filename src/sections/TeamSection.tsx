@@ -1,9 +1,41 @@
 import { Box, Typography, Container, Grid } from '@mui/material'
+import { useEffect, useRef } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { teamMembers } from '../data/teamMembers'
 import { useTextColor } from '../components/DynamicBackground'
 
+gsap.registerPlugin(ScrollTrigger)
+
 const TeamSection = () => {
   const { textColor } = useTextColor()
+  const imageRef = useRef<HTMLImageElement>(null)
+
+  useEffect(() => {
+    if (!imageRef.current) return
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        imageRef.current,
+        {
+          yPercent: 0,
+        },
+        {
+          yPercent: -15,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: imageRef.current,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 1,
+          },
+        }
+      )
+    })
+
+    return () => ctx.revert()
+  }, [])
+
   return (
     <Box
       id="team"
@@ -25,6 +57,7 @@ const TeamSection = () => {
             key={index}
             sx={{
               textAlign: 'left',
+              alignItems: 'center',
             }}
           >
             <Grid size={{ xs: 12, md: 6 }} spacing="gap">
@@ -68,13 +101,15 @@ const TeamSection = () => {
                   }}
                 >
                   "
-                  {member.bio.split(/(_[^_]+_)/g).map((part, i) =>
-                    part.startsWith('_') && part.endsWith('_') ? (
-                      <em key={i}>{part.slice(1, -1)}</em>
-                    ) : (
-                      part
-                    )
-                  )}
+                  {member.bio
+                    .split(/(_[^_]+_)/g)
+                    .map((part, i) =>
+                      part.startsWith('_') && part.endsWith('_') ? (
+                        <em key={i}>{part.slice(1, -1)}</em>
+                      ) : (
+                        part
+                      )
+                    )}
                   "
                 </Typography>
                 <Typography
@@ -96,15 +131,20 @@ const TeamSection = () => {
               sx={{
                 mb: 4,
                 overflow: 'hidden',
+                maxHeight: { xs: '500px', md: '600px' },
+                position: 'relative',
               }}
             >
-              <img
-                src="/images/imgi_123_40A7C801-D815-4BA5-8CFF-AADD6184BA57_1_105_c.jpg"
+              <Box
+                ref={imageRef}
+                component="img"
+                src="/images/imgi_124_team-moni.jpg"
                 alt={member.name}
-                style={{
+                sx={{
                   width: '100%',
                   height: '100%',
                   objectFit: 'cover',
+                  objectPosition: { xs: 'center 80%', md: 'center 75%' },
                 }}
               />
             </Grid>
