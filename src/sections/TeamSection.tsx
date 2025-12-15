@@ -99,7 +99,7 @@ const TeamSection = () => {
               }}
             >
               <img
-                src="/images/imgi_123_40A7C801-D815-4BA5-8CFF-AADD6184BA57_1_105_c.jpg"
+                src="/images/team-moni-optimized.jpg"
                 alt={member.name}
                 style={{
                   width: '100%',
