@@ -588,7 +588,10 @@ export default function AdminGallery() {
               </Button>
             </>
           )}
-          <Box sx={{ marginLeft: 'auto' }}>
+          <Box sx={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Typography variant="body2" color="text.secondary">
+              {images.filter((img) => img.active).length} / {images.length} sichtbar
+            </Typography>
             <ToggleButtonGroup
               value={viewMode}
               exclusive

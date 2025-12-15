@@ -34,6 +34,10 @@ export const GALLERIES = {
     id: 'trauerfloristik',
     name: 'Trauerfloristik',
   },
+  events: {
+    id: 'events',
+    name: 'Events',
+  },
 } as const
 
 export type GalleryId = keyof typeof GALLERIES
