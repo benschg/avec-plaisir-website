@@ -1,9 +1,35 @@
 import { Box, Typography, Container, Grid } from '@mui/material'
+import { useEffect, useRef } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { teamMembers } from '../data/teamMembers'
 import { useTextColor } from '../components/DynamicBackground'
 
+gsap.registerPlugin(ScrollTrigger)
+
 const TeamSection = () => {
   const { textColor } = useTextColor()
+  const imageRef = useRef<HTMLImageElement>(null)
+
+  useEffect(() => {
+    if (!imageRef.current) return
+
+    const ctx = gsap.context(() => {
+      gsap.to(imageRef.current, {
+        yPercent: 15,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: imageRef.current,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1,
+        },
+      })
+    })
+
+    return () => ctx.revert()
+  }, [])
+
   return (
     <Box
       id="team"
@@ -98,15 +124,19 @@ const TeamSection = () => {
                 mb: 4,
                 overflow: 'hidden',
                 maxHeight: { md: '600px' },
+                position: 'relative',
               }}
             >
               <img
+                ref={imageRef}
                 src="/images/imgi_124_team-moni.jpg"
                 alt={member.name}
                 style={{
                   width: '100%',
-                  height: '100%',
+                  height: '120%',
                   objectFit: 'cover',
+                  position: 'relative',
+                  top: '-10%',
                 }}
               />
             </Grid>
