@@ -459,6 +459,35 @@ const ServicesSection = () => {
       </Container>
       </Box>
 
+      {/* Animated text section - part of angebot section */}
+      <Box
+        id="avec-animated"
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          minHeight: '100vh',
+          position: 'relative',
+          zIndex: 2,
+          backgroundColor: '#9ba7aa',
+          transition: 'background-color 0.8s ease',
+        }}
+      >
+        <AnimatedText
+          words={[
+            'plaisir!',
+            'fleurs?',
+            {
+              type: 'svg',
+              src: '/avec-plaisir-flower-white.svg',
+              alt: 'flower',
+            },
+          ]}
+          fontSize={{ xs: '3.5rem', md: '6rem' }}
+          interval={4000}
+        />
+      </Box>
+
       {/* Photo Gallery Modal */}
       <PhotoGallery
         open={galleryOpen}
