@@ -123,7 +123,7 @@ const TeamSection = () => {
               sx={{
                 mb: 4,
                 overflow: 'hidden',
-                maxHeight: { md: '600px' },
+                maxHeight: { xs: '500px', md: '600px' },
                 position: 'relative',
               }}
             >
@@ -135,6 +135,7 @@ const TeamSection = () => {
                   width: '100%',
                   height: '120%',
                   objectFit: 'cover',
+                  objectPosition: 'center bottom',
                   position: 'relative',
                   top: '-10%',
                 }}
