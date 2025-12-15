@@ -34,20 +34,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser(user)
 
       if (user) {
-        console.log('User signed in:', user.email)
         try {
           const adminDoc = await getDoc(doc(db, 'config', 'adminUsers'))
           const adminEmails = adminDoc.data()?.emails || []
-          console.log('Admin emails from Firestore:', adminEmails)
-          console.log('User email:', user.email)
-          console.log('Is admin?', adminEmails.includes(user.email))
           setIsAdmin(adminEmails.includes(user.email))
         } catch (error) {
           console.error('Error checking admin status:', error)
           setIsAdmin(false)
         }
       } else {
-        console.log('No user signed in')
         setIsAdmin(false)
       }
 
@@ -59,16 +54,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signInWithGoogle = async () => {
     try {
-      console.log('Attempting sign in with popup...')
-      const result = await signInWithPopup(auth, googleProvider)
-      console.log('Sign in successful:', result.user.email)
+      await signInWithPopup(auth, googleProvider)
     } catch (error) {
       console.error('Error signing in with Google:', error)
-      console.error('Error details:', {
-        name: error instanceof Error ? error.name : 'Unknown',
-        message: error instanceof Error ? error.message : 'Unknown',
-        stack: error instanceof Error ? error.stack : 'Unknown'
-      })
       throw error
     }
   }
