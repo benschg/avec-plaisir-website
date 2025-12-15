@@ -25,6 +25,7 @@ const TeamSection = () => {
             key={index}
             sx={{
               textAlign: 'left',
+              alignItems: 'center',
             }}
           >
             <Grid size={{ xs: 12, md: 6 }} spacing="gap">
@@ -96,6 +97,7 @@ const TeamSection = () => {
               sx={{
                 mb: 4,
                 overflow: 'hidden',
+                maxHeight: { md: '600px' },
               }}
             >
               <img
