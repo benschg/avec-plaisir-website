@@ -24,11 +24,20 @@ const Layout = ({ children, showScrollStepper = false }: LayoutProps) => {
   return (
     <LenisProvider wrapper={wrapper}>
       <DynamicBackground>
+        {/* White border frame around the entire page */}
         <Box
-          ref={wrapperRef}
-          component={'div'}
-          className="lenis-wrapper"
-        >
+          sx={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            border: '8px solid white',
+            pointerEvents: 'none',
+            zIndex: 9999,
+          }}
+        />
+        <Box ref={wrapperRef} component={'div'} className="lenis-wrapper">
           <FallingFlowers />
           <Navigation />
           {showScrollStepper && <ScrollStepper />}
