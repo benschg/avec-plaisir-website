@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { Box } from '@mui/material'
 import Navigation from './Navigation'
 import FallingFlowers from './FallingFlowers'
@@ -14,6 +15,7 @@ interface LayoutProps {
 const Layout = ({ children, showScrollStepper = false }: LayoutProps) => {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const [wrapper, setWrapper] = useState<HTMLDivElement | null>(null)
+  const { pathname } = useLocation()
 
   useEffect(() => {
     if (wrapperRef.current) {
@@ -21,14 +23,28 @@ const Layout = ({ children, showScrollStepper = false }: LayoutProps) => {
     }
   }, [])
 
+  // Scroll to top on route change
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
+
   return (
     <LenisProvider wrapper={wrapper}>
       <DynamicBackground>
+        {/* White border frame around the entire page */}
         <Box
-          ref={wrapperRef}
-          component={'div'}
-          className="lenis-wrapper"
-        >
+          sx={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            border: { xs: '4px solid white', md: '8px solid white' },
+            pointerEvents: 'none',
+            zIndex: 9999,
+          }}
+        />
+        <Box ref={wrapperRef} component={'div'} className="lenis-wrapper">
           <FallingFlowers />
           <Navigation />
           {showScrollStepper && <ScrollStepper />}

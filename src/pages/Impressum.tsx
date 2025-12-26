@@ -1,19 +1,20 @@
 import { Container, Typography, Box, Paper, Link } from '@mui/material'
+import Footer from '../components/Footer'
 
 const Impressum = () => {
-
   return (
-    <Container maxWidth="md" sx={{ py: 8, mt: 8 }}>
-      <Paper
-        elevation={3}
-        sx={{
-          p: { xs: 3, md: 6 },
-          backgroundColor: 'rgba(255, 255, 255, 0.95)',
-          borderRadius: 2,
-          color: '#000000',
-          '& *': { color: '#000000 !important' }
-        }}
-      >
+    <Box>
+      <Container maxWidth="md" sx={{ py: 8, mt: 8 }}>
+        <Paper
+          elevation={3}
+          sx={{
+            p: { xs: 3, md: 6 },
+            backgroundColor: 'rgba(255, 255, 255, 0.95)',
+            borderRadius: 2,
+            color: '#000000',
+            '& *': { color: '#000000 !important' }
+          }}
+        >
         <Typography
           variant="h3"
           component="h1"
@@ -76,9 +77,11 @@ const Impressum = () => {
               Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar. Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend entfernen.
             </Typography>
           </Box>
-        </Box>
-      </Paper>
-    </Container>
+          </Box>
+        </Paper>
+      </Container>
+      <Footer />
+    </Box>
   )
 }
 
