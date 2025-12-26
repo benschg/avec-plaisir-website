@@ -32,7 +32,7 @@ const Layout = ({ children, showScrollStepper = false }: LayoutProps) => {
             left: 0,
             right: 0,
             bottom: 0,
-            border: '8px solid white',
+            border: { xs: '4px solid white', md: '8px solid white' },
             pointerEvents: 'none',
             zIndex: 9999,
           }}
