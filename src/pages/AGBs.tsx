@@ -1,9 +1,11 @@
 import { Container, Typography, Box, Paper } from '@mui/material'
+import Footer from '../components/Footer'
 
 const AGBs = () => {
   return (
-    <Container maxWidth="md" sx={{ py: 8, mt: 8 }}>
-      <Paper
+    <Box>
+      <Container maxWidth="md" sx={{ py: 8, mt: 8 }}>
+        <Paper
         elevation={3}
         sx={{
           p: { xs: 3, md: 6 },
@@ -181,9 +183,11 @@ const AGBs = () => {
               Geschäftes.
             </Typography>
           </Box>
-        </Box>
-      </Paper>
-    </Container>
+          </Box>
+        </Paper>
+      </Container>
+      <Footer />
+    </Box>
   )
 }
 

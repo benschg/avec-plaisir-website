@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { Box } from '@mui/material'
 import Navigation from './Navigation'
 import FallingFlowers from './FallingFlowers'
@@ -14,12 +15,18 @@ interface LayoutProps {
 const Layout = ({ children, showScrollStepper = false }: LayoutProps) => {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const [wrapper, setWrapper] = useState<HTMLDivElement | null>(null)
+  const { pathname } = useLocation()
 
   useEffect(() => {
     if (wrapperRef.current) {
       setWrapper(wrapperRef.current)
     }
   }, [])
+
+  // Scroll to top on route change
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
 
   return (
     <LenisProvider wrapper={wrapper}>
