@@ -1,12 +1,33 @@
-import { Box, Container, Typography, Grid, Link } from '@mui/material'
+import { useState, useEffect } from 'react'
+import {
+  Box,
+  Container,
+  Typography,
+  Grid,
+  Link,
+  LinearProgress,
+} from '@mui/material'
 import { Link as RouterLink, useNavigate, useLocation } from 'react-router-dom'
 import { Instagram } from 'lucide-react'
 import { useLenis } from '../hooks/useLenis'
+import { getContactInfo } from '../services/content.service'
+import type { ContactInfoData } from '../types/admin'
 
 const Footer = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const { scrollTo } = useLenis()
+  const [adminData, setAdminData] = useState<ContactInfoData | null>(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    getContactInfo()
+      .then((data) => setAdminData(data))
+      .catch((error) => console.error('Error loading contact info:', error))
+      .finally(() => setLoading(false))
+  }, [])
+
+  const hours = adminData?.hours
 
   const scrollToSection = (sectionId: string) => {
     // If not on home page, navigate to home first
@@ -62,13 +83,21 @@ const Footer = () => {
             <Typography variant="body2" sx={{ mt: 2 }}>
               Öffnungszeiten:
             </Typography>
-            <Typography variant="body2" sx={{ mb: 1 }}>
-              Montag bis Freitag 9 – 18 Uhr
-            </Typography>
-            <Typography variant="body2" sx={{ mb: 1 }}>
-              Samstag 9 – 15 Uhr
-            </Typography>
-            <Typography variant="body2">Sonntag geschlossen</Typography>
+            {loading ? (
+              <Box sx={{ width: '50%', py: 1 }}>
+                <LinearProgress />
+              </Box>
+            ) : hours ? (
+              <>
+                <Typography variant="body2" sx={{ mb: 1 }}>
+                  {hours.weekdays}
+                </Typography>
+                <Typography variant="body2" sx={{ mb: 1 }}>
+                  {hours.saturday}
+                </Typography>
+                <Typography variant="body2">{hours.sunday}</Typography>
+              </>
+            ) : null}
           </Grid>
 
           {/* Right side - Links */}

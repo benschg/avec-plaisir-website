@@ -1,5 +1,17 @@
-import { Box, Typography, Container, Grid, Link, Divider } from '@mui/material'
+import { useState, useEffect } from 'react'
+import {
+  Box,
+  Typography,
+  Container,
+  Grid,
+  Link,
+  Divider,
+  LinearProgress,
+} from '@mui/material'
 import { contactInfo } from '../data/contactInfo'
+import { getContactInfo } from '../services/content.service'
+import type { ContactInfoData, HolidayIconId } from '../types/admin'
+import { HOLIDAY_ICONS } from '../types/admin'
 import {
   MapPin,
   Phone,
@@ -7,8 +19,27 @@ import {
   Instagram,
   Clock,
   TreePine,
+  CableCar,
+  Egg,
+  Glasses,
+  Snowflake,
+  Palmtree,
 } from 'lucide-react'
 import type { ReactNode } from 'react'
+
+const holidayIconComponents = {
+  TreePine,
+  CableCar,
+  Egg,
+  Glasses,
+  Snowflake,
+  Palmtree,
+} as const
+
+const getHolidayIcon = (iconId?: HolidayIconId) => {
+  const iconName = iconId ? HOLIDAY_ICONS[iconId].icon : 'TreePine'
+  return holidayIconComponents[iconName as keyof typeof holidayIconComponents]
+}
 
 const ContactItem = ({
   icon,
@@ -31,7 +62,7 @@ const ContactItem = ({
           sx={{
             color: '#666666',
             fontSize: { xs: '1.0rem', md: '1.4rem' },
-            lineHeight: 2.0,
+            lineHeight: 1.6,
             whiteSpace: 'pre-line',
           }}
         >
@@ -65,6 +96,24 @@ const ContactItem = ({
 }
 
 const ContactSection = () => {
+  const [adminData, setAdminData] = useState<ContactInfoData | null>(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    getContactInfo()
+      .then((data) => setAdminData(data))
+      .catch((error) => console.error('Error loading contact info:', error))
+      .finally(() => setLoading(false))
+  }, [])
+
+  const hours = adminData?.hours
+  const holidayClosure = adminData?.holidayClosure.enabled
+    ? adminData.holidayClosure.text
+    : null
+  const holidayIcon = adminData?.holidayClosure.icon
+
+  const HolidayIconComponent = getHolidayIcon(holidayIcon)
+
   return (
     <Box
       id="kontakt"
@@ -221,28 +270,34 @@ const ContactSection = () => {
                 }}
               />
 
-              <ContactItem
-                icon={
-                  <Box
-                    sx={{
-                      mr: { xs: 1, md: 2 },
-                      color: '#666666',
-                      display: 'flex',
-                      alignItems: 'center',
-                      pt: 0.5,
-                    }}
-                  >
-                    <Clock size={32} />
-                  </Box>
-                }
-                description={[
-                  contactInfo.hours.weekdays,
-                  contactInfo.hours.saturday,
-                  contactInfo.hours.sunday,
-                ].join('\n')}
-              />
+              {loading ? (
+                <Box sx={{ width: '100%', py: 2 }}>
+                  <LinearProgress />
+                </Box>
+              ) : hours ? (
+                <ContactItem
+                  icon={
+                    <Box
+                      sx={{
+                        mr: { xs: 1, md: 2 },
+                        color: '#666666',
+                        display: 'flex',
+                        alignItems: 'center',
+                        pt: 0.5,
+                      }}
+                    >
+                      <Clock size={32} />
+                    </Box>
+                  }
+                  description={[
+                    hours.weekdays,
+                    hours.saturday,
+                    hours.sunday,
+                  ].join('\n')}
+                />
+              ) : null}
 
-              {contactInfo.holidayClosure && (
+              {holidayClosure && (
                 <>
                   <Divider
                     sx={{
@@ -262,13 +317,10 @@ const ContactSection = () => {
                           pt: 0.5,
                         }}
                       >
-                        <TreePine size={32} />
+                        <HolidayIconComponent size={32} />
                       </Box>
                     }
-                    description={[
-                      contactInfo.holidayClosure.dates,
-                      contactInfo.holidayClosure.reopening,
-                    ].join('\n')}
+                    description={holidayClosure}
                   />
                 </>
               )}
