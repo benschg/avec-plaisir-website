@@ -10,10 +10,31 @@ import {
   Snackbar,
   Alert,
   CircularProgress,
+  ToggleButton,
+  ToggleButtonGroup,
+  Tooltip,
 } from '@mui/material'
-import { Save } from 'lucide-react'
+import {
+  Save,
+  TreePine,
+  CableCar,
+  Egg,
+  Glasses,
+  Snowflake,
+  Palmtree,
+} from 'lucide-react'
 import { getContactInfo, updateContactInfo } from '../../services/content.service'
-import type { ContactInfoData } from '../../types/admin'
+import type { ContactInfoData, HolidayIconId } from '../../types/admin'
+import { HOLIDAY_ICONS } from '../../types/admin'
+
+const iconComponents = {
+  TreePine,
+  CableCar,
+  Egg,
+  Glasses,
+  Snowflake,
+  Palmtree,
+} as const
 
 export default function AdminHours() {
   const [loading, setLoading] = useState(true)
@@ -30,9 +51,14 @@ export default function AdminHours() {
     sunday: '',
   })
 
-  const [holidayClosure, setHolidayClosure] = useState({
+  const [holidayClosure, setHolidayClosure] = useState<{
+    text: string
+    enabled: boolean
+    icon?: HolidayIconId
+  }>({
     text: '',
     enabled: false,
+    icon: 'christmas',
   })
 
   useEffect(() => {
@@ -149,18 +175,46 @@ export default function AdminHours() {
           label="Feiertags-Hinweis anzeigen"
         />
         {holidayClosure.enabled && (
-          <TextField
-            label="Hinweistext"
-            value={holidayClosure.text}
-            onChange={(e) =>
-              setHolidayClosure({ ...holidayClosure, text: e.target.value })
-            }
-            placeholder="z.B. 26. Dezember 2025 – 3. Januar 2026 geschlossen"
-            fullWidth
-            multiline
-            rows={2}
-            sx={{ mt: 2 }}
-          />
+          <Box display="flex" flexDirection="column" gap={2} mt={2}>
+            <TextField
+              label="Hinweistext"
+              value={holidayClosure.text}
+              onChange={(e) =>
+                setHolidayClosure({ ...holidayClosure, text: e.target.value })
+              }
+              placeholder="z.B. 26. Dezember 2025 – 3. Januar 2026 geschlossen"
+              fullWidth
+              multiline
+              rows={2}
+            />
+            <Box>
+              <Typography variant="body2" color="text.secondary" mb={1}>
+                Symbol auswählen
+              </Typography>
+              <ToggleButtonGroup
+                value={holidayClosure.icon || 'christmas'}
+                exclusive
+                onChange={(_, value) => {
+                  if (value) {
+                    setHolidayClosure({ ...holidayClosure, icon: value })
+                  }
+                }}
+                sx={{ flexWrap: 'wrap', gap: 0.5 }}
+              >
+                {Object.entries(HOLIDAY_ICONS).map(([key, { label, icon }]) => {
+                  const IconComponent =
+                    iconComponents[icon as keyof typeof iconComponents]
+                  return (
+                    <Tooltip key={key} title={label}>
+                      <ToggleButton value={key} sx={{ px: 2 }}>
+                        <IconComponent size={24} />
+                      </ToggleButton>
+                    </Tooltip>
+                  )
+                })}
+              </ToggleButtonGroup>
+            </Box>
+          </Box>
         )}
       </Paper>
 

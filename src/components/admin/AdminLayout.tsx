@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
 import { Box, AppBar, Toolbar, Typography, Button, IconButton } from '@mui/material'
 import { LogOut, Menu } from 'lucide-react'
@@ -8,6 +8,16 @@ import { useAuth } from '../../contexts/AuthContext'
 export default function AdminLayout() {
   const { user, logout } = useAuth()
   const [mobileOpen, setMobileOpen] = useState(false)
+
+  // Enable scrolling on admin pages (override Lenis global overflow:hidden)
+  useEffect(() => {
+    document.documentElement.style.overflow = 'auto'
+    document.body.style.overflow = 'auto'
+    return () => {
+      document.documentElement.style.overflow = ''
+      document.body.style.overflow = ''
+    }
+  }, [])
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen)
