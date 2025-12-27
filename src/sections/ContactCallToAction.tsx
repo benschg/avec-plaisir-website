@@ -79,7 +79,6 @@ const ContactCallToAction = () => {
       id="cta"
       sx={{
         minHeight: '100vh',
-        height: { xs: 'auto', md: '100vh' },
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',

@@ -119,7 +119,6 @@ const ContactSection = () => {
       id="kontakt"
       sx={{
         minHeight: '100vh',
-        height: { xs: 'auto', md: '100vh' },
         display: 'flex',
         alignItems: 'center',
         py: { xs: 10, md: 4 },
