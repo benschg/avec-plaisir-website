@@ -9,7 +9,6 @@ const HeroSection = () => {
       id="hero"
       sx={{
         minHeight: '100vh',
-        height: { xs: 'auto', md: '100vh' },
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-evenly',

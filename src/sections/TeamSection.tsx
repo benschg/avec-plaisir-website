@@ -41,8 +41,6 @@ const TeamSection = () => {
       id="team"
       sx={{
         minHeight: '100vh',
-        height: { xs: 'auto', md: '100vh' },
-        overflowY: 'auto',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
