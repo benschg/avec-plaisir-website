@@ -138,7 +138,7 @@ const TeamSection = () => {
               <Box
                 ref={imageRef}
                 component="img"
-                src="/images/imgi_124_team-moni.jpg"
+                src="/images/imgi_123_40A7C801-D815-4BA5-8CFF-AADD6184BA57_1_105_c.jpg"
                 alt={member.name}
                 sx={{
                   width: '100%',
