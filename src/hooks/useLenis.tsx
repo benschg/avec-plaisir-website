@@ -78,7 +78,14 @@ export const LenisProvider = ({ children, wrapper }: LenisProviderProps) => {
     gsap.ticker.add(tickerCallback)
     gsap.ticker.lagSmoothing(0)
 
+    // Refresh ScrollTrigger on resize
+    const handleResize = () => {
+      ScrollTrigger.refresh()
+    }
+    window.addEventListener('resize', handleResize)
+
     return () => {
+      window.removeEventListener('resize', handleResize)
       gsap.ticker.remove(tickerCallback)
       lenisInstance.off('scroll', ScrollTrigger.update)
       lenisInstance.destroy()
