@@ -6,6 +6,16 @@
       "**/.*",
       "**/node_modules/**"
     ],
+    "redirects": [
+      {
+        "source": "/**",
+        "destination": "https://avecplaisir-zuerich.ch/:splat",
+        "type": 301,
+        "host": "www.avecplaisir-zuerich.ch"
+      }
+    ],
+    "trailingSlash": false,
+    "cleanUrls": true,
     "rewrites": [
       {
         "source": "**",
