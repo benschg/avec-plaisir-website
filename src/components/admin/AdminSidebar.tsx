@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 import {
   Drawer,
   List,
@@ -10,7 +10,7 @@ import {
   Typography,
   Box,
 } from '@mui/material'
-import { LayoutDashboard, Clock, Images } from 'lucide-react'
+import { LayoutDashboard, Clock, Images, ExternalLink } from 'lucide-react'
 
 const DRAWER_WIDTH = 240
 
@@ -29,13 +29,30 @@ export default function AdminSidebar({ mobileOpen, onDrawerToggle }: AdminSideba
   const drawerContent = (
     <>
       <Toolbar>
-        <Box>
+        <Box sx={{ width: '100%' }}>
           <Typography variant="h6" fontWeight="bold">
             Admin
           </Typography>
-          <Typography variant="caption" color="text.secondary">
-            avec plaisir
-          </Typography>
+          <Link
+            to="/"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '4px',
+              textDecoration: 'none',
+            }}
+          >
+            <Typography
+              variant="caption"
+              sx={{
+                color: 'text.secondary',
+                '&:hover': { color: 'primary.main' },
+              }}
+            >
+              avec plaisir
+            </Typography>
+            <ExternalLink size={12} style={{ color: 'inherit' }} />
+          </Link>
         </Box>
       </Toolbar>
       <List>
