@@ -12,8 +12,9 @@ import {
   ListItemButton,
   ListItemText,
 } from '@mui/material'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, Settings } from 'lucide-react'
 import { useLenis } from '../hooks/useLenis'
+import { useAuth } from '../contexts/AuthContext'
 
 const Navigation = () => {
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -23,6 +24,7 @@ const Navigation = () => {
   const location = useLocation()
   const navigate = useNavigate()
   const { lenis, scrollTo } = useLenis()
+  const { isAdmin } = useAuth()
 
   useEffect(() => {
     if (!lenis) return
@@ -154,6 +156,20 @@ const Navigation = () => {
                 {item.text}
               </Button>
             ))}
+            {isAdmin && (
+              <IconButton
+                onClick={() => navigate('/admin')}
+                sx={{
+                  color: '#ffffff',
+                  '&:hover': {
+                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                  },
+                }}
+                aria-label="Admin panel"
+              >
+                <Settings size={20} />
+              </IconButton>
+            )}
           </Box>
 
           {/* Mobile Menu Button */}
@@ -212,6 +228,31 @@ const Navigation = () => {
                 </ListItemButton>
               </ListItem>
             ))}
+            {isAdmin && (
+              <ListItem disablePadding>
+                <ListItemButton
+                  onClick={() => {
+                    navigate('/admin')
+                    setMobileOpen(false)
+                  }}
+                  sx={{
+                    textAlign: 'center',
+                    color: '#ffffff',
+                    '&:hover': {
+                      backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                    },
+                  }}
+                >
+                  <ListItemText
+                    primary="Admin"
+                    primaryTypographyProps={{
+                      fontSize: '1.2rem',
+                      fontWeight: 400,
+                    }}
+                  />
+                </ListItemButton>
+              </ListItem>
+            )}
           </List>
         </Box>
       </Drawer>
