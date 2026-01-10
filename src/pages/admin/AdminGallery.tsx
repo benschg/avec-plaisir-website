@@ -23,7 +23,7 @@ import {
   ToggleButtonGroup,
   ToggleButton,
 } from '@mui/material'
-import { Trash2, GripVertical, LayoutGrid, List } from 'lucide-react'
+import { Trash2, GripVertical, LayoutGrid, List, Eye } from 'lucide-react'
 import {
   DndContext,
   closestCenter,
@@ -44,6 +44,7 @@ import {
 import { CSS } from '@dnd-kit/utilities'
 import ImageUploader from '../../components/admin/ImageUploader'
 import ImageDetailDialog from '../../components/admin/ImageDetailDialog'
+import PhotoGallery from '../../components/PhotoGallery'
 import {
   getGalleryImages,
   addGalleryImage,
@@ -303,6 +304,7 @@ export default function AdminGallery() {
   const [batchDeleteDialog, setBatchDeleteDialog] = useState(false)
   const [deleting, setDeleting] = useState(false)
   const [viewMode, setViewMode] = useState<'grid' | 'row'>('grid')
+  const [previewOpen, setPreviewOpen] = useState(false)
   const [snackbar, setSnackbar] = useState<{
     open: boolean
     message: string
@@ -589,6 +591,15 @@ export default function AdminGallery() {
             </>
           )}
           <Box sx={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Button
+              size="small"
+              variant="outlined"
+              startIcon={<Eye size={16} />}
+              onClick={() => setPreviewOpen(true)}
+              disabled={images.filter((img) => img.active).length === 0}
+            >
+              Vorschau
+            </Button>
             <Typography variant="body2" color="text.secondary">
               {images.filter((img) => img.active).length} / {images.length} sichtbar
             </Typography>
@@ -743,6 +754,13 @@ export default function AdminGallery() {
         hasPrevious={detailImage ? images.findIndex((img) => img.id === detailImage.id) > 0 : false}
         currentIndex={detailImage ? images.findIndex((img) => img.id === detailImage.id) : undefined}
         totalImages={images.length}
+      />
+
+      {/* Preview gallery */}
+      <PhotoGallery
+        open={previewOpen}
+        onClose={() => setPreviewOpen(false)}
+        images={images.filter((img) => img.active)}
       />
     </Box>
   )
