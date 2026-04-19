@@ -10,7 +10,7 @@ import {
 } from '@mui/material'
 import { contactInfo } from '../data/contactInfo'
 import { getContactInfo } from '../services/content.service'
-import type { ContactInfoData, HolidayIconId } from '../types/admin'
+import type { ContactInfoData, HolidayEntry, HolidayIconId } from '../types/admin'
 import { HOLIDAY_ICONS } from '../types/admin'
 import {
   MapPin,
@@ -39,6 +39,47 @@ const holidayIconComponents = {
 const getHolidayIcon = (iconId?: HolidayIconId) => {
   const iconName = iconId ? HOLIDAY_ICONS[iconId].icon : 'TreePine'
   return holidayIconComponents[iconName as keyof typeof holidayIconComponents]
+}
+
+const germanDateFormatter = new Intl.DateTimeFormat('de-DE', {
+  day: 'numeric',
+  month: 'long',
+})
+
+const formatIsoDate = (iso: string): string => {
+  if (!iso) return ''
+  const [y, m, d] = iso.split('-').map(Number)
+  if (!y || !m || !d) return ''
+  return germanDateFormatter.format(new Date(y, m - 1, d))
+}
+
+const formatTime = (hhmm?: string): string => {
+  if (!hhmm) return ''
+  const [h, m] = hhmm.split(':')
+  if (h === undefined) return ''
+  const hour = parseInt(h, 10)
+  if (isNaN(hour)) return ''
+  return m && m !== '00' ? `${hour}:${m}` : `${hour}`
+}
+
+const formatHours = (entry: HolidayEntry): string => {
+  const s = formatTime(entry.startTime) || '9'
+  const e = formatTime(entry.endTime) || '18'
+  if (entry.hours?.trim() && !entry.startTime && !entry.endTime) {
+    return entry.hours.trim()
+  }
+  return `${s} – ${e} Uhr`
+}
+
+const formatHolidayEntry = (entry: HolidayEntry): string => {
+  const parts: string[] = []
+  if (entry.text.trim()) parts.push(entry.text.trim())
+  const start = formatIsoDate(entry.startDate)
+  const end = formatIsoDate(entry.endDate ?? '')
+  if (start && end) parts.push(`${start} – ${end}`)
+  else if (start) parts.push(start)
+  parts.push(entry.closed ? 'geschlossen' : formatHours(entry))
+  return parts.filter(Boolean).join(' ')
 }
 
 const ContactItem = ({
@@ -107,9 +148,15 @@ const ContactSection = () => {
   }, [])
 
   const hours = adminData?.hours
-  const holidayClosure = adminData?.holidayClosure.enabled
-    ? adminData.holidayClosure.text
-    : null
+  const holidayClosure = (() => {
+    if (!adminData?.holidayClosure.enabled) return null
+    const lines = (adminData.holidayClosure.entries ?? [])
+      .filter((e) => e.enabled)
+      .map(formatHolidayEntry)
+      .filter((line) => line.length > 0)
+    if (lines.length > 0) return lines.join('\n')
+    return adminData.holidayClosure.text || null
+  })()
   const holidayIcon = adminData?.holidayClosure.icon
 
   const HolidayIconComponent = getHolidayIcon(holidayIcon)

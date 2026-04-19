@@ -13,6 +13,18 @@ export const HOLIDAY_ICONS = {
 
 export type HolidayIconId = keyof typeof HOLIDAY_ICONS
 
+export interface HolidayEntry {
+  id: string
+  text: string
+  startDate: string
+  endDate?: string
+  closed: boolean
+  startTime?: string
+  endTime?: string
+  hours?: string
+  enabled: boolean
+}
+
 export interface ContactInfoData {
   hours: {
     weekdays: string
@@ -20,7 +32,8 @@ export interface ContactInfoData {
     sunday: string
   }
   holidayClosure: {
-    text: string
+    text?: string
+    entries: HolidayEntry[]
     enabled: boolean
     icon?: HolidayIconId
   }
