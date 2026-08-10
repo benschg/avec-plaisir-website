@@ -42,7 +42,7 @@ const Impressum = () => {
               Vertreten durch:<br />
               Monika Fähndrich<br />
               Telefon: 044 492 21 18<br />
-              Mail: salut@avecplaisir-zuerich.ch
+              Mail: salut@avecplaisir.ch
             </Typography>
             <Typography variant="body1" paragraph>
               Website Gestaltung:<br />

@@ -45,7 +45,7 @@ const Datenschutz = () => {
               Aemtlerstrsse 205<br />
               8003 Zürich<br />
               +41 44 492 21 18<br />
-              info@avecplaisir-zuerich.ch
+              info@avecplaisir.ch
             </Typography>
           </Box>
 

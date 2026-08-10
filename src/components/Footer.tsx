@@ -78,7 +78,7 @@ const Footer = () => {
               Telefon: +41 44 492 21 18
             </Typography>
             <Typography variant="body2" sx={{ mb: 1 }}>
-              E-Mail: salut@avecplaisir-zuerich.ch
+              E-Mail: salut@avecplaisir.ch
             </Typography>
             <Typography variant="body2" sx={{ mt: 2 }}>
               Öffnungszeiten:

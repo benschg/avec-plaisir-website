@@ -3,7 +3,7 @@ import type { ContactInfo } from '../types'
 export const contactInfo: ContactInfo = {
   address: 'Aemtlerstrasse 205\n8003 Zürich',
   phone: '+41 44 492 21 18',
-  email: 'salut@avecplaisir-zuerich.ch',
+  email: 'salut@avecplaisir.ch',
   instagram: '@avecplaisirzuerich',
   hours: {
     weekdays: 'Montag bis Freitag 9 – 18 Uhr',
