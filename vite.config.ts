@@ -14,8 +14,10 @@ export default defineConfig({
           'firebase': ['firebase/app', 'firebase/auth', 'firebase/firestore', 'firebase/storage'],
           // Animation libraries
           'animation': ['gsap', 'lenis'],
-          // Image processing
-          'image-processing': ['browser-image-compression', 'heic2any'],
+          // Image processing - lazy-loaded by the admin gallery upload flow only.
+          // Kept apart so a non-HEIC upload never pulls in libheif.
+          'image-compression': ['browser-image-compression'],
+          'heic-decode': ['heic2any'],
           // DnD
           'dnd': ['@dnd-kit/core', '@dnd-kit/sortable'],
           // React ecosystem

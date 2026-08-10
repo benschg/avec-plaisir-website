@@ -18,8 +18,6 @@ import {
   getDownloadURL,
   deleteObject,
 } from 'firebase/storage'
-import imageCompression from 'browser-image-compression'
-import heic2any from 'heic2any'
 import { db, storage } from '../config/firebase'
 import type { GalleryImage, GalleryId } from '../types/admin'
 
@@ -36,6 +34,9 @@ async function convertHeicToJpeg(file: File): Promise<File> {
   if (!isHeic) {
     return file
   }
+
+  // Loaded on demand: heic2any bundles libheif (~1.3 MB)
+  const { default: heic2any } = await import('heic2any')
 
   const blob = await heic2any({
     blob: file,
@@ -101,6 +102,9 @@ export async function addGalleryImage(
     // Convert HEIC to JPEG if needed
     const processedFile = await convertHeicToJpeg(file)
     onProgress?.(15)
+
+    const { default: imageCompression } =
+      await import('browser-image-compression')
 
     // Compress to thumbnail (300px) - for grid previews
     const thumbnailOptions = {
