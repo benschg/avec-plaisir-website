@@ -9,7 +9,19 @@
     "redirects": [
       {
         "source": "/**",
-        "destination": "https://avecplaisir-zuerich.ch/:splat",
+        "destination": "https://avecplaisir.ch/:splat",
+        "type": 301,
+        "host": "www.avecplaisir.ch"
+      },
+      {
+        "source": "/**",
+        "destination": "https://avecplaisir.ch/:splat",
+        "type": 301,
+        "host": "avecplaisir-zuerich.ch"
+      },
+      {
+        "source": "/**",
+        "destination": "https://avecplaisir.ch/:splat",
         "type": 301,
         "host": "www.avecplaisir-zuerich.ch"
       }

@@ -1,6 +1,6 @@
-# robots.txt for avecplaisir-zuerich.ch
+# robots.txt for avecplaisir.ch
 User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://avecplaisir-zuerich.ch/sitemap.xml
+Sitemap: https://avecplaisir.ch/sitemap.xml

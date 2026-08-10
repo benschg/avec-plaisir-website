@@ -51,7 +51,7 @@ const AGBs = () => {
             </Typography>
             <Typography variant="body1" paragraph>
               1.2 Die jeweils aktuelle und verbindliche Fassung der AGB wird
-              unter www.avecplaisir-zuerich.ch publiziert.
+              unter www.avecplaisir.ch publiziert.
             </Typography>
           </Box>
 
@@ -60,7 +60,7 @@ const AGBs = () => {
               2. Vertragsschluss
             </Typography>
             <Typography variant="body1" paragraph>
-              Die Angebote auf der Website www.avecplaisir-zuerich.ch sind rein
+              Die Angebote auf der Website www.avecplaisir.ch sind rein
               informativ und daher unverbindlich. Preis- und
               Sortimentsänderungen bleiben vorbehalten. Blumen sind
               Saisonprodukte, daher ist nicht immer die ganze Auswahl
