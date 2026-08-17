@@ -24,13 +24,49 @@
         "destination": "https://avecplaisir.ch/:splat",
         "type": 301,
         "host": "www.avecplaisir-zuerich.ch"
+      },
+      {
+        "source": "/**",
+        "destination": "https://avecplaisir.ch/:splat",
+        "type": 301,
+        "host": "avec-plaisir-website.web.app"
+      },
+      {
+        "source": "/**",
+        "destination": "https://avecplaisir.ch/:splat",
+        "type": 301,
+        "host": "avec-plaisir-website.firebaseapp.com"
+      }
+    ],
+    "headers": [
+      {
+        "source": "/admin",
+        "headers": [
+          {
+            "key": "X-Robots-Tag",
+            "value": "noindex, nofollow"
+          }
+        ]
+      },
+      {
+        "source": "/admin/**",
+        "headers": [
+          {
+            "key": "X-Robots-Tag",
+            "value": "noindex, nofollow"
+          }
+        ]
       }
     ],
     "trailingSlash": false,
     "cleanUrls": true,
     "rewrites": [
       {
-        "source": "**",
+        "source": "/admin",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/admin/**",
         "destination": "/index.html"
       }
     ]

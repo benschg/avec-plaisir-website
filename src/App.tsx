@@ -8,6 +8,7 @@ import Home from './pages/Home'
 import Impressum from './pages/Impressum'
 import AGBs from './pages/AGBs'
 import Datenschutz from './pages/Datenschutz'
+import NotFound from './pages/NotFound'
 
 // Lazy load admin components
 const AdminLogin = lazy(() => import('./pages/admin/AdminLogin'))
@@ -62,6 +63,17 @@ function App() {
                 element={
                   <Layout>
                     <Datenschutz />
+                  </Layout>
+                }
+              />
+
+              {/* Catch-all: only reachable via client-side navigation, since
+                  Firebase serves a real 404 for unknown paths on a fresh load. */}
+              <Route
+                path="*"
+                element={
+                  <Layout>
+                    <NotFound />
                   </Layout>
                 }
               />
