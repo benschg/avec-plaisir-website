@@ -6,6 +6,7 @@ import FallingFlowers from './FallingFlowers'
 import DynamicBackground from './DynamicBackground'
 import ScrollStepper from './ScrollStepper'
 import { LenisProvider } from '../hooks/useLenis'
+import { useSeo } from '../hooks/useSeo'
 
 interface LayoutProps {
   children: React.ReactNode
@@ -16,6 +17,8 @@ const Layout = ({ children, showScrollStepper = false }: LayoutProps) => {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const [wrapper, setWrapper] = useState<HTMLDivElement | null>(null)
   const { pathname } = useLocation()
+
+  useSeo()
 
   useEffect(() => {
     if (wrapperRef.current) {
